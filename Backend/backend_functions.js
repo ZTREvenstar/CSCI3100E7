@@ -29,6 +29,18 @@ app.use(session({
 
 /* connect to mongodb */
 
+var createFolder = function(folder){
+    try{
+        fs.accessSync(folder); 
+    }catch(e){
+        fs.mkdirSync(folder);
+    }  
+};
+
+var profilePicFolder = './Personal Info/profilePic/';
+
+createFolder(profilePicFolder);
+
 var profileInfo = {id:'exampleID', profileName:'exampleProfileName',email:'exampleEmail@mail.com'};
 var profilePic = 'db4obul-5409f57c-4521-448c-bd3d-9ea273e128c2.png';
 
