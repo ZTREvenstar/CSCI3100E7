@@ -6,12 +6,13 @@ var http = require('http');
 //var xml2js = require('xml2js');
 //var parseString = require('xml2js').parseString;
 //var builder = new xml2js.Builder();
-
-
+var multer = require('multer');
+var fs = require('fs');
 /* define app to use express */
 var app = express();
 app.use(bodyParser.urlencoded({extended: true,limit: '50mb',parameterLimit:1000000}));
 
+app.use(express.static('Personal Info'));
 //to get xml through post
 //var xmlparser = require('express-xml-bodyparser');
 app.use(express.json());
@@ -28,7 +29,28 @@ app.use(session({
 
 /* connect to mongodb */
 
+var profileInfo = {id:'exampleID', profileName:'exampleProfileName',email:'exampleEmail@mail.com'};
+var profilePic = 'db4obul-5409f57c-4521-448c-bd3d-9ea273e128c2.png';
 
+var profilePicStorage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'Personal Info/profilePic/');   
+    },
+    filename: function (req, file, cb) {
+		
+		fs.unlink('Personal Info/profilePic/'+profilePic, (err) => {
+			if (err) {
+			  console.error(err)
+			  return
+			}
+		  });
+		var profilePicName =Date.now() + '-'+ file.originalname;
+		profilePic = 'profilePic/'+ profilePicName
+        cb(null, profilePicName);  
+    }
+});
+
+var uploadProfilePic = multer({storage: profilePicStorage });
 
 app.all('/*', (req, res,next) => {
 	/* set response header */
@@ -84,6 +106,15 @@ app.get('/', function (req, res) {
 		res.send('Hello GET');
 	 })
 
+app.get('/profileInfo',function(req,res){
+	console.log("get profile info");
+	res.send(JSON.stringify(profileInfo));
+})
+
+app.get('/profilePic',function(req,res){
+	console.log("get profile picture");
+	res.send(profilePic);
+})
 
 app.post('/order', function(req,res){
 
@@ -100,6 +131,21 @@ app.post('/menu', function(req,res){
 	res.send();
 	//res.send('http://localhost:3000');
 })
+
+app.post('/updateProfileInfo', function(req,res){
+
+	var databody=req.body.alldata;
+	console.log(req.body);
+	console.log(databody);
+	Object.assign(profileInfo,req.body)
+	res.send(JSON.stringify(profileInfo));
+})
+
+app.post('/updateProfilePic', uploadProfilePic.single('chooseProfilePic'), function(req,res){
+	var file = req.file;
+	res.redirect('/personal.html')
+})
+
 var server = app.listen(3000, function () {
  
 	var host = server.address().address
