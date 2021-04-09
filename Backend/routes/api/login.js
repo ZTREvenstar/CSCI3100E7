@@ -3,7 +3,7 @@ const router = express.Router()
 const sqlQuery = require('../../db')
 const { OAuth2Client, UserRefreshClient } = require('google-auth-library')
 
-router.get('/login', async (req, res) => {
+router.get('/', async (req, res) => {
     console.log(req.query)
     //let strSql = "select (username,password) from userinfo where username = '" + req.query.username + "' and password = '" + req.query.username + "');"
     let strSql = "show tables;"
@@ -45,7 +45,4 @@ router.post("/login", (req, res) => {
 
         })
 })
-
-
-
 module.exports = router
