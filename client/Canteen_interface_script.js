@@ -2,14 +2,8 @@
 
 
 function get_menu(){
-	/*
-	$.get("http://localhost:3000/order",
-function(txt) {
-console.log(txt);
-});
-	*/
 
-	//we could delete result variable
+	//we could delete result variable, but just keep it for debugging
 	var result;
 	$.ajax({
 		url: 'http://localhost:3000/menu',
@@ -45,7 +39,7 @@ function get_order(){
 			console.log("succeed");
 			console.log(data);
 			result =  data;
-			add_menu_list($("#order"), data);
+			add_order_list($("#order"), data);
 
 		},
 		error:function(data,status){
