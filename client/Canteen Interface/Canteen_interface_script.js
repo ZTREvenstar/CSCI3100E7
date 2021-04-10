@@ -6,7 +6,7 @@ function get_menu(){
 	//we could delete result variable, but just keep it for debugging
 	var result;
 	$.ajax({
-		url: 'http://localhost:3000/menu',
+		url: 'http://localhost:3000/dish',
 		type:'GET',
 		dataType:'json',
 		//async:false,

@@ -1,15 +1,13 @@
-var express = require('express')
+const express = require('express')
 //var bodyParser = require('body-parser')
-var sqlQuery = require('../../db')
+const sqlQuery = require('../../db')
 const multer = require('multer') // v1.0.5
 const upload = multer() 
 
 
 const router = express.Router()
-//router.use(bodyParser.json());
-//router.use(bodyParser.urlencoded({extended: true, limit: '50mb', parameterLimit:100000}));
 router.use(express.json())
-router.use(express.static('../../../client/Canteen Interface'))
+router.use('/',express.static('../../../client/Canteen Interface'))
 
 router.all('/*', (req, res, next) => {
 	/* set response header */
@@ -21,43 +19,84 @@ router.all('/*', (req, res, next) => {
 })
 
 
+router.get('/', (req, res)=> {
 
-router.get('/menu', (req, res)=> {
+	console.log("get dish");
+	var dish_list = [{ "name": '123123123', "status": 'open', "price": 31 }, { "name": 'cB', "status": 'close', "price": 231 }];
+    res.json(dish_list);
 
-	console.log("get menu");
-	var menu_list = [{ "name": '123123123', "status": 'open', "price": 31 }, { "name": 'cB', "status": 'close', "price": 231 }];
-	//res.send(JSON.stringify(menu_list));
-    res.json(menu_list);
-	//res.send('Hello GET');
 })
 
-router.get('/order',(req, res)=> {
+//Two way -----either "then()" or "async and await" takes effects
+router.get('/dish', async (req, res)=> {
 
-    var strSql = 'SELECT * FROM order';
-    var result = sqlQuery(strSql);
+	console.log("get dish");
+    var strSql = 'SELECT * FROM dish';
+    strSql = "desc dish;";
+    let dish_list = await sqlQuery(strSql);
+	console.log(dish_list);
 
-	console.log("get order");
-	//var response = { "A": 10 };
-    res.json(result);
-	//res.send(JSON.stringify(response));
-	//res.send('Hello GET');
+    res.json(dish_list);
+
+
+})
+
+router.get('/order',async (req, res)=> {
+
+    var strSql = 'SELECT * FROM orderinf';
+    //var strSql = 'desc orderinf;';
+    let order_list = await sqlQuery(strSql);
+	console.log(order_list);
+    res.json(order_list);
 })
 
 
-router.post('/menu',upload.array(),(req, res)=>{
+router.post('/dish',upload.array(),(req, res)=>{
 
-    console.log(req.body['sad']);
+
+    let data = req.body;
+    var strSql = "insert into dish (id,status,price, canteenID, commentID,img) values(?,?,?,?,?,?);"
+
+    sqlQuery(strSql, 
+        [data['id'],data['status'],data['price'],data['canteenID'],data['commentID'],data['img']]);
+
     res.status(200).send();
 
 })
 
-router.post('/order',  (req, res)=> {
+router.post('/order',upload.array(), (req, res)=> {
+    let data = req.body;
+    //console.log([data['id'],data['customerID'],data['dishID'],data['time'],data['status'],data['charge']])
+    var strSql = "insert into orderinf (id,customerID,dishID, time, status,charge) values(?,?,?,?,?,?);"
+    sqlQuery(strSql, 
+        [data['id'],data['customerID'],data['dishID'],data['time'],data['status'],data['charge']]);
 
-	var databody = req.body.alldata;
-	console.log(req.body);
-	res.send();
-	//res.send('http://localhost:3000');
+	res.status(200).send();
+
 })
+
+router.delete('/dish',  (req, res)=> {
+
+	console.log(req.query.id);
+    var strSql = "delete from dish WHERE id=?;"
+    sqlQuery(strSql, 
+        [req.query.id]);
+
+    res.status(200).send();
+
+})
+
+router.delete('/order',  (req, res)=> {
+
+	console.log(req.query.id);
+    var strSql = "delete from orderinf WHERE id=?;"
+    sqlQuery(strSql, 
+        [req.query.id]);
+
+	res.status(200).send();
+
+})
+
 
 
 module.exports = router;
