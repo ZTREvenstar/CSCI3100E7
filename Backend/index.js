@@ -28,6 +28,7 @@ app.set('view engine', 'ejs');
 // app.use('/api/order_back', require('./routes/api/order_back'))
 
 //login router
+app.use('/api/canteen', require('./routes/api/canteen'))
 app.use('/api/login', require('./routes/api/login'))
 //register router
 app.use('/api/register', require('./routes/api/register'))
