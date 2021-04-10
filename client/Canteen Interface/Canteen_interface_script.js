@@ -5,8 +5,9 @@ function get_menu(){
 
 	//we could delete result variable, but just keep it for debugging
 	var result;
+	console.log("here");
 	$.ajax({
-		url: 'http://localhost:3000/dish',
+		url: 'http://localhost:5000/api/canteen/dish',
 		type:'GET',
 		dataType:'json',
 		//async:false,
@@ -31,7 +32,7 @@ function get_menu(){
 function get_order(){
 	var result;
 	$.ajax({
-		url: 'http://localhost:3000/order',
+		url: 'http://localhost:5000/api/canteen/order',
 		type:'GET',
 		dataType:'json',
 
@@ -70,12 +71,27 @@ function Gettime()
  //$(document).ready(writeFile);
  
 
- // add mene without image information 
+ // add menu without image information 
  function post_menu(form){
 	$.ajax({
 
-		url :'http://localhost:3000/order',
+		url :'http://localhost:5000/api/canteen/dish',
 		type:'POST',
+		datatype :'JSON',
+		data: $(form).serializeArray(),
+		success: function(data){
+			console.log("mes");
+		},
+		error: function(err){
+			console.log("err");
+		}
+	})
+ }
+ function put_order(form){
+	$.ajax({
+
+		url :'http://localhost:5000/api/canteen/order',
+		type:'PUT',
 		datatype :'JSON',
 		data: $(form).serializeArray(),
 		success: function(data){
@@ -111,7 +127,7 @@ function Gettime()
 	function add_order_list(parent, order_list){	 
 		for (index in order_list){
 			console.log(order_list[index]);
-			var order = $("<div><div class = 'row'><ul class='list-unstyled' ><li><p> DishName :</p> </li><li><p> Charge :</p></li><li><p> Time :</p></li><li><p> Status :</p></li></ul></div><button class= 'btn-default center-block'>cancel</button></div>");
+			var order = $("<div><div class = 'row'><ul class='list-unstyled' ><li><p> ID :</p> </li><li><p> Charge :</p></li><li><p> Time :</p></li><li><p> Status :</p></li></ul></div><button class= 'btn-default center-block'>cancel</button></div>");
 	/*
 			order.find("div").eq(0).addClass("row");
 			order.find("div").eq(1).addClass("col-xs-3 col-md-3 col-sm-3");
@@ -123,7 +139,7 @@ function Gettime()
 			order.find("p").eq(1).text(dish.find("p").eq(1).text()+menu_list[index]['price']);
 			order.find("p").eq(2).text(dish.find("p").eq(2).text()+menu_list[index]['status']);
 			*/
-			order.find("p").eq(0).text(order.find("p").eq(0).text()+order_list[index]['name']);
+			order.find("p").eq(0).text(order.find("p").eq(0).text()+order_list[index]['id']);
 			order.find("p").eq(1).text(order.find("p").eq(1).text()+order_list[index]['charge']);
 			order.find("p").eq(2).text(order.find("p").eq(3).text()+order_list[index]['status']);
 			parent.append(order);
@@ -135,10 +151,10 @@ function Gettime()
 function delete_order(order_id){
 			$.ajax({
 		
-				url :'http://localhost:3000/order',
+				url :'http://localhost:5000/api/canteen/order/?id='+'order_id',
 				type:'DELETE',
-				datatype :'JSON',
-				data:{"ID": order_id},
+				//datatype :'JSON',
+				//data:{"ID": order_id},
 				success: function(data){
 					console.log("mes");
 				},
@@ -148,18 +164,35 @@ function delete_order(order_id){
 			})
 		 }
 
+function delete_menu(dish_id){
+			$.ajax({
+		
+				url :'http://localhost:5000/api/canteen/dish/id='+'dish_id',
+				type:'DELETE',
+				//datatype :'JSON',
+				//data:{"ID": order_id},
+				success: function(data){
+					console.log("mes");
+				},
+				error: function(err){
+					console.log("err");
+				}
+			})
+		 }
+
+
  $(document).ready(function(){
 //bus();
 	//menu_list,order_list only for test, actually unneccessary
 	var menu_list;
-	var order_list=[{"name":'AB', "status":'open', "charge":31},{"name":'cB', "status":'close', "charge":231}];
+	//var order_list=[{"name":'AB', "status":'open', "charge":31},{"name":'cB', "status":'close', "charge":231}];
 	menu_list=get_menu();
 	console.log(menu_list);
-
+	var order_list=get_order();
 	add_order_list($("#order"), order_list)
 
 	$("form").submit(function(e){
-		post_menu(this);
+		put_order(this);
 	  });
 
 

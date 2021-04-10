@@ -32,7 +32,7 @@ router.get('/dish', async (req, res)=> {
 
 	console.log("get dish");
     var strSql = 'SELECT * FROM dish';
-    strSql = "desc dish;";
+    //strSql = "desc dish;";
     let dish_list = await sqlQuery(strSql);
 	console.log(dish_list);
 
@@ -89,7 +89,7 @@ router.put('/dish',upload.array(), (req, res)=> {
 
 router.put('/order',upload.array(), (req, res)=> {
     let data = req.body;
-   
+    console.log(data);
     var strSql = "update orderinf set customerID=?, dishID=?, time=?, status=?, charge=? WHERE id=?;"
     sqlQuery(strSql, 
         [data['customerID'],data['dishID'],data['time'],data['status'],data['charge'],data['id']]);
