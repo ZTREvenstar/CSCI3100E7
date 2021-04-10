@@ -75,6 +75,29 @@ router.post('/order',upload.array(), (req, res)=> {
 
 })
 
+
+router.put('/dish',upload.array(), (req, res)=> {
+    let data = req.body;
+   
+    var strSql = "update dish set status=?, price=?, canteenID=?, commentID=?, img=? WHERE id=?;"
+    sqlQuery(strSql, 
+        [data['status'],data['price'],data['canteenID'],data['commentID'],data['img'],data['id']]);
+
+	res.status(200).send();
+
+})
+
+router.put('/order',upload.array(), (req, res)=> {
+    let data = req.body;
+   
+    var strSql = "update orderinf set customerID=?, dishID=?, time=?, status=?, charge=? WHERE id=?;"
+    sqlQuery(strSql, 
+        [data['customerID'],data['dishID'],data['time'],data['status'],data['charge'],data['id']]);
+
+	res.status(200).send();
+
+})
+
 router.delete('/dish',  (req, res)=> {
 
 	console.log(req.query.id);
