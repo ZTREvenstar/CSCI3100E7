@@ -9,7 +9,7 @@ const router = express.Router()
 //router.use(bodyParser.json());
 //router.use(bodyParser.urlencoded({extended: true, limit: '50mb', parameterLimit:100000}));
 router.use(express.json())
-router.use(express.static('../../../client/Canteen_Interface_Main_page.html'))
+router.use(express.static('../../../client/Canteen Interface'))
 
 router.all('/*', (req, res, next) => {
 	/* set response header */
