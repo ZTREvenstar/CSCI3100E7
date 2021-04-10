@@ -1,18 +1,9 @@
 var express = require('express');
+const sqlQuery = require('../../db')
 const router = express.Router()
 
+let sqlStr = 'sss'
 
-var http = require('http');
-var mysql      = require('mysql');
-var app=express();
-var connection = mysql.createConnection({
-  host     : 'localhost',
-  user     : 'root',
-  password : '990511',
-  database : 'mysql'
-});
- 
-connection.connect();
  
 connection.query('SELECT 1 + 1 AS solution', function (error, results, fields) {
   if (error) throw error;
