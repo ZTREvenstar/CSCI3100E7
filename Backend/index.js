@@ -27,11 +27,12 @@ app.set('view engine', 'ejs');
 
 // app.use('/api/order_back', require('./routes/api/order_back'))
 
-//login router
+
 app.use('/api/canteen', require('./routes/api/canteen'))
+//login router
 app.use('/api/login', require('./routes/api/login'))
 //register router
 app.use('/api/register', require('./routes/api/register'))
-
+app.use('/api/com', require('./routes/api/comment_back'))
 const PORT = process.env.PORT || 5000
 app.listen(PORT, ()=>console.log(`Serevr started on PORT ${PORT}`))

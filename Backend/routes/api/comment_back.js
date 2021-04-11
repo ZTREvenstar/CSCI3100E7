@@ -1,15 +1,22 @@
 var express = require('express');
-const sqlQuery = require('../../db')
-const router = express.Router()
+//var http = require('http');
+//var mysql      = require('mysql');
+const sqlQuery = require('../../db');
+const multer = require('multer') // v1.0.5
+const upload = multer() 
+const router=express.Router()
+router.use(express.json())
+router.use('/',express.static('../../../client/Comment'))
+//var app=express();
+/*var connection = mysql.createConnection({
+  host     : 'localhost',
+  user     : 'root',
+  password : '990511',
+  database : 'mysql'
+});*/
 
-let sqlStr = 'sss'
 
- 
-connection.query('SELECT 1 + 1 AS solution', function (error, results, fields) {
-  if (error) throw error;
-  console.log('The solution is: ', results[0].solution);
-});
-app.all('/*', (req, res,next) => {
+router.all('/*', (req, res,next) => {
 	/* set response header */
 	res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Allow-Methods", "GET, PUT, DELETE, POST");
@@ -17,79 +24,55 @@ app.all('/*', (req, res,next) => {
 	res.setHeader('Content-Type', 'application/json');
 	next();
 });
-app.post('/addC/cid/:cid/dishId/:dishId/content/:content', (req, res) => {
-        var sql='SELECT MAX(id) AS MI FROM Comment';
-        var id;
-        connection.query(sql,function(err,result){
-            if(err){
-                console.log('err')
-                return;
-            }
-            //console.log(result[0].MI);
-            id=result[0].MI+1;
-            console.log(id)
-            sql='INSERT INTO Comment (id,dishId,customerId,content,likeNum) VALUES (?,?,?,?,0)';
-        var addSqlParams=[id,req.params.dishId,req.params.cid,req.params.content];
-		connection.query(sql,addSqlParams,function(err,result){
-            if(err){
-                console.log(err);
-                return;
-            }
-            res.send({ 'cid': id });
-        });
-        });
-        
-        
-	
+router.post('/addC/cid/:cid/dishId/:dishId/content/:content', async (req, res) => {
+        var sql='SELECT MAX(id) AS MI FROM comment';
+        let id=await sqlQuery(sql);
+        console.log(id[0].MI);
+        sql='INSERT INTO comment (id,dishId,customerId,content,likeNum) VALUES (?,?,?,?,0)';
+        var addSqlParams=[id[0].MI+1,req.params.dishId,req.params.cid,req.params.content];
+        sqlQuery(sql,addSqlParams);
+        res.json(id);	
 });
-app.get('/comment/:dishId',(req,res)=>{
+router.get('/comment/:dishId',async (req,res)=>{
     var dish=req.params.dishId;
-    console.log(dish);
-    var sql='SELECT * FROM Comment WHERE dishID='+dish;
-    connection.query(sql,function(err,result){
-        if(err){
-            return;
-        }
-        res.send(result);
-    })
+    var sql='SELECT * FROM comment WHERE dishID='+dish;
+    let d=await sqlQuery(sql);
+    console.log(d);
+    res.json(d);
 });
-app.post('/like/:cid',(req,res)=>{
+router.post('/like/:cid',async (req,res)=>{
     var cid=req.params.cid;
-    var sql='UPDATE Comment SET likeNum=likeNum+1 WHERE id='+cid;
-    connection.query(sql,function(err,result){
-   if(err){
-    return err;
-    }
-    });
-    var sql='SELECT likeNum FROM Comment WHERE id='+cid;
-    connection.query(sql,function(err,result){
-   if(err){
-    return err;
-    }
-    res.send(result);
-    })
+    var sql='UPDATE comment SET likeNum=likeNum+1 WHERE id='+cid;
+    //console.log("like it");
+    sqlQuery(sql);
+    var sql='SELECT likeNum as LN FROM comment WHERE id='+cid;
+    var ln=await sqlQuery(sql);
+    res.json(ln);
 
 });
-app.get('/dish',(req,res)=>{
-    var dish=[1];
-    res.send({'dish':dish});
+router.get('/dish',async (req,res)=>{
+    var dish_list = [{ "name": 'beef', "status": 'open', "price": 31,"id":1 }, { "name": 'carrot', "status": 'close', "price": 23, "id":2 }];
+    res.json(dish_list);
 });
-app.post('/deleteC/:cid',(req,res)=>{
-    var sql="DELETE FROM Comment WHERE id="+req.params.cid;
-    connection.query(sql,function(err,result){
-        if(err){
-            return err;
-        }
-        res.send(result);
-    })
-
+router.post('/deleteC/:cid/:cID',async (req,res)=>{
+    console.log("delete it");
+    var sql="SELECT customerID AS CID FROM comment WHERE id="+req.params.cid;
+    var re=await sqlQuery(sql);
+    console.log(re[0].CID,req.params.cID);
+    if (re[0].CID!=req.params.cID){
+        res.send(false);
+    }else{
+        var sql="DELETE FROM comment WHERE id="+req.params.cid;
+    sqlQuery(sql);
+    res.send(true);
+    }
 });
-var server = app.listen(3000, function () {
+/*var server = app.listen(3000, function () {
  
 	var host = server.address().address
 	var port = server.address().port
    
 	console.log("应用实例，访问地址为 http://%s:%s", host, port)
    
-  })
+  })*/
   module.exports = router
