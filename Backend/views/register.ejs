@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>Bootstrap 101 Template</title>
+
+    <!-- Bootstrap -->
+    <link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 shim 和 Respond.js 是为了让 IE8 支持 HTML5 元素和媒体查询（media queries）功能 -->
+    <!-- 警告：通过 file:// 协议（就是直接将 html 页面拖拽到浏览器中）访问页面时 Respond.js 不起作用 -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        .register-container {
+            width: 80%;
+            border: 1px solid #e9e9e9;
+            margin: 150px auto;
+            padding: 20px 10%;
+            border-radius: 5px;
+            box-shadow: 5px 5px 5px 0 #e9e9e9;
+        }
+
+        .register-btn-container button{
+            width: 100%;
+            background: rgb(0, 220, 0);
+        }
+    </style>
+</head>
+<body>
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <div class="register-container">
+            <form id="register-form" method="POST">
+                <div class="form-group">
+                    <label for="nameInput">username</label>
+                    <input type="text" name="username" class="form-control" id="nameInput" placeholder="姓名">
+                </div>
+                <div class="form-group">
+                    <label for="account">id      </label>
+                    <input type="text" name="id" class="form-control" id="account" placeholder="帐号">
+                </div>
+                <div class="form-group">
+                    <label for="password">password</label>
+                    <input type="password" name="password" class="form-control" id="password" placeholder="密码">
+                </div>
+                <div class="register-btn-container">
+                    <button type="submit" id="register-btn" class="btn btn-default">注册</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+    <div class="col-md-4"></div>
+</div>
+
+<!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+<script src="../node_modules/jquery/dist/jquery.min.js"></script>
+<!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+<script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script>
+    $('#register-btn').click(function (e) {
+      // 阻止表单的默认行为
+      e.preventDefault()
+      // 使用jq获取表单数据
+      const formData = $('#register-form').serialize()
+      // console.log(formData) // user_name=12&user_account=12&user_password=12
+      $.ajax({
+        url:'/register',
+        method:'post',
+        data:formData
+      }).then(res=>{
+        console.log(res)
+        if (res.success){
+          alert('注册成功')
+          location.href = '/login'
+        }else {
+          alert(res.msg)
+        }
+      })
+    })
+</script>
+</body>
+</html>
