@@ -2,16 +2,16 @@
 <HTML>
 
 <head>
-    <title>Login</title>
+    <title>Customer Login</title>
 </head>
 
 <body>
-    <h2>Login Page</h2><br>
+    <h2>Customer login</h2>
     <div class="login_form">
-        <form action="/api/login" method="POST">
+        <form action="/api/login/user" method="POST">
             <div id="form_widget">
                 <br>
-                Id:<input type="text" placeholder="username" id="box_name" name="id" 
+                Your Id:<input type="text" placeholder="id" id="box_name" name="id" 
                     οnfοcus="this.value=''" οnblur="if(this.value=='')this.value='username'" />
                 <br>
                 Password:<input type="password" placeholder="password" id="box_pass" name="password"
