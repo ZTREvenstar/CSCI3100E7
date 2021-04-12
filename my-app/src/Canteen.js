@@ -303,7 +303,7 @@ class Canteen extends React.Component{
 
 
 
-export default class App extends React.Component{
+export default class Canteen_App extends React.Component{
     render(){
       return (
       <div style={{width:'100vw', height:'100vh'}}>
