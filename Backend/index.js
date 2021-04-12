@@ -26,7 +26,7 @@ app.set('view engine', 'ejs');
 // app.use('/api/order_back', require('./routes/api/order_back'))
 
 // orderCanteenUI router, for testing
-app.use('/api/orderback', require('./routes/api/orderback'))
+app.use('/api/order', require('./routes/api/order'))
 
 
 app.use('/api/canteen', require('./routes/api/canteen'))
