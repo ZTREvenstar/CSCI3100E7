@@ -1,7 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
-import Canteen_App from './Canteen.js';
-function App() {
+import Canteen from './Canteen.js';
+import React from "react"
+class App extends React.Component {
+  render(){
   return (
     <div className="App">
       <header className="App-header">
@@ -18,9 +20,10 @@ function App() {
           Learn React
         </a>
       </header>
-      <Canteen_App />
+      <Canteen />
     </div>
   );
+  }
 }
 
 export default App;

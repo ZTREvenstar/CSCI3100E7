@@ -12,14 +12,14 @@ class Navbar extends React.Component{
          
          <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
            <span className="navbar-toggler-icon"></span>
-         </button> <a className="navbar-brand" href="#">Name</a>
+         </button> <a className="navbar-brand btn" onClick={this.props.clickOnProfile}>Profile</a>
          <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
            <ul className="navbar-nav">
              <li className="nav-item active">
-                <a className="nav-link" href="#" onClick={this.props.clickOnMenu}>Menu</a>
+                <a className="nav-link btn"  onClick={this.props.clickOnMenu}>Menu</a>
              </li>
              <li className="nav-item">
-                <a className="nav-link" href="#" onClick={this.props.clickOnOrder}>Order</a>
+                <a className="nav-link btn"  onClick={this.props.clickOnOrder}>Order</a>
              </li>
            </ul>
            <form className="form-inline">
@@ -317,7 +317,7 @@ class Menu extends React.Component{
 
     render(){
 
-        if (this.props.Menu_or_Order==0){
+        if (this.props.PageToShow==0){
             return(
                 <div>
             <button  className="btn btn-primary text-center">transform</button>
@@ -332,7 +332,82 @@ class Menu extends React.Component{
     }
     
 }
-class Canteen extends React.Component{
+
+
+class Profile_Modify extends React.Component{
+
+    constructor(props){
+        
+        super(props);
+
+        this.state={
+          
+            name:this.props.name,
+            id:0,
+            password:null,
+        }
+        
+        }
+
+
+    nameChange=(event)=>{
+        this.setState({name: event.target.value});
+     }
+    idChange=(event)=>{
+        this.setState({id: event.target.value});
+     }
+
+    passwordChange=(event)=>{
+        this.setState({password: event.target.value});
+     }
+
+
+    render(){
+
+        return(
+            <form role="form" onSubmit={this.post_menu}>
+        <div className="form-group">
+           
+           <label htmlFor="exampleInputEmail1">
+             id
+           </label>
+           <input name="id" className="form-control" onChange={this.idChange}/>
+         </div>
+        <div className="form-group">
+           
+          <label htmlFor="exampleInputEmail1">
+            Name
+          </label>
+          <input name="name" className="form-control" onChange={this.nameChange}/>
+        </div>
+
+        <div className="form-group">      
+          <label htmlFor="exampleInputPassword1">
+            Password
+          </label>
+          <input name="status" className="form-control" onChange={this.passwordChange} />
+        </div>
+
+
+
+        <button type="submit" className="btn btn-primary" >
+          Modify
+        </button>
+      </form>
+        )    
+    }
+}
+class Profile extends React.Component{
+
+
+    render(){
+        if (this.props.PageToShow==2)
+        return(<div><p>Somethinghere</p><Profile_Modify /></div>)
+        else
+        return null
+    }
+}
+export default class Canteen extends React.Component{
 
     constructor(props){
         
@@ -343,17 +418,19 @@ class Canteen extends React.Component{
             name:null,
             id:0,
             password:null,
-            Menu_or_Order:0 // 0 means show Menu, 1 means show Order
+            PageToShow:0 // 0 means show Menu, 1 means show Order, 2 means show profile
         }
         
         }
 
-
-    clickOnOrder=()=>{
-        this.setState({Menu_or_Order:1})
-    }
     clickOnMenu=()=>{
-        this.setState({Menu_or_Order:0})
+        this.setState({PageToShow:0})
+    }
+    clickOnOrder=()=>{
+        this.setState({PageToShow:1})
+    }
+    clickOnProfile=()=>{
+        this.setState({PageToShow:2})
     }
 
     render(){
@@ -365,9 +442,10 @@ class Canteen extends React.Component{
       <h3 className="text-info text-center">
         Welcome
       </h3>
-    <Navbar name={this.state.name} id={this.state.id} clickOnMenu={this.clickOnMenu} clickOnOrder={this.clickOnOrder}/>
+    <Navbar name={this.state.name} id={this.state.id} clickOnMenu={this.clickOnMenu} clickOnOrder={this.clickOnOrder}clickOnProfile={this.clickOnProfile}/>
     <Carousel />
-    <Menu Menu_or_Order={this.state.Menu_or_Order} canteenID={this.state.id}/>
+    <Profile PageToShow={this.state.PageToShow} canteenID={this.state.id}/>
+    <Menu PageToShow={this.state.PageToShow} canteenID={this.state.id}/>
     </div>
   </div>
 </div>
@@ -377,14 +455,3 @@ class Canteen extends React.Component{
 }
 
 
-
-export default class Canteen_App extends React.Component{
-    render(){
-      return (
-      <div style={{width:'100vw', height:'100vh'}}>
-        <Canteen />
-      </div>
-    );
-    }
-    
-  }
