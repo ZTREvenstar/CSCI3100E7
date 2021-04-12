@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canteen login</title>
+</head>
+<body>
+    <h2>Canteen login</h2>
+    <form action="/api/login/canteen" method="POST">
+        <div id="form_widget">
+            <br>
+            Your Id:<input type="text" placeholder="id" id="box_name" name="id" 
+                οnfοcus="this.value=''" οnblur="if(this.value=='')this.value='username'" />
+            <br>
+            Password:<input type="password" placeholder="password" id="box_pass" name="password"
+                οnfοcus="this.value=''" οnblur="if(this.value=='')this.value='password'" />
+            <br>
+            <!-- <input type="text" id="vcode" placeholder="Captcha code" value="captcha_code" οnfοcus="this.value=''"
+                οnblur="if(this.value=='')this.value='captcha_code'" /><span id="code" title="Change a new Captcha code"></span> -->
+            <!-- <div id="search_pass_link">
+                <a href="#" rel="external nofollow">Forget your password?</a>
+            </div> -->
+            <input type="submit" value="Login" class="btn" οnmοuseοver="this.style.backgroundColor='#FF8D00'"
+                οnmοuseοut="this.style.backgroundColor='#FC5628'">
+            <br>
+        </div>
+    </form>
+</body>
+</html>

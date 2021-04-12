@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ordering Canteen side UI</title>
+</head>
+<body style="width: 70%; margin: auto">
+
+
+<h1 style="text-align:center;">Order Canteen Interface</h1>
+
+<h3>Newly Come Orders:</h3>
+<div>choose an order to confirm</div>
+<div class = "container">
+    <div class = "menu">
+        <ul class="list-unstyled" >
+            <% for(let i = 0; i < unconfirmed.length; i++){%>
+                <li>
+                    <%- unconfirmed[i] %>
+                    <button class= "btn-default center-block">confirm</button>
+                </li>
+            <%}%>
+        </ul>
+    </div>
+</div>
+<hr>
+
+<h3>Waiting Orders: Waiting</h3>
+<div>choose an order to finish</div>
+<div class = "container">
+    <div class = "menu">
+        <ul class="list-unstyled" >
+            <% for(let i = 0; i < unfinished.length; i++){%>
+                <li>
+                    <%- unfinished[i] %>
+                    <button class= "btn-default center-block">confirm</button>
+                </li>
+            <%}%>
+        </ul>
+    </div>
+</div>
+<hr>
+
+<h3>Finished Orders:</h3>
+<div>Once finished, send remind automatically，then can send remind manually</div>
+<div class = "container">
+    <div class = "menu">
+        <ul class="list-unstyled" >
+            <% for(let i = 0; i < unfinished.length; i++){%>
+                <li>
+                    <%- unfinished[i] %>
+                    <button class= "btn-default center-block">confirm</button>
+                </li>
+            <%}%>
+        </ul>
+    </div>
+</div>
+<hr>
+
+<div>Display coming orders</div>
+<div>Update order information</div>
+<div>Send reminding message</div>
+</div>
+
+</div>
+
+</body>
+</html>
+
