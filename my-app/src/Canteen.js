@@ -16,10 +16,10 @@ class Navbar extends React.Component{
          <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
            <ul className="navbar-nav">
              <li className="nav-item active">
-                <a className="nav-link" href="#">Menu <span className="sr-only">(current)</span></a>
+                <a className="nav-link" href="#" onClick={this.props.clickOnMenu}>Menu</a>
              </li>
              <li className="nav-item">
-                <a className="nav-link" href="#">Order</a>
+                <a className="nav-link" href="#" onClick={this.props.clickOnOrder}>Order</a>
              </li>
            </ul>
            <form className="form-inline">
@@ -64,7 +64,7 @@ class Carousel extends React.Component{
             <img className="d-block w-100" alt="Carousel Bootstrap First" src="https://www.layoutit.com/img/sports-q-c-1600-500-1.jpg" />
             <div className="carousel-caption">
               <h4>
-                First Thumbnail label
+                Canteen Photo
               </h4>
               <p>
                 Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
@@ -101,19 +101,21 @@ class Carousel extends React.Component{
 
 class Nested extends React.Component{
 
+
+
     render(){
         return (
             <div className="media bg-warning rounded">
             <img className="mr-3 rounded-circle" alt="Bootstrap Media Preview" src="https://www.layoutit.com/img/sports-q-c-64-64-8.jpg" />
             <div className="media-body">
               <h5 className="mt-0">
-                Nested media heading
+                dish 1 
               </h5> Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.
               <div className="media mt-3">
                  <a className="pr-3" href="#"><img className="rounded-circle" alt="Bootstrap Media Another Preview" src="https://www.layoutit.com/img/sports-q-c-64-64-2.jpg" /></a>
                 <div className="media-body">
                   <h5 className="mt-0">
-                    Nested media heading
+                    comment
                   </h5> Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.
                 </div>
               </div>
@@ -123,7 +125,25 @@ class Nested extends React.Component{
     }
 }
 
+class TableRow extends React.Component{
+    render(){
+
+        return (
+            <tr>   
+            <td scope="row"> </td>
+            <td>{this.props.data.id}</td>
+            <td>{this.props.data.name}</td>
+            <td>{this.props.data.status}</td>   
+            <td>{this.props.data.price}</td>  
+            <td>{this.props.data.canteenID}</td>  
+           </tr>
+        )
+    }
+}
+
 class Table extends React.Component{
+
+
 
     render(){
         return(
@@ -151,20 +171,8 @@ class Table extends React.Component{
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>
-                  1
-                </td>
-                <td>
-                  TB - Monthly
-                </td>
-                <td>
-                  01/04/2012
-                </td>
-                <td>
-                  Default
-                </td>
-              </tr>
+        { this.props.Menu_data.map(data => 
+            <TableRow data={data}/> )}
             </tbody>
           </table>
         )
@@ -173,41 +181,105 @@ class Table extends React.Component{
 
 class Form extends React.Component{
 
+constructor(props){
+    super(props)
+    this.state={
+        id:null, name:null,status:null,price:null ,img:null
+    }
+}
+     post_menu=()=>{
+        alert(this.props.canteenID);
+        $.ajax({
+    
+            url :URL+'/api/canteen/dish',
+            type:'POST',
+            datatype :'JSON',
+            data: {
+                'id':this.state.id, 
+                'name':this.state.name, 
+                'status':this.state.status, 
+                'price':this.state.price, 
+                'img':this.state.img, 
+                'canteenID':this.props.canteenID, 
+                'commentID':0
+            
+        },
+            success: function(data){
+                console.log("add menu");
+            },
+            error: function(err){
+                console.log("err");
+            }
+        })
+     }
+
+     nameChange=(event)=>{
+        this.setState({name: event.target.value});
+     }
+     idChange=(event)=>{
+        this.setState({id: event.target.value});
+     }
+
+     statusChange=(event)=>{
+        this.setState({status: event.target.value});
+     }
+     priceChange=(event)=>{
+        this.setState({price: event.target.value});
+     }
+     imgChange=(event)=>{
+        this.setState({img: event.target.value});
+     }
     render(){
+
         return(
-            <form role="form">
+            <form role="form" onSubmit={this.post_menu}>
         <div className="form-group">
            
-          <label for="exampleInputEmail1">
-            Email address
-          </label>
-          <input type="email" className="form-control" id="exampleInputEmail1" />
-        </div>
+           <label htmlFor="exampleInputEmail1">
+             id
+           </label>
+           <input name="id" className="form-control" onChange={this.idChange}/>
+         </div>
         <div className="form-group">
            
-          <label for="exampleInputPassword1">
-            Password
+          <label htmlFor="exampleInputEmail1">
+            Name
           </label>
-          <input type="password" className="form-control" id="exampleInputPassword1" />
+          <input name="name" className="form-control" onChange={this.nameChange}/>
         </div>
+
+        <div className="form-group">      
+          <label htmlFor="exampleInputPassword1">
+            Status
+          </label>
+          <input name="status" className="form-control" onChange={this.statusChange} />
+        </div>
+
         <div className="form-group">
            
-          <label for="exampleInputFile">
-            File input
+           <label htmlFor="exampleInputEmail1">
+             Price
+           </label>
+           <input name="price" className="form-control"onChange={this.priceChange} />
+         </div>
+
+        <div className="form-group">
+           
+          <label htmlFor="exampleInputFile">
+            Image
           </label>
-          <input type="file" className="form-control-file" id="exampleInputFile" />
-          <p className="help-block">
-            Example block-level help text here.
-          </p>
+          <input type="file" className="form-control-file" onChange={this.imgChange}/>
         </div>
+
         <div className="checkbox">
            
           <label>
             <input type="checkbox" /> Check me out
           </label>
         </div> 
-        <button type="submit" className="btn btn-primary">
-          Submit
+
+        <button type="submit" className="btn btn-primary" >
+          Add new dish
         </button>
       </form>
         )
@@ -218,22 +290,24 @@ class Menu extends React.Component{
     constructor(props) {
         super(props);
         this.state={
-            Menu_data:null
+            Menu_data:[]
         }
       }
     componentDidMount(){
+        //console.log("Menu canteenID is"+this.props.canteenID)
         $.ajax({
             url: URL+'/api/canteen/dish',
             type:'GET',
             dataType:'json',
             //async:false,
-            success: function(data,status){
+            success: (data,status)=>{
                 console.log("succeed");
                 console.log(data);
                 this.setState({Menu_data:data})
+
                 //add_menu_list($("#menu"), data);
             },
-            error:function(data,status){
+            error:(data,status)=>{
                 console.log("error");
                 console.log(data);
             }
@@ -242,13 +316,14 @@ class Menu extends React.Component{
     }
 
     render(){
+
         if (this.props.Menu_or_Order==0){
             return(
                 <div>
             <button  className="btn btn-primary text-center">transform</button>
             <Nested Menu_data={this.state.Menu_data}/>
             <Table Menu_data={this.state.Menu_data}/>
-            <Form Menu_data={this.state.Menu_data}/>
+            <Form canteenID={this.props.canteenID} Menu_data={this.state.Menu_data}/>
                 </div>
         )
         }
@@ -266,7 +341,7 @@ class Canteen extends React.Component{
         this.state={
           
             name:null,
-            id:null,
+            id:0,
             password:null,
             Menu_or_Order:0 // 0 means show Menu, 1 means show Order
         }
@@ -292,7 +367,7 @@ class Canteen extends React.Component{
       </h3>
     <Navbar name={this.state.name} id={this.state.id} clickOnMenu={this.clickOnMenu} clickOnOrder={this.clickOnOrder}/>
     <Carousel />
-    <Menu Menu_or_Order={this.state.Menu_or_Order}/>
+    <Menu Menu_or_Order={this.state.Menu_or_Order} canteenID={this.state.id}/>
     </div>
   </div>
 </div>
