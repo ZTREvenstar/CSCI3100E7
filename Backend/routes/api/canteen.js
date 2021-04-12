@@ -1,31 +1,54 @@
 const express = require('express')
 //var bodyParser = require('body-parser')
 const sqlQuery = require('../../db')
-const multer = require('multer') // v1.0.5
+const multer = require('multer') 
 const upload = multer() 
-
+var path = require("path"), fs = require("fs");
 
 const router = express.Router()
 router.use(express.json())
-router.use('/',express.static('../../../client/Canteen Interface'))
+//router.use('/',express.static('../../../client/Canteen Interface'))
+
 
 router.all('/*', (req, res, next) => {
 	/* set response header */
 	res.setHeader("Access-Control-Allow-Origin", "*");
 	res.setHeader("Access-Control-Allow-Methods", "GET, PUT, DELETE, POST");
 	res.setHeader("Access-Control-Allow-Headers", "*");
-	res.setHeader('Content-Type', 'application/json');
+	//res.setHeader('Content-Type', 'application/json');
 	next();
 })
 
 
-router.get('/', (req, res)=> {
 
-	console.log("get dish");
+router.get('/', (req, res)=> {
+	console.log(req.query.id);
+    //fs.readFile(path.join(__dirname, '..', '..', 'foo.bar'));
+    console.log(path.join(__dirname, '..', '..', '..','client','Canteen Interface','Canteen_Interface_Main_page.html' ));
+    res.sendFile(path.join(__dirname, '..', '..', '..','client','Canteen Interface','Canteen_Interface_Main_page.html' ),root=path.join(__dirname, '..', '..', '..','client','Canteen Interface'))
+	/*
+    console.log("get dish");
 	var dish_list = [{ "name": '123123123', "status": 'open', "price": 31 }, { "name": 'cB', "status": 'close', "price": 231 }];
     res.json(dish_list);
+    */
 
 })
+
+router.get('/React.js', (req, res)=> {
+	console.log(req.query.id);
+    //fs.readFile(path.join(__dirname, '..', '..', 'foo.bar'));
+    console.log(path.join(__dirname, '..', '..', '..','client','Canteen Interface','React.js' ));
+    res.sendFile(path.join(__dirname, '..', '..', '..','client','Canteen Interface','React.js' ))
+	/*
+    console.log("get dish");
+	var dish_list = [{ "name": '123123123', "status": 'open', "price": 31 }, { "name": 'cB', "status": 'close', "price": 231 }];
+    res.json(dish_list);
+    */
+
+})
+
+
+
 
 //Two way -----either "then()" or "async and await" takes effects
 router.get('/dish', async (req, res)=> {
@@ -41,9 +64,16 @@ router.get('/dish', async (req, res)=> {
 
 })
 
-router.get('/order',async (req, res)=> {
+//order should belong to certain canteen
 
+router.get('/order',async (req, res)=> {
+    var canteenid= req.query['id'];
     var strSql = 'SELECT * FROM orderinf';
+    /*there is canteenid 
+    if (canteenid){
+        strSql= 'SELECT * FROM orderinf WHERE '
+    }
+    */
     //var strSql = 'desc orderinf;';
     let order_list = await sqlQuery(strSql);
 	console.log(order_list);
@@ -55,10 +85,10 @@ router.post('/dish',upload.array(),(req, res)=>{
 
 
     let data = req.body;
-    var strSql = "insert into dish (id,status,price, canteenID, commentID,img) values(?,?,?,?,?,?);"
+    var strSql = "insert into dish (id,name,status,price, canteenID, commentID,img) values(?,?,?,?,?,?,?);"
 
     sqlQuery(strSql, 
-        [data['id'],data['status'],data['price'],data['canteenID'],data['commentID'],data['img']]);
+        [data['id'],data['name'],data['status'],data['price'],data['canteenID'],data['commentID'],data['img']]);
 
     res.status(200).send();
 
@@ -90,9 +120,9 @@ router.put('/dish',upload.array(), (req, res)=> {
 router.put('/order',upload.array(), (req, res)=> {
     let data = req.body;
     console.log(data);
-    var strSql = "update orderinf set customerID=?, dishID=?, time=?, status=?, charge=? WHERE id=?;"
+    var strSql = "update orderinf set name=?, customerID=?, dishID=?, time=?, status=?, charge=? WHERE id=?;"
     sqlQuery(strSql, 
-        [data['customerID'],data['dishID'],data['time'],data['status'],data['charge'],data['id']]);
+        [data['name'],data['customerID'],data['dishID'],data['time'],data['status'],data['charge'],data['id']]);
 
 	res.status(200).send();
 

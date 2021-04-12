@@ -67,8 +67,6 @@ function Gettime()
     return (year + "/" + mon + "/" + date + " " + h + ":" + m + ":" + s);
 
 }
-
- //$(document).ready(writeFile);
  
 
  // add menu without image information 
@@ -80,13 +78,29 @@ function Gettime()
 		datatype :'JSON',
 		data: $(form).serializeArray(),
 		success: function(data){
-			console.log("mes");
+			console.log("add menu");
 		},
 		error: function(err){
 			console.log("err");
 		}
 	})
  }
+ function put_menu(form){
+	$.ajax({
+
+		url :'http://localhost:5000/api/canteen/dish',
+		type:'PUT',
+		datatype :'JSON',
+		data: $(form).serializeArray(),
+		success: function(data){
+			console.log("update menu");
+		},
+		error: function(err){
+			console.log("err");
+		}
+	})
+ }
+
  function put_order(form){
 	$.ajax({
 
@@ -95,7 +109,7 @@ function Gettime()
 		datatype :'JSON',
 		data: $(form).serializeArray(),
 		success: function(data){
-			console.log("mes");
+			console.log("update order");
 		},
 		error: function(err){
 			console.log("err");
