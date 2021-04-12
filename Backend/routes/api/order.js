@@ -20,6 +20,41 @@ router.get('/customer', (req,res)=>{
     res.render('orderCustomerUI');
 })
 
+router.get('/makeorder/cid:cid/did:did', async (req, res)=>{
+
+    let sql = 'SELECT MAX(orderID) FROM orderinfo';
+    let result = await sqlQuery(sql);
+    console.log(result[0]['MAX(orderID)']);
+    let neworderID = result[0]['MAX(orderID)'] + 1;
+
+    let cid = req.params.cid;
+    let did = req.params.did;
+    let myDate = new Date();
+    let nowDateTime = String(myDate.getFullYear()) + '-'
+                    + String(myDate.getMonth()) + '-'
+                    + String(myDate.getDay()) + ' '
+                    + String(myDate.getHours()) + ':'
+                    + String(myDate.getMinutes()) + ':'
+                    + String(myDate.getSeconds());
+
+    console.log(nowDateTime);
+
+    let orderstatus = 0; // newly come, has not been confirmed yet
+    let charge = 2.5;
+
+    sql = 'INSERT INTO orderinfo VALUES (?, ?, ?, ?, ?)';
+    let addSqlParams = [neworderID, cid, nowDateTime, orderstatus, charge];
+    await sqlQuery(sql, addSqlParams);
+
+    sql = 'SELECT * FROM orderinfo';
+    result = await sqlQuery(sql);
+    for(let i = 0; i < result.length; i++)
+    {
+        console.log(result);
+    }
+    res.send("hahahahahaha")
+})
+
 
 
 module.exports = router
