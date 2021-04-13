@@ -6,11 +6,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ordering Canteen side UI</title>
 
-<!--    <script src="https://code.jquery.com/jquery-3.4.1.min.js"-->
-<!--            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="-->
-<!--            crossorigin="anonymous"></script>-->
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
 <!--    <script language="JavaScript" src="../.js"></script>-->
+    <script>
+        $(document).ready(function() {
+            $(".btn").on("click", function() {
+                let orderID = $(this).attr("id").substring(3);
+                $.ajax({
+                    type: "POST",
+                    url: "/api/order/updateorder",
+                    // operation = 1 for update, = 2 for delete
+                    data: {
+                        "orderID" : orderID,
+                        "operation" : 1
+                    },
+                    dataType: "json",
+                    complete: function(){
+                        $(this).off('click');
+                        alert("completed!");
+                        window.location.reload(true);
+                    }
+                });
+            });
+        });
+
+        $(document).ready(function() {
+            $(".btn_discard").on("click", function() {
+                let orderID = $(this).attr("id").substring(3);
+                $.ajax({
+                    type: "POST",
+                    url: "/api/order/updateorder",
+                    data: {
+                        "orderID": orderID,
+                        "operation": 2
+                    },
+                    dataType: "json",
+                    complete: function(){
+                        $(this).off('click');
+                        alert("completed!");
+                        window.location.reload(true);
+                    }
+                });
+            });
+        });
+    </script>
 </head>
+
+
 <body style="width: 70%; margin: auto">
 
 
@@ -18,55 +60,47 @@
 
 <h3>Newly Come Orders:</h3>
 <div>choose an order to confirm</div>
-<div class = "container">
-    <div class = "menu">
+<div id = "container1">
         <ul class="list-unstyled" >
             <% for(let i = 0; i < unconfirmed.length; i++){%>
-                <li>
-                    <%- unconfirmed[i] %>
-                    <button class= "btn-default center-block">confirm</button>
+                <li class = "order" id = "order<%- unconfirmed[i] %>">
+                    <%= unconfirmed[i] %>
+                    <button class = "btn" id = "btn<%- unconfirmed[i] %>">confirm</button>
                 </li>
             <%}%>
         </ul>
-    </div>
 </div>
 <hr>
 
 <h3>Waiting Orders: Waiting</h3>
 <div>choose an order to finish</div>
-<div class = "container">
-    <div class = "menu">
+<div id = "container2">
         <ul class="list-unstyled" >
             <% for(let i = 0; i < unfinished.length; i++){%>
-                <li>
-                    <%- unfinished[i] %>
-                    <button class= "btn-default center-block">confirm</button>
+                <li class = "order" id = "order<%- unfinished[i] %>">
+                    <%= unfinished[i] %>
+                    <button class = "btn" id = "btn<%- unfinished[i] %>">finish</button>
                 </li>
             <%}%>
         </ul>
-    </div>
 </div>
 <hr>
 
 <h3>Finished Orders:</h3>
 <div>Once finished, send remind automatically，then can send remind manually</div>
-<div class = "container">
-    <div class = "menu">
+<div id = "container3">
         <ul class="list-unstyled" >
-            <% for(let i = 0; i < unfinished.length; i++){%>
-                <li>
-                    <%- unfinished[i] %>
-                    <button class= "btn-default center-block">confirm</button>
+            <% for(let i = 0; i < finished.length; i++){%>
+                <li class = "order" id = "order<%- finished[i] %>">
+                    <%= finished[i] %>
+                    <button class = "btn_remind" id = "btn<%- finished[i] %>">send a remind</button>
+                    <button class = "btn_discard" id = "btn<%- finished[i] %>">discard</button>
                 </li>
             <%}%>
         </ul>
-    </div>
 </div>
 <hr>
 
-<div>Display coming orders</div>
-<div>Update order information</div>
-<div>Send reminding message</div>
 </div>
 
 </div>

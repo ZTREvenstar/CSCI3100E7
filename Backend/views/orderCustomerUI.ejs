@@ -5,6 +5,26 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ordering Customer side UI</title>
+
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script>
+        function submitData()
+        {
+            $.ajax({
+                type: 'GET',
+                url: '/api/order/makeorder',
+                data: $('#form1').serialize(),
+                error: function(request) {
+                    alert("error"+request.error);
+                },
+                success: function() {
+                    alert("Submit Success!");
+                    $(".input").val('');
+                },
+            });
+            return false;
+        }
+    </script>
 </head>
 
 
@@ -13,22 +33,57 @@
 <h1 style="text-align:center;">Order Customer Interface</h1>
 
 <div class = "container">
-    <form>
-
+    <form id = "form1" action = "/api/order/makeorder" method = 'get' onsubmit = 'return submitData();'>
+        <div>Input customer id for makeorder testing
+            <input class = 'input' type = 'text' name = 'cid'>
+        </div>
+        <div>Input dish id for makeorder testing
+            <input class = 'input' type = 'text' name = 'did'>
+        </div>
+        <div><input type = 'submit' value = 'submit'></div>
     </form>
 </div>
 
 
 <h3>My order status:</h3>
+
 <div class = "container">
     <div class = "menu">
+        <div>waiting to be confirmed:</div>
         <ul class="list-unstyled" >
-            <li>502<div>waiting to be confirmed</div></li>
-            <p></p>
-            <li>10<div>preparing</div></li>
-            <p></p>
-            <li>25<div>FINISHED: please take the meal</div></li>
-            <p></p>
+            <% for(let i = 0; i < myUnconfirmed.length; i++){%>
+                <li>
+                    <%= myUnconfirmed[i] %>
+                </li>
+            <%}%>
+        </ul>
+    </div>
+</div>
+<hr>
+
+<div class = "container">
+    <div class = "menu">
+        <div>preparing:</div>
+        <ul class="list-unstyled" >
+            <% for(let i = 0; i < myUnfinished.length; i++){%>
+                <li>
+                    <%= myUnfinished[i] %>
+                </li>
+            <%}%>
+        </ul>
+    </div>
+</div>
+<hr>
+
+<div class = "container">
+    <div class = "menu">
+        <div>Finished, please take the meal:</div>
+        <ul class="list-unstyled" >
+            <% for(let i = 0; i < myFinished.length; i++){%>
+                <li>
+                    <%= myFinished[i] %>
+                </li>
+            <%}%>
         </ul>
     </div>
 </div>
