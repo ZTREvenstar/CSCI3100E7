@@ -22,10 +22,10 @@ router.post('/user', async (req, res) => {
     console.log(strSql)
     let result = await sqlQuery(strSql)
     if (result.length == 0) {
-        res.status(200).send('fail')
+        res.status(200).json('fail')
     }
     else {
-        res.status(200).send('success')
+        res.status(200).json('success')
     }
     //res.send("post method")
 })
@@ -52,5 +52,7 @@ router.post('/canteen', async (req, res) => {
     }
     //res.send("post method")
 })
+
+
 
 module.exports = router

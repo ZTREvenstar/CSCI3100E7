@@ -1,7 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
 import Canteen from './Canteen.js';
-import Login from './login.js'
+import Customerlogin from './login/customerlogin.js'
+import Canteenlogin from './login/canteenlogin.js'
+import Register from './login/register.js'
 import React from "react"
 class App extends React.Component {
 
@@ -38,21 +40,9 @@ canteenlogin=(id_data)=>{
   render(){
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-      <Login customerlogin={this.customerlogin} logout={this.logout} canteenlogin={this.canteenlogin}/>
+      <Customerlogin customerlogin={this.customerlogin} logout={this.logout} canteenlogin={this.canteenlogin}/>
+      <Canteenlogin customerlogin={this.customerlogin} logout={this.logout} canteenlogin={this.canteenlogin}/>
+      <Register/>
       <Canteen id={this.state.id} logout={this.logout} customer_canteen={this.state.customer_canteen}/>
     </div>
   );

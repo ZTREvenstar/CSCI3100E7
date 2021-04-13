@@ -53,11 +53,11 @@ router.get('/React.js', (req, res)=> {
 //Two way -----either "then()" or "async and await" takes effects
 router.get('/dish', async (req, res)=> {
 
-	console.log("get dish");
+	//console.log("get dish");
     var strSql = 'SELECT * FROM dish';
     //strSql = "desc dish;";
     let dish_list = await sqlQuery(strSql);
-	console.log(dish_list);
+	//console.log(dish_list);
 
     res.json(dish_list);
 
@@ -76,7 +76,7 @@ router.get('/order',async (req, res)=> {
     */
     //var strSql = 'desc orderinf;';
     let order_list = await sqlQuery(strSql);
-	console.log(order_list);
+	//console.log(order_list);
     res.json(order_list);
 })
 
