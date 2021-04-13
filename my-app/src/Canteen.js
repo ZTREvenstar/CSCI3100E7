@@ -275,7 +275,7 @@ constructor(props){
                 'price':this.state.price, 
                 'img':this.state.img, 
                 'canteenID':this.props.canteenID, 
-                'commentID':0
+
             
         },
             success: (data)=>{
@@ -327,14 +327,14 @@ constructor(props){
            <label htmlFor="exampleInputEmail1">
              id
            </label>
-           <input name="id" className="form-control "placeholder="Jane Doe" onChange={this.idChange}/>
+           <input name="id" className="form-control "placeholder="0" onChange={this.idChange}/>
          </div>
         <div className="form-group">
            
           <label htmlFor="exampleInputEmail1">
             Name
           </label>
-          <input name="name" className="form-control"   onChange={this.nameChange}/>
+          <input name="name" className="form-control" placeholder="meat"  onChange={this.nameChange}/>
         </div>
 
 
@@ -343,7 +343,7 @@ constructor(props){
            <label htmlFor="exampleInputEmail1">
              Price
            </label>
-           <input name="price" className="form-control"  onChange={this.priceChange} />
+           <input name="price" className="form-control"  placeholder="10"onChange={this.priceChange} />
          </div>
 
         <div className="form-group">
@@ -409,7 +409,7 @@ class Menu extends React.Component{
         this.intervalId = setInterval(() => {
                 this.get_Menu();
         }, 3000);
-
+        
     }
     componentWillUnmount(){
         clearInterval(this.intervalId);
@@ -446,13 +446,17 @@ class Profile_Modify extends React.Component{
             name:this.props.name,
             id:0,
             password:null,
+            form_trigger: 0
         }
         
         }
 
 
-        put_canteen=()=>{
+        put_canteen=(e)=>{
+            e.preventDefault();
             //alert(this.props.canteenID);
+            //console.log(this.state.img)
+            /*
             $.ajax({
         
                 url :URL+'/api/canteen/',
@@ -462,7 +466,6 @@ class Profile_Modify extends React.Component{
                     'id':this.state.id, 
                     'name':this.state.name, 
                     'password':this.state.password
-                
             },
                 success: function(data){
                     console.log("update canteen");
@@ -471,7 +474,30 @@ class Profile_Modify extends React.Component{
                     console.log("err");
                 }
             })
+            console.log(this.state.img)
+            */
+
+            let file = this.state.img;
+            const formdata = new FormData();
+            formdata.append('img', file);
+    
+        const url = URL+'/api/canteen/img?id='+this.state.id;
+        fetch(url, {
+            method: 'POST',
+            body: formdata,
+            headers: {
+                "Content-Type": false
+            }
+        }).then(response => {console.log("success")})
+        .catch(error => console.log(error));
+
+
+
          }
+
+
+
+         
 
     nameChange=(event)=>{
         this.setState({name: event.target.value});
@@ -484,11 +510,23 @@ class Profile_Modify extends React.Component{
         this.setState({password: event.target.value});
      }
 
-
+     imgChange=(event)=>{
+        this.setState({img: event.target.files[0]});
+     }
+     change_form_trigger=()=>{
+        if (this.state.form_trigger==0)
+            this.setState({form_trigger:1})
+        else
+        this.setState({form_trigger:0})
+     }
     render(){
-
+        if (this.state.form_trigger==0)
+        return <button className="btn btn-primary"onClick={this.change_form_trigger}>modify</button>
+        else
         return(
-            <form role="form" onSubmit={this.put_canteen}>
+            <div className="container ">
+            <div className="row justify-content-center ">
+            <form role="form col-md-4 col-sm-4" id="uploadForm" enctype="multipart/form-data" onSubmit={this.put_canteen}>
         <div className="form-group">
            
            <label htmlFor="exampleInputEmail1">
@@ -511,12 +549,19 @@ class Profile_Modify extends React.Component{
           <input name="status" className="form-control" onChange={this.passwordChange} />
         </div>
 
-
-
+        <div className="form-group">
+           <label htmlFor="exampleInputFile">
+             Image
+           </label>
+           <input type="file" name="img"className="form-control-file" onChange={this.imgChange}/>
+         </div>
         <button type="submit" className="btn btn-primary" >
           Modify
         </button>
+        <button className="btn btn-warning"onClick={this.change_form_trigger}>Cancel</button>
       </form>
+      </div>
+      </div>
         )    
     }
 }
@@ -525,7 +570,10 @@ class Profile extends React.Component{
 
     render(){
         if (this.props.PageToShow==2)
-        return(<div><p>Somethinghere</p><Profile_Modify /></div>)
+        return(<div>
+            <p>id: {this.props.canteenID}</p>
+            <Profile_Modify />
+            </div>)
         else
         return null
     }
