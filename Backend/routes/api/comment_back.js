@@ -37,6 +37,7 @@ router.get('/comment/:dishId',async (req,res)=>{
     var dish=req.params.dishId;
     var sql='SELECT * FROM comment WHERE dishID='+dish;
     let d=await sqlQuery(sql);
+    d.sort(function(a,b){return b['likeNum']-a['likeNum'];});
     res.json(d);
 });
 router.post('/like/:cid',async (req,res)=>{
