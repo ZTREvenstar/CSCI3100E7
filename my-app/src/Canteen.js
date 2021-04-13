@@ -31,7 +31,7 @@ class Navbar extends React.Component{
            <ul className="navbar-nav ml-md-auto">
  
              <li className="nav-item dropdown">
-                <a className="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown">Dropdown link</a>
+                <a className="nav-link dropdown-toggle btn" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown">Dropdown link</a>
                <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                   <a className="dropdown-item" href="#">Action</a> <a className="dropdown-item" href="#">Another action</a> <a className="dropdown-item" href="#">Something else here</a>
                  <div className="dropdown-divider">
@@ -82,19 +82,62 @@ class Carousel extends React.Component{
               </p>
             </div>
           </div>
-          <div className="carousel-item">
-            <img className="d-block w-100" alt="Carousel Bootstrap Third" src="https://www.layoutit.com/img/sports-q-c-1600-500-3.jpg" />
-            <div className="carousel-caption">
-              <h4>
-                Third Thumbnail label
-              </h4>
-              <p>
-                Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
-              </p>
-            </div>
-          </div>
         </div> <a className="carousel-control-prev" href="#carousel-733750" data-slide="prev"><span className="carousel-control-prev-icon"></span> <span className="sr-only">Previous</span></a> <a className="carousel-control-next" href="#carousel-733750" data-slide="next"><span className="carousel-control-next-icon"></span> <span className="sr-only">Next</span></a>
       </div>
+        )
+    }
+}
+
+class Thread_comment extends React.Component{
+    render(){
+
+        return (
+            <div className="media mt-3">
+            <a className="pr-3" href="#"><img className="rounded-circle" alt="Bootstrap Media Another Preview" src="https://www.layoutit.com/img/sports-q-c-64-64-2.jpg" /></a>
+           <div className="media-body">
+             <h5 className="mt-0">
+               comment
+             </h5>content+{this.props.comment.comtent}
+           </div>
+         </div>
+        )
+    }
+}
+
+class Thread extends React.Component{
+
+constructor(pros){
+    super(pros)
+    this.state=({
+        comment:[]
+    })
+}
+    get_comment=()=>{
+
+        $.ajax({
+            type: "GET",
+            url: URL+"api/comment?canteenid="+this.props.data.canteenID,
+            success:(res,status)=>{
+                this.setState({comment:res})
+            },
+            error:(err)=>{
+                console.log(err)
+                alert("fail to get comment")
+            }
+        })
+    }
+    render(){
+        return(
+            <div>
+            <img className="mr-3 rounded-circle" alt="Bootstrap Media Preview" src={URL+"api/canteen/img/?id="+this.props.data.dishID} />
+            <div className="media-body">
+              <h5 className="mt-0">
+                dish 1 
+              </h5> Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.
+              { this.state.comment.map(data => 
+                <Thread comment={data}/> )}
+            </div>    
+            </div>
         )
     }
 }
@@ -104,36 +147,44 @@ class Nested extends React.Component{
 
 
     render(){
+        return null;
+        /*
         return (
             <div className="media bg-warning rounded">
-            <img className="mr-3 rounded-circle" alt="Bootstrap Media Preview" src="https://www.layoutit.com/img/sports-q-c-64-64-8.jpg" />
-            <div className="media-body">
-              <h5 className="mt-0">
-                dish 1 
-              </h5> Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.
-              <div className="media mt-3">
-                 <a className="pr-3" href="#"><img className="rounded-circle" alt="Bootstrap Media Another Preview" src="https://www.layoutit.com/img/sports-q-c-64-64-2.jpg" /></a>
-                <div className="media-body">
-                  <h5 className="mt-0">
-                    comment
-                  </h5> Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.
-                </div>
-              </div>
-            </div>
+            { this.props.Menu_data.map(data => 
+            <Thread data={data}/> )}
           </div>       
-        )
+        )*/
     }
+    
 }
 
 class TableRow extends React.Component{
+    
+    delete_menu=()=>{
+
+        $.ajax({
+    
+            url :URL+'/api/canteen/dish?id='+this.props.data.id,
+            type:'delete',
+            datatype :'JSON',
+            data: {},
+            success: (data)=>{
+                alert("delete successfully");
+            },
+            error: (err)=>{
+                console.log("err");
+            }
+        })
+    }
     render(){
 
         return (
             <tr>   
-            <td scope="row"> </td>
+            <td scope="row"> <a className="btn btn-warning" onClick={this.delete_menu}>delete</a></td>
             <td>{this.props.data.id}</td>
             <td>{this.props.data.name}</td>
-            <td>{this.props.data.status}</td>   
+            <td>{this.props.data.status==1?"Offered":"Not Offered"}</td>   
             <td>{this.props.data.price}</td>  
             <td>{this.props.data.canteenID}</td>  
            </tr>
@@ -184,11 +235,34 @@ class Form extends React.Component{
 constructor(props){
     super(props)
     this.state={
-        id:null, name:null,status:null,price:null ,img:null
+        id:null, name:null,status:0,price:null ,img:null,
+        Start_add:0
     }
 }
-     post_menu=()=>{
-        alert(this.props.canteenID);
+
+    Reset=()=>{
+            this.setState({
+                id:null, name:null,status:0,price:null ,img:null
+            })
+
+        }
+     post_menu=(e)=>{
+        e.preventDefault();
+        if (this.state.id==null){
+            alert("dish id should not be empty")
+            return;
+        }
+        if (this.state.name==null){
+            alert("dish name should not be empty")
+            return;
+        }
+        if (this.state.price==null){
+            alert("dish price should not be empty")
+            return;
+        }
+ 
+        
+
         $.ajax({
     
             url :URL+'/api/canteen/dish',
@@ -204,10 +278,12 @@ constructor(props){
                 'commentID':0
             
         },
-            success: function(data){
-                console.log("add menu");
+            success: (data)=>{
+                alert("add successfully");
+                document.getElementById("create-course-form").reset();
+                //this.Reset();
             },
-            error: function(err){
+            error: (err)=>{
                 console.log("err");
             }
         })
@@ -221,7 +297,10 @@ constructor(props){
      }
 
      statusChange=(event)=>{
-        this.setState({status: event.target.value});
+        if (event.target.value)
+        this.setState({status: 1});
+        else
+        this.setState({status: 0});
      }
      priceChange=(event)=>{
         this.setState({price: event.target.value});
@@ -229,38 +308,42 @@ constructor(props){
      imgChange=(event)=>{
         this.setState({img: event.target.value});
      }
+     set_Start_add=()=>{
+         if (this.state.Start_add==0)
+            this.setState({Start_add: 1});
+        else
+            this.setState({Start_add: 0});
+     }
     render(){
 
-        return(
-            <form role="form" onSubmit={this.post_menu}>
-        <div className="form-group">
+        if (this.state.Start_add==0)
+        return <button  className="btn btn-primary text-center" onClick={this.set_Start_add}>Add a new menu</button>
+        else
+        return(<div className="container ">
+            <div className="row justify-content-center ">
+            <form className="col-md-4 col-xm-4 " role="form" id="create-course-form" onSubmit={this.post_menu}>
+        <div className="form-group ">
            
            <label htmlFor="exampleInputEmail1">
              id
            </label>
-           <input name="id" className="form-control" onChange={this.idChange}/>
+           <input name="id" className="form-control "placeholder="Jane Doe" onChange={this.idChange}/>
          </div>
         <div className="form-group">
            
           <label htmlFor="exampleInputEmail1">
             Name
           </label>
-          <input name="name" className="form-control" onChange={this.nameChange}/>
+          <input name="name" className="form-control"   onChange={this.nameChange}/>
         </div>
 
-        <div className="form-group">      
-          <label htmlFor="exampleInputPassword1">
-            Status
-          </label>
-          <input name="status" className="form-control" onChange={this.statusChange} />
-        </div>
 
         <div className="form-group">
            
            <label htmlFor="exampleInputEmail1">
              Price
            </label>
-           <input name="price" className="form-control"onChange={this.priceChange} />
+           <input name="price" className="form-control"  onChange={this.priceChange} />
          </div>
 
         <div className="form-group">
@@ -274,14 +357,18 @@ constructor(props){
         <div className="checkbox">
            
           <label>
-            <input type="checkbox" /> Check me out
+            <input type="checkbox"   onChange={this.statusChange} /> Status(Availible or not)
           </label>
         </div> 
 
+
         <button type="submit" className="btn btn-primary" >
-          Add new dish
+          Add 
         </button>
+        <button  className="btn btn-warning text-center" onClick={this.set_Start_add}>Cancel</button>
       </form>
+      </div>
+      </div>
         )
     }
 }
@@ -290,11 +377,13 @@ class Menu extends React.Component{
     constructor(props) {
         super(props);
         this.state={
-            Menu_data:[]
+            Menu_data:[],
+
         }
       }
-    componentDidMount(){
-        //console.log("Menu canteenID is"+this.props.canteenID)
+
+
+    get_Menu(){
         $.ajax({
             url: URL+'/api/canteen/dish',
             type:'GET',
@@ -314,6 +403,17 @@ class Menu extends React.Component{
     
         });
     }
+    componentDidMount(){
+        //console.log("Menu canteenID is"+this.props.canteenID)
+
+        this.intervalId = setInterval(() => {
+                this.get_Menu();
+        }, 3000);
+
+    }
+    componentWillUnmount(){
+        clearInterval(this.intervalId);
+    }
 
     render(){
 
@@ -323,6 +423,7 @@ class Menu extends React.Component{
             <button  className="btn btn-primary text-center">transform</button>
             <Nested Menu_data={this.state.Menu_data}/>
             <Table Menu_data={this.state.Menu_data}/>
+           
             <Form canteenID={this.props.canteenID} Menu_data={this.state.Menu_data}/>
                 </div>
         )
@@ -350,6 +451,28 @@ class Profile_Modify extends React.Component{
         }
 
 
+        put_canteen=()=>{
+            //alert(this.props.canteenID);
+            $.ajax({
+        
+                url :URL+'/api/canteen/',
+                type:'PUT',
+                datatype :'JSON',
+                data: {
+                    'id':this.state.id, 
+                    'name':this.state.name, 
+                    'password':this.state.password
+                
+            },
+                success: function(data){
+                    console.log("update canteen");
+                },
+                error: function(err){
+                    console.log("err");
+                }
+            })
+         }
+
     nameChange=(event)=>{
         this.setState({name: event.target.value});
      }
@@ -365,7 +488,7 @@ class Profile_Modify extends React.Component{
     render(){
 
         return(
-            <form role="form" onSubmit={this.post_menu}>
+            <form role="form" onSubmit={this.put_canteen}>
         <div className="form-group">
            
            <label htmlFor="exampleInputEmail1">
@@ -436,10 +559,10 @@ export default class Canteen extends React.Component{
     render(){
         return (
             
-  <div className="container-fluid  bg-light">
+  <div className="container-fluid  bg-light" >
   <div className="row">
     <div className="col-md-12">
-      <h3 className="text-info text-center">
+      <h3 className="text-info text-center" >
         Welcome
       </h3>
     <Navbar name={this.state.name} id={this.state.id} clickOnMenu={this.clickOnMenu} clickOnOrder={this.clickOnOrder}clickOnProfile={this.clickOnProfile}/>
