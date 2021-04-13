@@ -4,14 +4,14 @@ CREATE comment( id INT, dishID INT, customerID INT, content VARCHAR(100) NOT NUL
 
 ////////////////////////////////////////////////
 CREATE TABLE orderinfo
-             (orderID VARCHAR(5), 
+             (orderID INT, 
               customerID INT,
-              time VARCHAR(16),
+              time DATETIME,
               status INT,
-              charge REAL,
-              PRIMARY KEY (orderID),
-              // FOREIGN KEY (customer_id) REFERENCES customer,
+              charge FLOAT,
+              PRIMARY KEY (orderID) 
              ) 
+ // FOREIGN KEY (customer_id) REFERENCES customer,
 
 CREATE TABLE orderlist
              (orderID VARCHAR(5),
