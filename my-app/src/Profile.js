@@ -86,6 +86,9 @@ class Profile extends React.Component{
             default:
                 display = <></>
         }
+        if(this.props.customer_canteen == 1){
+            return(<></>)
+        }
         return(
             <>
             <header className = "container">
