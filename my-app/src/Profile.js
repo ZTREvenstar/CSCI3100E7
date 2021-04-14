@@ -55,9 +55,16 @@ class Profile extends React.Component{
     }
 
     renderPic=()=>{
-        console.log("changing states");
+       // console.log("changing states");
         this.setState({
             updated: this.state.updated+1,
+        })
+    }
+
+    renderUsername=(update)=>{
+        console.log("changing username to" + update);
+        this.setState({
+            username: update,
         })
     }
 
@@ -68,10 +75,10 @@ class Profile extends React.Component{
                 display = <></>
                 break;
             case 1:
-                display = <ChangeInfo id = {this.props.id}/>
+                display = <ChangeInfo id = {this.props.id} handleSuccess = {this.handleClick} handleUsername = {this.renderUsername}/>
                 break;
             case 2:
-                display = <ChangePW id = {this.props.id}/>
+                display = <ChangePW id = {this.props.id} handleSuccess = {this.handleClick} />
                 break;
             case 3:
                 display = <UploadPic id = {this.props.id} handleSuccess = {this.handleClick} handlePicChange = {this.renderPic}/>
@@ -79,14 +86,13 @@ class Profile extends React.Component{
             default:
                 display = <></>
         }
-
         return(
             <>
             <header className = "container">
                 <h1 className = "my-4">Personal Information</h1>
             </header>
             <main className = "container">
-            <div class="row my-2" id = "Profile">
+            <div class="row my-2 d-flex align-items-center" id = "Profile">
                 <div id = "profileInfo" className="col-lg-8 col-md-6">
                     <table className="table">
                         <tbody>
@@ -122,7 +128,7 @@ class Profile extends React.Component{
 class ChangeInfo extends React.Component{
     constructor(props) {
         super(props);
-        this.state = {email: '', username:''};
+        this.state = {username:''};
     
       //  this.handleChange = this.handleChange.bind(this);
       //  this.handleSubmit = this.handleSubmit.bind(this);
@@ -130,21 +136,24 @@ class ChangeInfo extends React.Component{
     handleSubmit=(event)=>{
         event.preventDefault();
 
-        alert('trying to submit a form');
+        //alert('trying to submit a form');
+        let newusername = this.state.username
         this.serverRequest = $.ajax({
             url: 'http://localhost:5000/api/profile/updateInfo',
             type:'POST',
             data: JSON.stringify({
-                'email':this.state.email,
                 'username':this.state.username,
                 'id':this.props.id,
             }),
             contentType: "application/json",
-            dataType:'JSON',
             async:true,
-            success: function(data,status){
+            success: (data)=>{
                 console.log("succeed");
                 console.log(data);
+                if(data == 'success'){
+                    this.props.handleUsername(newusername)
+                }
+                this.props.handleSuccess(1);
             },
             error:function(data,status){
                 console.log("error");
@@ -160,24 +169,14 @@ class ChangeInfo extends React.Component{
         })
     }
 
-    emailChange=(event)=>{
-        this.setState({
-            email: event.target.value
-        })
-    }
 
     render(){
         return(
             <div>
                 <form id = "changeInfo" method = "post" onSubmit = {this.handleSubmit}>
-                        <div className="form-group">
+                    <div className="form-group">
                         <label htmlFor="InputProfileName">Profile Name</label>
-                        <input type="text" className="form-control" id = "username" name="username" placeholder="Enter New User Name" onChange = {this.usernameChange}></input>email
-                    </div>
-                    <div className="form-group">                            
-                        <label htmlFor="InputEmailAddress">Email address</label>
-                        <input type="email" className="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="Enter email" onChange = {this.emailChange}></input>
-                        <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
+                        <input type="text" className="form-control"  name="username" placeholder="Enter New User Name" onChange = {this.usernameChange}></input>email
                     </div>
                     <button type="submit" className="btn btn-primary">Submit</button>
                 </form>
@@ -187,17 +186,67 @@ class ChangeInfo extends React.Component{
 }
 
 class ChangePW extends React.Component{
+
+    constructor(props) {
+        super(props);
+        this.state = {pw: '', confirm:''};
+    
+      //  this.handleChange = this.handleChange.bind(this);
+      //  this.handleSubmit = this.handleSubmit.bind(this);
+    }
+    handleSubmit=(event)=>{
+        event.preventDefault();
+        if(this.state.pw!=this.state.confirm){
+            window.alert("pleas enter the same password twice")
+            return;
+        }
+        //alert('trying to submit a form');
+        this.serverRequest = $.ajax({
+            url: 'http://localhost:5000/api/profile/updatePW',
+            type:'POST',
+            data: JSON.stringify({
+                'pw':this.state.pw,
+                'id':this.props.id,
+            }),
+            contentType: "application/json",
+            async:true,
+            success: (data)=>{
+                console.log("succeed");
+                console.log(data);
+                this.props.handleSuccess(2);
+            },
+            error:function(data){
+                console.log("error");
+                this.props.handleSuccess(2);
+            }
+        });
+        
+    }
+
+    pwChange=(event)=>{
+        this.setState({
+            pw: event.target.value
+        })
+    }
+
+    confirmChange=(event)=>{
+        this.setState({
+            confirm: event.target.value
+        })
+    }
+    
+
     render(){
         return(
                 <div>
-                    <form id = "changePassword">
+                    <form id = "changePassword" method = "post" onSubmit = {this.handleSubmit}>
                         <div className="form-group">
-                            <label htmlFor="InputPassword">Password</label>
-                            <input type="password" className="form-control" id="inputPassword" placeholder="Enter New Password"></input>
+                            <label htmlFor="InputPassword">Enter Password</label>
+                            <input type="password" className="form-control" id="inputPassword" placeholder="Enter New Password" onChange = {this.pwChange}></input>
                         </div>
                         <div className="form-group">
-                            <label htmlFor="ConfirmPassword">Password</label>
-                            <input type="password" className="form-control" id="confirmPassword" placeholder="Repeat New Password"></input>
+                            <label htmlFor="ConfirmPassword">Confirm Password</label>
+                            <input type="password" className="form-control" id="confirmPassword" placeholder="Repeat New Password" onChange = {this.confirmChange}></input>
                         </div>
                         <button type="submit" className="btn btn-primary">Submit</button>
                     </form>
