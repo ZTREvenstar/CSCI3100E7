@@ -10,27 +10,32 @@ const sqlQuery = require('../../db')
 
 router.get('/canteen',async (req,res)=>{
 
+    let cid = req.query.canteenID;
+
     let dataSend = [];
 
     // unconfirmed
     let sql = 'SELECT O.orderID AS orderID, O.status AS status, D.name AS dishName ' +
               'FROM orderinfo O, dish D ' +
-              'WHERE O.status = 0 AND D.id = O.dishID';
-    let result = await sqlQuery(sql);
+              'WHERE O.status = 0 AND D.id = O.dishID AND D.id = ?';
+    let addSqlParams = [cid];
+    let result = await sqlQuery(sql, addSqlParams);
     dataSend.push(result);
 
     // unfinished
     sql = 'SELECT O.orderID AS orderID, O.status AS status, D.name AS dishName ' +
-          'FROM orderinfo O, dish D ' +
-          'WHERE O.status = 1 AND D.id = O.dishID';
-    result = await sqlQuery(sql);
+        'FROM orderinfo O, dish D ' +
+        'WHERE O.status = 1 AND D.id = O.dishID AND D.id = ?';
+    addSqlParams = [cid];
+    result = await sqlQuery(sql, addSqlParams);
     dataSend.push(result);
 
     // finished
     sql = 'SELECT O.orderID AS orderID, O.status AS status, D.name AS dishName ' +
           'FROM orderinfo O, dish D ' +
-          'WHERE O.status = 2 AND D.id = O.dishID';
-    result = await sqlQuery(sql);
+          'WHERE O.status = 2 AND D.id = O.dishID AND D.id = ?';
+    addSqlParams = [cid];
+    result = await sqlQuery(sql, addSqlParams);
     dataSend.push(result);
 
     res.json(dataSend);
@@ -38,34 +43,37 @@ router.get('/canteen',async (req,res)=>{
 
 router.get('/customer', async (req,res)=>{
 
-    let cid = 1155124498;
+    let cid = req.query.customerID;
 
     let dataSend = [];
 
     // unconfirmed
-    let sql = 'SELECT O.orderID AS orderID, O.status AS status, D.name AS dishName ' +
-              'FROM orderinfo O, dish D ' +
-              'WHERE O.status = 0 AND O.customerID = ? AND D.id = O.dishID';
+    let sql = 'SELECT O.orderID AS orderID, O.status AS status, D.name AS dishName, D.price AS price, C.name AS canteenName FROM orderinfo O, dish D, canteen C WHERE O.status = 0 AND O.customerID = ? AND D.id = O.dishID AND D.canteenID = C.id';
     let addSqlParams = [cid];
     let result = await sqlQuery(sql, addSqlParams);
     dataSend.push(result);
 
     // unfinished
-    sql = 'SELECT O.orderID AS orderID, O.status AS status, D.name AS dishName ' +
-          'FROM orderinfo O, dish D ' +
-          'WHERE O.status = 1 AND O.customerID = ? AND D.id = O.dishID';
+    sql = 'SELECT O.orderID AS orderID, O.status AS status, D.name AS dishName, D.price AS price, C.name as canteenName ' +
+          'FROM orderinfo O, dish D, canteen C ' +
+          'WHERE O.status = 1 AND O.customerID = ? ' +
+                'AND D.id = O.dishID ' +
+                'AND D.canteenID = C.id';
     addSqlParams = [cid];
     result = await sqlQuery(sql, addSqlParams);
     dataSend.push(result);
-
 
     // finished
-    sql = 'SELECT O.orderID AS orderID, O.status AS status, D.name AS dishName ' +
-          'FROM orderinfo O, dish D ' +
-          'WHERE O.status = 2 AND O.customerID = ? AND D.id = O.dishID';
+    sql = 'SELECT O.orderID AS orderID, O.status AS status, D.name AS dishName, D.price AS price, C.name as canteenName ' +
+          'FROM orderinfo O, dish D, canteen C ' +
+          'WHERE O.status = 2 AND O.customerID = ? ' +
+            'AND D.id = O.dishID ' +
+            'AND D.canteenID = C.id';
     addSqlParams = [cid];
     result = await sqlQuery(sql, addSqlParams);
     dataSend.push(result);
+
+    console.log(dataSend);
 
     res.json(dataSend);
 })
@@ -139,45 +147,6 @@ router.post('/updateorder',  async (req, res)=>{
 
     res.send("Completed!");
 })
-
-
-
-// for insert data to mysql in the testing stage
-router.get('/sql', async (req, res) =>{
-
-    let sql = 'SELECT MAX(orderID) FROM orderinfo';
-    let result = await sqlQuery(sql);
-    console.log(result[0]['MAX(orderID)']);
-    let neworderID = result[0]['MAX(orderID)'] + 1;
-
-    let cid = req.query.cid;
-    let did = req.query.did;
-    let myDate = new Date();
-    let nowDateTime = String(myDate.getFullYear()) + '-'
-        + String(myDate.getMonth()) + '-'
-        + String(myDate.getDay()) + ' '
-        + String(myDate.getHours()) + ':'
-        + String(myDate.getMinutes()) + ':'
-        + String(myDate.getSeconds());
-
-    console.log(nowDateTime);
-    //console.log(cid);
-    //console.log(did);
-
-    let orderstatus = 2; // newly come, has not been confirmed yet
-    let charge = 5;
-
-    sql = 'INSERT INTO orderinfo VALUES (?, ?, ?, ?, ?)';
-    let addSqlParams = [neworderID, cid, nowDateTime, orderstatus, charge];
-    await sqlQuery(sql, addSqlParams);
-
-    // let sql = 'INSERT INTO orderinfo VALUES';
-    // let addSqlParams = [neworderID, cid, nowDateTime, orderstatus, charge];
-    // await sqlQuery(sql, addSqlParams);
-    console.log("reach here")
-    res.send('aaaaaaaaaaaaaaaa')
-})
-
 
 
 module.exports = router

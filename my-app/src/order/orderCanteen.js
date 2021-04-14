@@ -14,7 +14,7 @@ class OrderCanteen extends React.Component {
 
     getData(){
         $.ajax({
-            url: URL + '/api/order/canteen?canteenID='+this.props.id,
+            url: URL + '/api/order/canteen?canteenID='+ this.props.id,
             type:'GET',
             dataType:'json',
             success: (data)=> {

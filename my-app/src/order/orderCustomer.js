@@ -14,17 +14,17 @@ class OrderCustomer extends React.Component {
 
     getData(){
         $.ajax({
-            url: URL + '/api/order/customer',
+            url: URL + '/api/order/customer?customerID=' + this.props.id,
             type:'GET',
             dataType:'json',
             success: (data)=> {
-                console.log("Success!");
-                //console.log(data);
+                console.log("!!!!!Success!");
+                console.log(data);
                 this.setState({myData:data});
             },
             error: (err)=>{
                 console.log("error");
-                //console.log(err);
+                console.log(err);
             }
         })
     }
@@ -90,7 +90,10 @@ class OrderList extends React.Component {
                         this.props.orderlist.map((item)=>{
                             return(
                                 <li className="order" id = {"order"+ item["orderID"]}>
-                                    <div>OrderID:{item["orderID"]}   Dish Name:{item["dishName"]}</div>
+                                    <div>OrderID: {item["orderID"]}</div>
+                                    <div>Dish Name: {item["dishName"]}</div>
+                                    <div>Canteen Name: {item["canteenName"]}</div>
+                                    <div>Price: ${item["price"]}</div>
                                 </li>
                             )
                         })
