@@ -69,6 +69,7 @@ class Profile_Modify extends React.Component{
                 success: (data)=>{
                     window.alert("succeeded, now updating parent component");
                     console.log(data);
+                    this.props.set_random();
                 },
                 error:function(data){
                     console.log("error");
@@ -151,7 +152,7 @@ export default class Profile extends React.Component{
         if (this.props.PageToShow==2)
         return(<div>
             <p>id: {this.props.canteenID}</p>
-            <Profile_Modify canteenID={this.props.canteenID}/>
+            <Profile_Modify set_random={this.props.set_random}canteenID={this.props.canteenID}/>
             </div>)
         else
         return null

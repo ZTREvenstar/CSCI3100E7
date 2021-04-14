@@ -85,7 +85,8 @@ export default class Canteen extends React.Component{
             id:0,
             password:null,
             search_content:null,
-            PageToShow:0 // 0 means show Menu, 1 means show Order, 2 means show profile
+            PageToShow:0 ,// 0 means show Menu, 1 means show Order, 2 means show profile
+            Random: 0
         }
         
         }
@@ -109,6 +110,9 @@ export default class Canteen extends React.Component{
         e.preventDefault();
         this.setState({search_content:null})
     }
+    set_random=()=>{
+        this.setState({ Random:Math.random()})
+    }
 
     render(){
         if (this.props.customer_canteen==1)
@@ -121,8 +125,8 @@ export default class Canteen extends React.Component{
         Welcome Dear Canteen {this.props.id}
       </h3>
     <Navbar start_search={this.start_search}cancel_search={this.cancel_search} name={this.state.name} id={this.props.id} clickOnMenu={this.clickOnMenu} clickOnOrder={this.clickOnOrder} clickOnProfile={this.clickOnProfile} logout={this.props.logout}/>
-    <Carousel canteenID={this.props.id}/>
-    <Profile PageToShow={this.state.PageToShow} canteenID={this.props.id}/>
+    <Carousel Random={this.state.Random} canteenID={this.props.id}/>
+    <Profile set_random={this.set_random} PageToShow={this.state.PageToShow} canteenID={this.props.id}/>
     <Menu search_content={this.state.search_content} PageToShow={this.state.PageToShow} canteenID={this.props.id}/>
     </div>
   </div>

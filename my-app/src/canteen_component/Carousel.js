@@ -18,7 +18,7 @@ export default class Carousel extends React.Component{
         </ol>
         <div className="carousel-inner">
           <div className="carousel-item active">
-            <img className="d-block w-100" alt="Carousel Bootstrap First" src={URL + "/public/canteen/" + this.props.canteenID + ".png?" + Math.random()}/>
+            <img className="d-block w-100" alt="Carousel Bootstrap First" src={URL + "/public/canteen/" + this.props.canteenID + ".png?" + Math.random()+this.props.Random}/>
             <div className="carousel-caption">
               <h4>
                 Canteen Photo
