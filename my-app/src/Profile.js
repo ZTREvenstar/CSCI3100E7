@@ -86,13 +86,16 @@ class Profile extends React.Component{
             default:
                 display = <></>
         }
+        if(this.props.customer_canteen == 1){
+            return(<></>)
+        }
         return(
             <>
             <header className = "container">
                 <h1 className = "my-4">Personal Information</h1>
             </header>
             <main className = "container">
-            <div class="row my-2 d-flex align-items-center" id = "Profile">
+            <div className="row my-2 d-flex align-items-center" id = "Profile">
                 <div id = "profileInfo" className="col-lg-8 col-md-6">
                     <table className="table">
                         <tbody>
