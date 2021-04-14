@@ -85,10 +85,10 @@ router.post('/dish',upload.array(),(req, res)=>{
 
 
     let data = req.body;
-    var strSql = "insert into dish (id,name,status,price, canteenID, commentID,img) values(?,?,?,?,?,?,?);"
+    var strSql = "insert into dish (id,name,status,price, canteenID, img) values(?,?,?,?,?,?);"
 
     sqlQuery(strSql, 
-        [data['id'],data['name'],data['status'],data['price'],data['canteenID'],data['commentID'],data['img']]);
+        [data['id'],data['name'],data['status'],data['price'],data['canteenID'],data['img']]);
 
     res.status(200).send();
 
@@ -109,9 +109,9 @@ router.post('/order',upload.array(), (req, res)=> {
 router.put('/dish',upload.array(), (req, res)=> {
     let data = req.body;
    
-    var strSql = "update dish set status=?, price=?, canteenID=?, commentID=?, img=? WHERE id=?;"
+    var strSql = "update dish set status=?, price=?, canteenID=?,  img=? WHERE id=?;"
     sqlQuery(strSql, 
-        [data['status'],data['price'],data['canteenID'],data['commentID'],data['img'],data['id']]);
+        [data['status'],data['price'],data['canteenID'],data['img'],data['id']]);
 
 	res.status(200).send();
 
