@@ -63,20 +63,24 @@ class OrderCanteen extends React.Component {
         }
 
         return (
-            <div>
+            <ul  className=" list-group">
+                <li className=" list-group-item">
                 <h1>Order Canteen Interface</h1>
                 <h3>Newly Come Orders:</h3>
                 <div>choose an order to confirm</div>
                 {display1}
-
-                <h3>Waiting Orders: Waiting</h3>
+                </li>
+                <li className=" list-group-item">
+                <h3>Waiting Orders:</h3>
                 <div>choose an order to finish</div>
                 {display2}
-
+                </li>
+                <li className=" list-group-item">
                 <h3>Finished Orders:</h3>
                 <div>Once finished, send remind automatically，then can send remind manually</div>
                 {display3}
-            </div>
+                </li>
+            </ul>
         );
     };
 }
@@ -107,13 +111,13 @@ class OrderList extends React.Component {
         return (
             <div>
 
-                <ul className = "list-unstyled" >
+                <ul className = " list-group" >
                     {
                         this.props.orderlist.map((item)=>{
                             return(
-                                <li className="order" id = {"order"+ item["orderID"]}>
+                                <li className=" list-group-item" id = {"order"+ item["orderID"]}>
                                     <div>OrderID:{item["orderID"]}   Dish Name:{item["dishName"]}</div>
-                                    <button className="btn" id= {"btn" + item["orderID"]}
+                                    <button className="btn btn-primary" id= {"btn" + item["orderID"]}
                                             onClick={(e)=>this.handleClickEvent(item["orderID"], this.props.operation)}>{this.props.btn_operation}</button>
                                 </li>
                             )

@@ -11,10 +11,7 @@ export default class Carousel extends React.Component{
         <ol className="carousel-indicators">
           <li data-slide-to="0" data-target="#carousel-733750" className="active">
           </li>
-          <li data-slide-to="1" data-target="#carousel-733750">
-          </li>
-          <li data-slide-to="2" data-target="#carousel-733750">
-          </li>
+
         </ol>
         <div className="carousel-inner">
           <div className="carousel-item active">
@@ -25,17 +22,6 @@ export default class Carousel extends React.Component{
               </h4>
               <p>
                 upload your photo to show to the visitor!
-              </p>
-            </div>
-          </div>
-          <div className="carousel-item">
-            <img className="d-block w-100" alt="Carousel Bootstrap Second" src="https://www.layoutit.com/img/sports-q-c-1600-500-2.jpg" />
-            <div className="carousel-caption">
-              <h4>
-                Second Thumbnail label
-              </h4>
-              <p>
-                Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
               </p>
             </div>
           </div>
