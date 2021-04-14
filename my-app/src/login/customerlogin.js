@@ -23,6 +23,7 @@ class login extends React.Component {
             success: (res) => {
                 console.log("result: " + res)
                 if(res == "success"){
+                    
                     this.props.customerlogin(this.state.id)
                     this.setState({
                         open_or_not: 0

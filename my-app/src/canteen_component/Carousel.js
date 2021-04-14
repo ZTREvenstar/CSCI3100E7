@@ -24,7 +24,7 @@ export default class Carousel extends React.Component{
                 Canteen Photo
               </h4>
               <p>
-                Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+                upload your photo to show to the visitor!
               </p>
             </div>
           </div>

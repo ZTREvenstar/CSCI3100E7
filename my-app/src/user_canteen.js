@@ -134,9 +134,29 @@ class Dish extends React.Component{
           eve.target.innerHTML=buttonHTML[1-tmp];
           this.setState({show:1-tmp});
       }
+      order=()=>{
+          //console.log("aadadadadada");
+          $.ajax({
+        
+            url :'http://localhost:5000/api/order/makeorder',
+            type:'GET',
+            datatype :'JSON',
+            data: {
+            cid:this.state.uid,
+            did:this.state.id
+},
+            success: (data)=>{
+                alert("order placed");
+            },
+            error: (err)=>{
+                console.log("err");
+            }
+        }) 
+      }
     render(){
-        return(<li>
+        return(<li id={this.state.id}>
             <a>{this.state.name}</a>
+            <button onClick={this.order}>order</button>
             <button onClick={this.showD}>show detail</button>
             <DishDet id={this.state.id}  did={this.state.uid} name={this.state.name} show={this.state.show}/>
         </li>);
