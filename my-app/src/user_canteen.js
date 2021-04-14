@@ -1,6 +1,7 @@
 import React from "react";
 import $ from "jquery";
 import DishDet from "./NewCom.js";
+const URL = "http://localhost:5000";
 
 class UserInt extends React.Component{
     constructor(props){
@@ -25,19 +26,24 @@ class UserInt extends React.Component{
         });
         
     }
-    changeCan=(eve)=>{
+    changeCan=(tmpid)=>{
         //console.log(eve.target.parentNode.id);
-        var tmpid=eve.target.parentNode.id;
         console.log(tmpid);
         this.setState({cur_canteen:tmpid,show_cur_canteen:1});
     }
     render(){
         return(
             <div>
-                {this.state.all_canteen.map(c=><div id={c.id}>
-                    <h1>{c.name}</h1>
-                    <button onClick={this.changeCan}>see menu</button>
-                </div>)}
+                {   
+                this.state.all_canteen.map(c => 
+                   <div key={c.id} id={c.id} className="card d-inline-block m-2" style={{width: 200}} onClick = {()=>this.changeCan(c.id)}>
+                        <img src={URL + "/public/canteen/"+c.id+".png"} alt="{file.remarks}" className="w-100"></img>
+                        <div className="card-body">
+                            <h3 className="card-title">{c.name}</h3>
+                        </div>
+                   </div>
+                 )
+                }
                 <div>
                     <UserMenu show={this.state.show_cur_canteen} cid={this.state.cur_canteen} uid={this.state.userID}/>
                 </div>
@@ -97,7 +103,8 @@ class UserMenu extends React.Component{
         }
         else{
             return(
-                <ul>{this.state.dish.map(d=><Dish did={d.id} name={d.name} uid={this.props.uid}/>)}</ul>);
+                
+                <div className = "d-flex flex-wrap justify-content-center"><ul className = "list-group w-75 ">{this.state.dish.map(d=><Dish did={d.id} name={d.name} uid={this.props.uid}/>)}</ul></div>);
         }
         
     }
@@ -154,10 +161,10 @@ class Dish extends React.Component{
         }) 
       }
     render(){
-        return(<li id={this.state.id}>
+        return(<li className="list-group-item" key = {this.state.id} id={this.state.id}>
             <a>{this.state.name}</a>
-            <button onClick={this.order}>order</button>
-            <button onClick={this.showD}>show detail</button>
+            <button type="button" className="btn btn-primary m-2" onClick={this.order}>order</button>
+            <button type="button" className="btn btn-primary m-2" onClick={this.showD}>show detail</button>
             <DishDet id={this.state.id}  did={this.state.uid} name={this.state.name} show={this.state.show}/>
         </li>);
     }

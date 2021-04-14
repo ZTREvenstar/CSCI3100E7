@@ -3,6 +3,7 @@ import $ from "jquery";
 import propic from './pic/green.png';
 import equal from 'fast-deep-equal';
 import ReactStars from "react-rating-stars-component";
+const URL = "http://localhost:5000";
 
 const sortChoice=[
     {uuid:'1',name:'Choose filter'},
@@ -113,7 +114,8 @@ this.sortDish=this.sortDish.bind(this);
         else{
            return (
         <div>
-          <h1>Dish Name:{this.props.name}            Overall:{this.state.rating}------------------------------------------------------------------------------</h1>
+          <h2>Dish Name:{this.props.name}</h2>            
+          <h2>Total Rating:{this.state.rating}</h2>
           <select className="form-control form-control-sm"        
                     name="subscriptions" onChange={this.sortDish}>
                         {sortChoice.map(item => (
@@ -122,7 +124,7 @@ this.sortDish=this.sortDish.bind(this);
                         </option>
       ))}
                     </select>
-          <div>
+          <div className = "d-flex flex-wrap justify-content-center">
               {this.state.comments.map(c=><Comment id={c.id} cid={c.customerID} content={c.content} ln={c.likeNum} rating={c.rating} update={this.updateC} did={this.props.did}/>)}
           </div>
           <div>
@@ -166,14 +168,14 @@ class CForm extends React.Component{
       render() {
         return (
           <form onSubmit={this.handleSubmit}>
-            
+            <div class="form-group">
             <label>
               write your comment:
               <ReactStars count={5} size={20} onChange={this.starChange} value={this.state.star}/>
               <input type="text" value={this.state.value} onChange={this.handleChange} />
             </label>
-            
-            <input type="submit" value="submit" />
+            </div>
+            <button type="submit" class="btn btn-primary"value="submit">Submit</button>
           </form>
         );
       }
@@ -226,42 +228,41 @@ class Comment extends React.Component{
     render(){
         if(this.state.did==this.state.cid){
             return(
-            <div className="container">
-                <img src={propic} alt="Avatar" style={{
-            resizeMode: "contain",
-            height: 30,
-            width: 30
-            }}/>
-                <a>Customer id {this.props.cid}</a>
-                <p>rating:{this.props.rating}</p>
-                <p>{this.props.content}</p>
-                <p></p>
-                <div className="rvw-root">
-                    <button className="col" onClick={this.likeC}>Helpful</button>
-                    <button className="col" onClick={this.DeleteC}>delete</button>
-                    <p> {this.state.likeNum} people found this review helpful</p>
-                    
-                </div>
-            </div>
+            <>
+            <div className="py-3 px-2">
+                <div className="card d-inline-block my-2" style={{width: 220}}>
+                        <img src={URL+"/public/customer/"+this.state.cid+".png"} className="card-img" alt="..."  ></img>
+                        <div className="card-body">
+                            <h6 className="card-title">rating:{this.props.rating}</h6>
+                            <p className="card-text">{this.props.content}</p>
+                            <div className="d-flex flex-wrap justify-content-center">
+                            <button type="button" className="btn btn-primary m-1" onClick={this.likeC}>Helpful</button>
+                            <button type="button" className="btn btn-primary m-1" onClick={this.DeleteC}>delete</button>
+                            <small class="text-muted"> {this.state.likeNum} people found this review helpful</small>
+                    </div>
+                        </div>
+                   </div>
+            </div>     
+            </>
         );
         }
         else{
             return(
-                <div className="rvw">
-                    <img src={propic} alt="Avatar" style={{
-                        resizeMode: "contain",
-                        height: 30,
-                        width: 30
-                    }}/>
-                    <a>id {this.props.cid}</a>
-                    <p>rating:{this.props.rating}</p>
-                    <p>{this.props.content}</p>
-                    <p></p>
-                    <div className="rvw-root">
-                        <button className="col" onClick={this.likeC}>Helpful</button>
-                        <p> {this.state.likeNum} people found this review helpful</p>
-                    </div>
-                </div>
+                <>
+                <div className="py-3 px-2">
+                    <div className="card d-inline-block my-2" style={{width: 220}}>
+                            <img src={URL+"/public/customer/"+this.state.cid+".png"} className="card-img" alt="..."  ></img>
+                            <div className="card-body">
+                                <h6 className="card-title">rating:{this.props.rating}</h6>
+                                <p className="card-text">{this.props.content}</p>
+                                <div className="d-flex flex-wrap justify-content-center">
+                                <button type="button" className="btn btn-primary m-1" onClick={this.likeC}>Helpful</button>
+                                <small class="text-muted"> {this.state.likeNum} people found this review helpful</small>
+                        </div>
+                            </div>
+                       </div>
+                </div>     
+                </>
             );
         }
         
