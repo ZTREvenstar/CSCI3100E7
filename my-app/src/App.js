@@ -3,6 +3,7 @@ import './App.css';
 import Canteen from './Canteen.js';
 import Customerlogin from './login/customerlogin.js'
 import Canteenlogin from './login/canteenlogin.js'
+import Profile from './Profile.js';
 import Register from './login/register.js'
 import React from "react"
 class App extends React.Component {
@@ -63,6 +64,7 @@ render(){
   return (
     <div className="App">
       <Canteen id={this.state.id} logout={this.logout} customer_canteen={this.state.customer_canteen}/>
+      <Profile id={this.state.id} logout={this.logout} customer_canteen={this.state.customer_canteen}/>
     </div>
   );
 

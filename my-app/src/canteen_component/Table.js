@@ -36,9 +36,19 @@ class TableRow extends React.Component{
 
 export default class Table extends React.Component{
 
+    filter_data=()=>{
+        if (this.props.search_content==null)
+        return this.props.Menu_data;
 
+        return this.props.Menu_data.filter((data)=>{
+        if (data["name"].toLowerCase().includes(this.props.search_content.toLowerCase()))
+            return true;
+            return false;
+});
+    }
 
     render(){
+
         return(
             <table className="table table-hover table-bordered">
             <thead>
@@ -64,7 +74,7 @@ export default class Table extends React.Component{
               </tr>
             </thead>
             <tbody>
-        { this.props.Menu_data.map(data => 
+        { this.filter_data().map(data => 
             <TableRow data={data}/> )}
             </tbody>
           </table>

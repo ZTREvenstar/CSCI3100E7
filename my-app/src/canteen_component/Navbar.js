@@ -5,6 +5,18 @@ const URL = "http://localhost:5000"
 
 export default class Navbar extends React.Component{
 
+constructor(props){
+    super(props)
+    this.state={
+        search_content:null
+    }
+}
+
+get_search_content=(event)=>{
+    //alert(event.target.value)
+    this.setState({search_content: event.target.value})
+}
+
     render(){
 
         return (
@@ -24,9 +36,12 @@ export default class Navbar extends React.Component{
              </li>
            </ul>
            <form className="form-inline">
-             <input className="form-control mr-sm-2" type="text" /> 
-             <button className="btn btn-primary my-2 my-sm-0" type="submit">
+             <input name="content" className="form-control mr-sm-2"  onChange={this.get_search_content} /> 
+             <button className="btn btn-primary my-2 my-sm-0"  onClick={(e)=>this.props.start_search(e,this.state.search_content)}>
                Search
+             </button>
+             <button className="btn btn-primary my-2 my-sm-0"  onClick={(e)=>this.props.cancel_search(e)}>
+               Cancel
              </button>
            </form>
            <ul className="navbar-nav ml-md-auto">

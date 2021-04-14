@@ -60,7 +60,7 @@ class Menu extends React.Component{
                 <div>
             <button  className="btn btn-primary text-center">transform</button>
             <Nested Menu_data={this.state.Menu_data}/>
-            <Table Menu_data={this.state.Menu_data}/>
+            <Table search_content={this.props.search_content} Menu_data={this.state.Menu_data}/>
            
             <Form canteenID={this.props.canteenID} Menu_data={this.state.Menu_data}/>
                 </div>
@@ -84,6 +84,7 @@ export default class Canteen extends React.Component{
             name:null,
             id:0,
             password:null,
+            search_content:null,
             PageToShow:0 // 0 means show Menu, 1 means show Order, 2 means show profile
         }
         
@@ -99,6 +100,15 @@ export default class Canteen extends React.Component{
         this.setState({PageToShow:2})
     }
 
+    start_search=(e,value)=>{
+        e.preventDefault();
+        console.log(value);
+        this.setState({search_content:value})
+    }
+    cancel_search=()=>{
+        this.setState({search_content:null})
+    }
+
     render(){
         if (this.props.customer_canteen==1)
         return (
@@ -109,10 +119,10 @@ export default class Canteen extends React.Component{
       <h3 className="text-info text-center" >
         Welcome Dear Canteen {this.props.id}
       </h3>
-    <Navbar name={this.state.name} id={this.props.id} clickOnMenu={this.clickOnMenu} clickOnOrder={this.clickOnOrder} clickOnProfile={this.clickOnProfile} logout={this.props.logout}/>
+    <Navbar start_search={this.start_search}cancel_search={this.cancel_search} name={this.state.name} id={this.props.id} clickOnMenu={this.clickOnMenu} clickOnOrder={this.clickOnOrder} clickOnProfile={this.clickOnProfile} logout={this.props.logout}/>
     <Carousel />
     <Profile PageToShow={this.state.PageToShow} canteenID={this.props.id}/>
-    <Menu PageToShow={this.state.PageToShow} canteenID={this.props.id}/>
+    <Menu search_content={this.state.search_content} PageToShow={this.state.PageToShow} canteenID={this.props.id}/>
     </div>
   </div>
 </div>
