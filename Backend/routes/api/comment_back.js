@@ -74,7 +74,7 @@ router.post('/deleteC/:cid/:cID',async (req,res)=>{
     }
 });
 router.get('/canteen',async (req,res)=>{
-    var sql='SELECT * FROM canteen';
+    var sql='SELECT * FROM canteen WHERE status=1';
     let d=await sqlQuery(sql);
     res.json(d);
 });
