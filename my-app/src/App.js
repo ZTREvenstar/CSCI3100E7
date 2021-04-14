@@ -13,7 +13,7 @@ constructor(props){
   super(props)
   this.state=({
 
-    id:123,
+    id:null,
     customer_canteen: 1,
     login_register:0
   })
@@ -52,12 +52,23 @@ BackToRegister=()=>{
   })
 }
 
+switchTocustomer=()=>{
+  this.setState({
+    customer_canteen:0
+  })
+}
+switchTocanteen=()=>{
+  this.setState({
+    customer_canteen:1
+  })
+}
+
 render(){
   if (this.state.id==null)
   return (
     <div className="App">
-    <Customerlogin login_register={this.state.login_register}customerlogin={this.customerlogin} logout={this.logout} canteenlogin={this.canteenlogin} BackToRegister={this.BackToRegister}/>
-    <Canteenlogin login_register={this.state.login_register}customerlogin={this.customerlogin} logout={this.logout} canteenlogin={this.canteenlogin}BackToRegister={this.BackToRegister} />
+    <Customerlogin switchTocanteen={this.switchTocanteen}customer_canteen={this.state.customer_canteen} login_register={this.state.login_register}customerlogin={this.customerlogin} logout={this.logout} canteenlogin={this.canteenlogin} BackToRegister={this.BackToRegister}/>
+    <Canteenlogin switchTocustomer={this.switchTocustomer}customer_canteen={this.state.customer_canteen} login_register={this.state.login_register}customerlogin={this.customerlogin} logout={this.logout} canteenlogin={this.canteenlogin}BackToRegister={this.BackToRegister} />
     <Register login_register={this.state.login_register} BackToLogin={this.BackToLogin}/>
     </div>
   )
@@ -72,5 +83,6 @@ render(){
 
   }
 }
+
 
 export default App;

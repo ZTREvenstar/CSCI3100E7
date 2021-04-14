@@ -46,12 +46,17 @@ class login extends React.Component {
         })
     }
     render() {
-        if (this.props.login_register==0)
+        if (this.props.login_register==0&&this.props.customer_canteen==1)
             return (
 
                 <div className="container ">
                     <div className="row justify-content-center ">
-                    <form className="col-md-4 col-xm-4 " noValidate method="POST">
+                    <form className="col-md-4 col-xm-4 bg-dark text-light rounded" noValidate method="POST">
+                    <h4>You are logging in as<sapn className="text-danger"> canteen</sapn></h4>
+                    <div>    
+                            <button className="btn btn-success "  οnmοuseοver="this.style.backgroundColor='#FF8D00'"
+                                οnmοuseοut="this.style.backgroundColor='#FC5628'" onClick={this.props.switchTocustomer}>switch To customer</button>
+                    </div>
                         <div id="form_widget">
                             <div className="form-group " >
                                 Your Id:<input  className="form-control" type="text" placeholder="id" id="box_name" name="id" 
@@ -62,14 +67,17 @@ class login extends React.Component {
                                     οnfοcus="this.value=''" onChange={(e) => this.password_change(e)} οnblur="if(this.value=='')this.value='password'" />
                             </div>
                         </div>
-                        <div>
-                            <button className="btn btn-primary" type="submit"  οnmοuseοver="this.style.backgroundColor='#FF8D00'"
-                                οnmοuseοut="this.style.backgroundColor='#FC5628'" onClick={this.login}>Login</button>
+                     
 
-                        </div><div>
+                        <div>
                         <button className="btn btn-warning" type="submit"  οnmοuseοver="this.style.backgroundColor='#FF8D00'"
                                 οnmοuseοut="this.style.backgroundColor='#FC5628'" onClick={this.props.BackToRegister}>Go register</button>
                                 </div>
+                        <div>
+                            <button className="btn btn-primary" type="submit"  οnmοuseοver="this.style.backgroundColor='#FF8D00'"
+                                οnmοuseοut="this.style.backgroundColor='#FC5628'" onClick={this.login}>Login</button>
+                        </div>
+
                     </form>
                 </div>
 </div>
