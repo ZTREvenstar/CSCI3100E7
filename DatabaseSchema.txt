@@ -49,7 +49,10 @@ canteen            id (primary key)  |  name  |  password  |  status
 
 dish                  id (primary key)  |  canteenID  |  commentID  | name  |  price |  status  |  img    
 
-orderinfo          orderID (primary key)  |  customerID  |  time  |  status  |  charge
-orderlist            orderID (primary key)  |  dishID (primary key)  |  quantity  
+
+
+orderinfo          orderID (primary key)  |  customerID  |  dishID  |  time  |  status  
+
+
 
 comment         id (primary key)  |  dishID  |  customerID  |  content  | likeNum     

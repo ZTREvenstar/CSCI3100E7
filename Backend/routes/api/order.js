@@ -10,75 +10,64 @@ const sqlQuery = require('../../db')
 
 router.get('/canteen',async (req,res)=>{
 
+    let dataSend = [];
+
     // unconfirmed
-    let sql = 'SELECT orderID FROM orderinfo WHERE status = 0';
+    let sql = 'SELECT O.orderID AS orderID, O.status AS status, D.name AS dishName ' +
+              'FROM orderinfo O, dish D ' +
+              'WHERE O.status = 0 AND D.id = O.dishID';
     let result = await sqlQuery(sql);
-    let unconfirmed = [];
-    for(let i = 0; i < result.length; i++)
-        unconfirmed.push(result[i]['orderID']);
+    dataSend.push(result);
 
     // unfinished
-    sql = 'SELECT orderID FROM orderinfo WHERE status = 1'
+    sql = 'SELECT O.orderID AS orderID, O.status AS status, D.name AS dishName ' +
+          'FROM orderinfo O, dish D ' +
+          'WHERE O.status = 1 AND D.id = O.dishID';
     result = await sqlQuery(sql);
-    let unfinished = [];
-    for(let i = 0; i < result.length; i++)
-        unfinished.push(result[i]['orderID']);
+    dataSend.push(result);
 
     // finished
-    sql = 'SELECT orderID FROM orderinfo WHERE status = 2'
+    sql = 'SELECT O.orderID AS orderID, O.status AS status, D.name AS dishName ' +
+          'FROM orderinfo O, dish D ' +
+          'WHERE O.status = 2 AND D.id = O.dishID';
     result = await sqlQuery(sql);
-    let finished = [];
-    for(let i = 0; i < result.length; i++)
-        finished.push(result[i]['orderID']);
+    dataSend.push(result);
 
-    // in ejs, for-loop displaying orders
-    let options = {
-        unconfirmed,
-        unfinished,
-        finished
-    };
-
-    res.type('html');
-    res.render('orderCanteenUI', options);
+    res.json(dataSend);
 })
 
 router.get('/customer', async (req,res)=>{
 
-    let cid = 111;
+    let cid = 1155124498;
+
+    let dataSend = [];
 
     // unconfirmed
-    let sql = 'SELECT orderID FROM orderinfo WHERE status = 0 AND customerID = ?';
+    let sql = 'SELECT O.orderID AS orderID, O.status AS status, D.name AS dishName ' +
+              'FROM orderinfo O, dish D ' +
+              'WHERE O.status = 0 AND O.customerID = ? AND D.id = O.dishID';
     let addSqlParams = [cid];
     let result = await sqlQuery(sql, addSqlParams);
-    let myUnconfirmed = [];
-    for(let i = 0; i < result.length; i++)
-        myUnconfirmed.push(result[i]['orderID']);
+    dataSend.push(result);
 
     // unfinished
-    sql = 'SELECT orderID FROM orderinfo WHERE status = 1 AND customerID = ?';
+    sql = 'SELECT O.orderID AS orderID, O.status AS status, D.name AS dishName ' +
+          'FROM orderinfo O, dish D ' +
+          'WHERE O.status = 1 AND O.customerID = ? AND D.id = O.dishID';
     addSqlParams = [cid];
     result = await sqlQuery(sql, addSqlParams);
-    let myUnfinished = [];
-    for(let i = 0; i < result.length; i++)
-        myUnfinished.push(result[i]['orderID']);
+    dataSend.push(result);
+
 
     // finished
-    sql = 'SELECT orderID FROM orderinfo WHERE status = 2 AND customerID = ?';
+    sql = 'SELECT O.orderID AS orderID, O.status AS status, D.name AS dishName ' +
+          'FROM orderinfo O, dish D ' +
+          'WHERE O.status = 2 AND O.customerID = ? AND D.id = O.dishID';
     addSqlParams = [cid];
     result = await sqlQuery(sql, addSqlParams);
-    let myFinished = [];
-    for(let i = 0; i < result.length; i++)
-        myFinished.push(result[i]['orderID']);
+    dataSend.push(result);
 
-    // in ejs, for-loop displaying orders
-    let options = {
-        myUnconfirmed,
-        myUnfinished,
-        myFinished
-    };
-
-    res.type('html');
-    res.render('orderCustomerUI', options);
+    res.json(dataSend);
 })
 
 router.get('/makeorder', async (req, res)=>{
@@ -99,10 +88,9 @@ router.get('/makeorder', async (req, res)=>{
                     + String(myDate.getSeconds());
 
     let orderstatus = 0; // newly come, has not been confirmed yet
-    let charge = 2.5;
 
     sql = 'INSERT INTO orderinfo VALUES (?, ?, ?, ?, ?)';
-    let addSqlParams = [neworderID, cid, nowDateTime, orderstatus, charge];
+    let addSqlParams = [neworderID, cid, did, nowDateTime, orderstatus];
     await sqlQuery(sql, addSqlParams);
 
     sql = 'SELECT * FROM orderinfo';

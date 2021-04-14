@@ -65,6 +65,8 @@
             <% for(let i = 0; i < unconfirmed.length; i++){%>
                 <li class = "order" id = "order<%- unconfirmed[i] %>">
                     <%= unconfirmed[i] %>
+                    <%= "  Dish Name:  " %>
+                    <%= unconfirmedName[i] %>
                     <button class = "btn" id = "btn<%- unconfirmed[i] %>">confirm</button>
                 </li>
             <%}%>
@@ -79,6 +81,8 @@
             <% for(let i = 0; i < unfinished.length; i++){%>
                 <li class = "order" id = "order<%- unfinished[i] %>">
                     <%= unfinished[i] %>
+                    <%= "  Dish Name:  " %>
+                    <%= unfinishedName[i] %>
                     <button class = "btn" id = "btn<%- unfinished[i] %>">finish</button>
                 </li>
             <%}%>
@@ -93,6 +97,8 @@
             <% for(let i = 0; i < finished.length; i++){%>
                 <li class = "order" id = "order<%- finished[i] %>">
                     <%= finished[i] %>
+                    <%= "  Dish Name:  " %>
+                    <%= finishedName[i] %>
                     <button class = "btn_remind" id = "btn<%- finished[i] %>">send a remind</button>
                     <button class = "btn_discard" id = "btn<%- finished[i] %>">discard</button>
                 </li>
