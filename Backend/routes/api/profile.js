@@ -86,8 +86,6 @@ router.post('/updateInfo', async function(req,res){
 })*/
 
 router.post('/info',async function(req,res){
-	console.log("get profile info");
-	console.log(req.body);
 	//res.send(req.body);
 	var strSql = 'SELECT * FROM customer WHERE id=' + req.body.id;
 	//var strSql_2 = 'SELECT * FROM customer WHERE id!=' + req.body.id + ' AND username=' + req.body.username;
