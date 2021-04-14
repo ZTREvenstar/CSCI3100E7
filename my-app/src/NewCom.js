@@ -157,7 +157,7 @@ class CForm extends React.Component{
              //console.log(res.cid);
                         } 
         });
-        this.setState({value: "",star:0});
+        this.setState({value: ""});
         event.preventDefault();
       }
       
