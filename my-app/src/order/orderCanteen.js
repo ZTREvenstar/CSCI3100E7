@@ -33,7 +33,7 @@ class OrderCanteen extends React.Component {
         //console.log("Menu canteenID is"+this.props.canteenID)
         this.intervalId = setInterval(() => {
             this.getData();
-        }, 3000);
+        }, 500);
 
     }
     componentWillUnmount(){
@@ -46,17 +46,17 @@ class OrderCanteen extends React.Component {
         if(this.state.myData==null || this.state.myData[0]==null){
             display1 = <></>
         }else{
-            display1 = <OrderList type="unconfirmed" orderlist = {this.state.myData[0]}/>
+            display1 = <OrderList operation={1} btn_operation="confirm" orderlist = {this.state.myData[0]}/>
         }
         if(this.state.myData==null ||this.state.myData[1]==null){
             display2=<></>
         }else{
-            display2=<OrderList type="unfinished" orderlist = {this.state.myData[1]}/>
+            display2=<OrderList operation={1} btn_operation="finish" orderlist = {this.state.myData[1]}/>
         }
         if(this.state.myData==null || this.state.myData[2]==null){
             display3=<></>
         }else{
-            display3=<OrderList type="finished" orderlist = {this.state.myData[2]}/>
+            display3=<OrderList operation={2} btn_operation="discard" orderlist = {this.state.myData[2]}/>
         }
 
         return (
@@ -81,30 +81,26 @@ class OrderCanteen extends React.Component {
 
 class OrderList extends React.Component {
 
-    handleConfirm = (orderID)=>{
-        console.log(orderID);
+    handleClickEvent = (orderID, operation)=>{
+
         $.ajax({
             type: "POST",
             url: URL + "/api/order/updateorder",
             // operation = 1 for update, = 2 for delete
             data: {
                 "orderID" : orderID,
-                "operation" : 1
+                "operation" : operation
             },
             dataType: "json",
             complete: function(){
                 alert("completed!");
-                window.location.reload(true);
             }
         });
     }
 
 
     render() {
-        // let unconfirmed = [
-        //     {"order": 1, "name": "a"},
-        //     {"order": 1, "name": "a"},
-        //     {"order": 1, "name": "a"}];
+
         return (
             <div>
 
@@ -115,7 +111,7 @@ class OrderList extends React.Component {
                                 <li className="order" id = {"order"+ item["orderID"]}>
                                     <div>OrderID:{item["orderID"]}   Dish Name:{item["dishName"]}</div>
                                     <button className="btn" id= {"btn" + item["orderID"]}
-                                            onClick={(e)=>this.handleConfirm(item["orderID"])}>confirm</button>
+                                            onClick={(e)=>this.handleClickEvent(item["orderID"], this.props.operation)}>{this.props.btn_operation}</button>
                                 </li>
                             )
                         })
