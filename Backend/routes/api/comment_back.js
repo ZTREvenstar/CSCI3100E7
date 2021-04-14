@@ -74,10 +74,11 @@ router.post('/deleteC/:cid/:cID',async (req,res)=>{
     }
 });
 router.get('/canteen',async (req,res)=>{
-    var sql='SELECT * FROM canteen WHERE status=1';
+    var sql='SELECT * FROM canteen';
     let d=await sqlQuery(sql);
     res.json(d);
 });
+
 router.get('/canteen/:cid',async (req,res)=>{
     var tmp=req.params.cid;
     var sql='SELECT * FROM dish WHERE canteenID='+tmp;

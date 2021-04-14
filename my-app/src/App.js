@@ -1,5 +1,6 @@
 import './App.css';
 import Canteen from './Canteen.js';
+import Customer from './Customer.js';
 import Customerlogin from './login/customerlogin.js'
 import Canteenlogin from './login/canteenlogin.js'
 import Profile from './Profile.js';
@@ -14,7 +15,7 @@ constructor(props){
   super(props)
   this.state=({
 
-    id:0,
+    id:123,
     customer_canteen: 0,
     login_register:0
   })
@@ -77,9 +78,7 @@ render(){
   return (
     <div className="App">
       <Canteen id={this.state.id} logout={this.logout} customer_canteen={this.state.customer_canteen}/>
-      <Profile id={this.state.id} logout={this.logout} customer_canteen={this.state.customer_canteen}/>
-      <OrderCanteen id={this.state.id} logout={this.logout} customer_canteen={this.state.customer_canteen}/>
-      <OrderCustomer id={this.state.id} logout={this.logout} customer_canteen={this.state.customer_canteen}/>
+      <Customer id={this.state.id} logout={this.logout} customer_canteen={this.state.customer_canteen}/>
     </div>
   );
 

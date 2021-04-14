@@ -70,6 +70,9 @@ class Profile extends React.Component{
 
     render(){
         let display = null;
+        if(this.props.PageToShow!=0){
+            return(<></>)
+        }
         switch(this.state.section){
             case 0:
                 display = <></>
@@ -85,9 +88,6 @@ class Profile extends React.Component{
                 break;
             default:
                 display = <></>
-        }
-        if(this.props.customer_canteen == 1){
-            return(<></>)
         }
         return(
             <>

@@ -32,6 +32,10 @@ class UserInt extends React.Component{
         this.setState({cur_canteen:tmpid,show_cur_canteen:1});
     }
     render(){
+        if(this.props.PageToShow!=2){
+            return(<></>)
+        }
+        console.log("rendering menu");
         return(
             <div>
                 {   

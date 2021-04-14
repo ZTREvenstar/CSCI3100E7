@@ -42,6 +42,9 @@ class OrderCustomer extends React.Component {
 
 
     render() {
+        if(this.props.PageToShow!=1){
+            return(<></>)
+        }
         let display1, display2, display3;
         if(this.state.myData==null || this.state.myData[0]==null){
             display1 = <div>You have no orders unconfirmed.</div>
