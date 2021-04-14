@@ -12,7 +12,8 @@ constructor(props){
   this.state=({
 
     id:null,
-    customer_canteen: null
+    customer_canteen: null,
+    login_register:0
   })
 }
 
@@ -37,12 +38,30 @@ canteenlogin=(id_data)=>{
 
 }
 
-  render(){
+BackToLogin=()=>{
+  this.setState({
+    login_register:0
+  })
+}
+
+BackToRegister=()=>{
+  this.setState({
+    login_register:1
+  })
+}
+
+render(){
+  if (this.state.id==null)
   return (
     <div className="App">
-      <Customerlogin customerlogin={this.customerlogin} logout={this.logout} canteenlogin={this.canteenlogin}/>
-      <Canteenlogin customerlogin={this.customerlogin} logout={this.logout} canteenlogin={this.canteenlogin}/>
-      <Register/>
+    <Customerlogin login_register={this.state.login_register}customerlogin={this.customerlogin} logout={this.logout} canteenlogin={this.canteenlogin} BackToRegister={this.BackToRegister}/>
+    <Canteenlogin login_register={this.state.login_register}customerlogin={this.customerlogin} logout={this.logout} canteenlogin={this.canteenlogin}BackToRegister={this.BackToRegister} />
+    <Register login_register={this.state.login_register} BackToLogin={this.BackToLogin}/>
+    </div>
+  )
+  else
+  return (
+    <div className="App">
       <Canteen id={this.state.id} logout={this.logout} logout={this.logout} customer_canteen={this.state.customer_canteen}/>
     </div>
   );

@@ -49,7 +49,7 @@ class login extends React.Component {
         })
     }
     render() {
-        if (this.state.open_or_not)
+        if (this.props.login_register==1)
             return (
 
                 <div className="container ">
@@ -70,6 +70,10 @@ class login extends React.Component {
                         <div>
                             <button className="btn btn-primary"type="submit"  οnmοuseοver="this.style.backgroundColor='#FF8D00'"
                                 οnmοuseοut="this.style.backgroundColor='#FC5628'" onClick={this.register}>Register</button>
+                        </div>
+                        <div>
+                            <button className="btn btn-warning"type="submit"  οnmοuseοver="this.style.backgroundColor='#FF8D00'"
+                                οnmοuseοut="this.style.backgroundColor='#FC5628'" onClick={this.props.BackToLogin}>Back to login</button>
                         </div>
                     </form>
                 </div>
