@@ -29,8 +29,8 @@ class OrderCanteen extends React.Component {
         })
     }
     componentDidMount(){
+        this.getData();
         //console.log("Menu canteenID is"+this.props.canteenID)
-
         this.intervalId = setInterval(() => {
             this.getData();
         }, 3000);
@@ -42,21 +42,37 @@ class OrderCanteen extends React.Component {
 
 
     render() {
+        var display1, display2, display3;
+        if(this.state.myData==null || this.state.myData[0]==null){
+            display1 = <></>
+        }else{
+            display1 = <OrderList type="unconfirmed" orderlist = {this.state.myData[0]}/>
+        }
+        if(this.state.myData==null ||this.state.myData[1]==null){
+            display2=<></>
+        }else{
+            display2=<OrderList type="unfinished" orderlist = {this.state.myData[1]}/>
+        }
+        if(this.state.myData==null || this.state.myData[2]==null){
+            display3=<></>
+        }else{
+            display3=<OrderList type="finished" orderlist = {this.state.myData[2]}/>
+        }
 
         return (
             <div>
                 <h1>Order Canteen Interface</h1>
                 <h3>Newly Come Orders:</h3>
                 <div>choose an order to confirm</div>
-                <OrderList type="unconfirmed" orderlist = {this.state.myData[0]}/>
+                {display1}
 
                 <h3>Waiting Orders: Waiting</h3>
                 <div>choose an order to finish</div>
-                <OrderList type="unfinished" orderlist = {this.state.myData[1]}/>
+                {display2}
 
                 <h3>Finished Orders:</h3>
                 <div>Once finished, send remind automatically，then can send remind manually</div>
-                <OrderList type="finished" orderlist = {this.state.myData[2]}/>
+                {display3}
             </div>
         );
     };
