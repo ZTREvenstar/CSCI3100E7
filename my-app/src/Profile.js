@@ -86,6 +86,7 @@ class Profile extends React.Component{
                 <h1 className = "my-4">Personal Information</h1>
             </header>
             <main className = "container">
+            <div class="row my-2" id = "Profile">
                 <div id = "profileInfo" className="col-lg-8 col-md-6">
                     <table className="table">
                         <tbody>
@@ -97,10 +98,6 @@ class Profile extends React.Component{
                             <th scope="row">Profile Name: </th>
                             <td id = "profileName">{this.state.username}</td>
                         </tr>
-                        <tr>
-                            <th scope="row">Email Address:</th>
-                            <td id = "email"></td>
-                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -109,7 +106,8 @@ class Profile extends React.Component{
                     <img id = "profilePic" src={URL+"/public/customer/"+ this.props.id + ".png?"+this.state.updated} className="img-thumbnail" style={{height: 200}} alt={"no profile pic"}></img>
                     </picture>
                 </div>
-                <div id="buttons" className = "d-flex flex-wrap my-2" >
+                </div>
+                <div id="buttons" className = "d-flex flex-wrap my-2 justify-content-center" >
                     <button type="button" className="btn btn-primary m-2" onClick = {(e)=>this.handleClick(1)} >change Personal Information</button>
                     <button type="button" className="btn btn-primary m-2" onClick = {(e)=>this.handleClick(2)} >change Password</button>
                     <button type="button" className="btn btn-primary m-2" onClick = {(e)=>this.handleClick(3)} >Upload Profile Pic</button>
@@ -191,7 +189,7 @@ class ChangeInfo extends React.Component{
 class ChangePW extends React.Component{
     render(){
         return(
-            <div>
+                <div>
                     <form id = "changePassword">
                         <div className="form-group">
                             <label htmlFor="InputPassword">Password</label>
