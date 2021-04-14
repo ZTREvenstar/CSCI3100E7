@@ -43,7 +43,7 @@ router.post('/user', async (req, res) => {
         // req.session.id = result_new[0].id
         // req.session.username = result_new[0].username
         //console.log(JSON.stringify(result_new[0].id))
-        res.status(200).json('success,session saved')
+        res.status(200).json('success')
 
     }
     //res.send("post method")
