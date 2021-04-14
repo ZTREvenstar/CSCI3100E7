@@ -1,7 +1,7 @@
 const express = require('express')
 const sqlQuery = require('../../db')
 const multer = require('multer') 
-const upload = multer() 
+
 const bp = require('body-parser');
 var path = require("path"), fs = require("fs");
 

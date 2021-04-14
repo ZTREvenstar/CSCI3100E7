@@ -50,18 +50,30 @@ class Profile_Modify extends React.Component{
             
             if ( this.state.img!=null){
                 let file = this.state.img;
-                const formdata = new FormData();
+                console.log(file);
+                var formdata = new FormData();
+                formdata.append('id', this.props.canteenID);
                 formdata.append('img', file);
+                console.log("logging file")
+                console.log(formdata);
         
-            const url = URL+'/api/canteen/img?id='+this.props.canteenID;
-            fetch(url, {
-                method: 'POST',
-                body: formdata,
-                headers: {
-                    "Content-Type": false
+            const url = URL+'/api/canteen/img';
+            
+            this.serverRequest = $.ajax({
+                url: url,
+                type:'POST',
+                data: formdata,
+                contentType: false, processData: false,
+                async:true,
+                success: (data)=>{
+                    window.alert("succeeded, now updating parent component");
+                    console.log(data);
+                },
+                error:function(data){
+                    console.log("error");
+                    console.log(data);
                 }
-            }).then(response => {console.log("success")})
-            .catch(error => console.log(error));
+            });
             }
 
 

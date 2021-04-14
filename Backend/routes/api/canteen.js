@@ -2,13 +2,46 @@ const express = require('express')
 //var bodyParser = require('body-parser')
 const sqlQuery = require('../../db')
 const multer = require('multer') 
-const upload = multer() 
 var path = require("path"), fs = require("fs");
 
 const router = express.Router()
 router.use(express.json())
 //router.use('/',express.static('../../../client/Canteen Interface'))
 
+
+
+var createFolder = function(folder){
+    try{
+        fs.accessSync(folder); 
+    }catch(e){
+        fs.mkdirSync(folder);
+    }  
+};
+
+var profilePicFolder = path.join(__dirname, '..', '..', '..','public','canteen');
+
+createFolder(profilePicFolder);
+
+var profilePicStorage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, profilePicFolder);   
+    },
+    filename: function (req, file, cb) {
+		//console.log("namingfiles");
+		let id = req.body.id;
+		console.log(id);
+		fs.unlink(profilePicFolder+"/"+id +".png", (err) => {
+			if (err) {
+			  console.error(err)
+			  return
+			}
+		})
+		var profilePicName = id +".png";
+        cb(null, profilePicName);  
+    }
+});
+
+const upload = multer({storage: profilePicStorage });
 
 router.all('/*', (req, res, next) => {
 	/* set response header */
@@ -150,6 +183,12 @@ router.delete('/order',  (req, res)=> {
 
 })
 
+router.post('/img', upload.single('img'), function(req,res){
+	var file = req.file;
+	console.log(file)
+	console.log(req.body.id);
+	res.send('success');
+})
 
 
 module.exports = router;

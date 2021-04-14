@@ -5,6 +5,7 @@ const URL = "http://localhost:5000"
 export default class Carousel extends React.Component{
 
     render(){
+        console.log("canteen ID is"+this.props.canteenID);
         return(
 <div className="carousel slide" id="carousel-733750">
         <ol className="carousel-indicators">
@@ -17,7 +18,7 @@ export default class Carousel extends React.Component{
         </ol>
         <div className="carousel-inner">
           <div className="carousel-item active">
-            <img className="d-block w-100" alt="Carousel Bootstrap First" src="https://www.layoutit.com/img/sports-q-c-1600-500-1.jpg" />
+            <img className="d-block w-100" alt="Carousel Bootstrap First" src={URL + "/public/canteen/" + this.props.canteenID + ".png?" + Math.random()}/>
             <div className="carousel-caption">
               <h4>
                 Canteen Photo
