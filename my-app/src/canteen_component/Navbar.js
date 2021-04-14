@@ -28,11 +28,11 @@ get_search_content=(event)=>{
          </button> <a className="navbar-brand btn" onClick={this.props.clickOnProfile}>Profile</a>
          <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
            <ul className="navbar-nav">
-             <li className="nav-item active">
-                <a className="nav-link btn"  onClick={this.props.clickOnMenu}>Menu</a>
+             <li className="nav-item ">
+                <a className="nav-link btn active"  onClick={this.props.clickOnMenu}>Menu</a>
              </li>
-             <li className="nav-item">
-                <a className="nav-link btn"  onClick={this.props.clickOnOrder}>Order</a>
+             <li className="nav-item ">
+                <a className="nav-link btn active"  onClick={this.props.clickOnOrder}>Order</a>
              </li>
            </ul>
            <form className="form-inline">

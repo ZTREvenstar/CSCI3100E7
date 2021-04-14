@@ -42,6 +42,9 @@ class OrderCanteen extends React.Component {
 
 
     render() {
+        if (this.props.PageToShow!=1)
+        return null;
+
         let display1, display2, display3;
         if(this.state.myData==null || this.state.myData[0]==null){
             display1 = <></>

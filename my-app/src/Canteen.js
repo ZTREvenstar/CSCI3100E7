@@ -6,6 +6,7 @@ import Nested from "./canteen_component/Nested"
 import Profile from "./canteen_component/Profile"
 import Table from "./canteen_component/Table"
 import Form from "./canteen_component/Form"
+import OrderCanteen from './order/orderCanteen.js'
 const URL = "http://localhost:5000"
 
 
@@ -128,6 +129,7 @@ export default class Canteen extends React.Component{
     <Carousel Random={this.state.Random} canteenID={this.props.id}/>
     <Profile set_random={this.set_random} PageToShow={this.state.PageToShow} canteenID={this.props.id}/>
     <Menu search_content={this.state.search_content} PageToShow={this.state.PageToShow} canteenID={this.props.id}/>
+    <OrderCanteen id={this.props.id} PageToShow={this.state.PageToShow} logout={this.props.logout} customer_canteen={this.props.customer_canteen}/>
     </div>
   </div>
 </div>

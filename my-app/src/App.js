@@ -4,7 +4,7 @@ import Customerlogin from './login/customerlogin.js'
 import Canteenlogin from './login/canteenlogin.js'
 import Profile from './Profile.js';
 import Register from './login/register.js'
-import OrderCanteen from './order/orderCanteen.js'
+//import OrderCanteen from './order/orderCanteen.js'
 import React from "react"
 
 class App extends React.Component {
@@ -22,7 +22,7 @@ constructor(props){
 logout=()=>{
   this.setState({
     id:null,
-    customer_canteen:null
+    customer_canteen:0
   })
 }
 
@@ -77,7 +77,7 @@ render(){
     <div className="App">
       <Canteen id={this.state.id} logout={this.logout} customer_canteen={this.state.customer_canteen}/>
       <Profile id={this.state.id} logout={this.logout} customer_canteen={this.state.customer_canteen}/>
-      <OrderCanteen id={this.state.id} logout={this.logout} customer_canteen={this.state.customer_canteen}/>
+     
     </div>
   );
 
