@@ -106,9 +106,9 @@ export default class Canteen extends React.Component{
   <div className="row">
     <div className="col-md-12">
       <h3 className="text-info text-center" >
-        Welcome
+        Welcome Dear Canteen {this.props.id}
       </h3>
-    <Navbar name={this.state.name} id={this.state.id} clickOnMenu={this.clickOnMenu} clickOnOrder={this.clickOnOrder}clickOnProfile={this.clickOnProfile}/>
+    <Navbar name={this.state.name} id={this.state.id} clickOnMenu={this.clickOnMenu} clickOnOrder={this.clickOnOrder} clickOnProfile={this.clickOnProfile} logout={this.props.logout}/>
     <Carousel />
     <Profile PageToShow={this.state.PageToShow} canteenID={this.state.id}/>
     <Menu PageToShow={this.state.PageToShow} canteenID={this.state.id}/>

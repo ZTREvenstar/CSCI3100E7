@@ -52,27 +52,28 @@ class login extends React.Component {
         if (this.state.open_or_not)
             return (
 
-                <div>
-                    <form noValidate method="POST">
+                <div className="container ">
+                    <div className="row justify-content-center ">
+                    <form className="col-md-4 col-xm-4 "noValidate method="POST">
                         <div id="form_widget">
-                            <div className={styleMedia.inputGroups}>
-                            Your Id:<input type="text" placeholder="id" id="box_name" name="id" className={styleMedia.input}
+                            <div className="form-group ">
+                            Your Id:<input type="text" className="form-control"placeholder="id" id="box_name" name="id" 
                                     οnfοcus="this.value=''" onChange={(e) => this.id_change(e)} οnblur="if(this.value=='')this.value='id'" />
-                            
-                            Username:<input type="text" placeholder="id" id="box_name" name="id" className={styleMedia.input}
+
+                            Username:<input type="text" className="form-control"placeholder="id" id="box_name" name="id" 
                                     οnfοcus="this.value=''" onChange={(e) => this.username_change(e)} οnblur="if(this.value=='')this.value='username'" />
 
-                            Password:<input type="password" placeholder="password" id="box_pass" name="password" className={styleMedia.input}
+                            Password:<input type="password" className="form-control"placeholder="password" id="box_pass" name="password" 
                                     οnfοcus="this.value=''" onChange={(e) => this.password_change(e)} οnblur="if(this.value=='')this.value='password'" />
                             </div>
                         </div>
                         <div>
-                            <button className={styleMedia.button} type="submit" className={styleMedia.input} οnmοuseοver="this.style.backgroundColor='#FF8D00'"
+                            <button className="btn btn-primary"type="submit"  οnmοuseοver="this.style.backgroundColor='#FF8D00'"
                                 οnmοuseοut="this.style.backgroundColor='#FC5628'" onClick={this.register}>Register</button>
                         </div>
                     </form>
                 </div>
-
+</div>
 
             )
         else

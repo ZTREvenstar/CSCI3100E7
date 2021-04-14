@@ -32,7 +32,7 @@ export default class Navbar extends React.Component{
            <ul className="navbar-nav ml-md-auto">
  
              <li className="nav-item dropdown">
-                <a className="nav-link dropdown-toggle btn" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown">Dropdown link</a>
+                <a className="nav-link dropdown-toggle btn" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" onClick={this.props.logout}>Log out</a>
                <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                   <a className="dropdown-item" href="#">Action</a> <a className="dropdown-item" href="#">Another action</a> <a className="dropdown-item" href="#">Something else here</a>
                  <div className="dropdown-divider">

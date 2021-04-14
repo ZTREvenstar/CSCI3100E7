@@ -43,7 +43,7 @@ canteenlogin=(id_data)=>{
       <Customerlogin customerlogin={this.customerlogin} logout={this.logout} canteenlogin={this.canteenlogin}/>
       <Canteenlogin customerlogin={this.customerlogin} logout={this.logout} canteenlogin={this.canteenlogin}/>
       <Register/>
-      <Canteen id={this.state.id} logout={this.logout} customer_canteen={this.state.customer_canteen}/>
+      <Canteen id={this.state.id} logout={this.logout} logout={this.logout} customer_canteen={this.state.customer_canteen}/>
     </div>
   );
 
