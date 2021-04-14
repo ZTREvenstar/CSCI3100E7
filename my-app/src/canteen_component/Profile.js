@@ -28,7 +28,7 @@ class Profile_Modify extends React.Component{
 
             //alert(this.props.canteenID);
             //console.log(this.state.img)
-            
+            else{
             $.ajax({
         
                 url :URL+'/api/login/canteen?id='+this.props.canteenID,
@@ -46,6 +46,7 @@ class Profile_Modify extends React.Component{
                     console.log("err");
                 }
             })
+        }
             //console.log(this.state.img)
             
             if ( this.state.img!=null){
