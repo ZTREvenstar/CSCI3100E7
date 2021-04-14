@@ -100,6 +100,7 @@ export default class Canteen extends React.Component{
     }
 
     render(){
+        if (this.props.customer_canteen==1)
         return (
             
   <div className="container-fluid  bg-light" >
@@ -108,14 +109,16 @@ export default class Canteen extends React.Component{
       <h3 className="text-info text-center" >
         Welcome Dear Canteen {this.props.id}
       </h3>
-    <Navbar name={this.state.name} id={this.state.id} clickOnMenu={this.clickOnMenu} clickOnOrder={this.clickOnOrder} clickOnProfile={this.clickOnProfile} logout={this.props.logout}/>
+    <Navbar name={this.state.name} id={this.props.id} clickOnMenu={this.clickOnMenu} clickOnOrder={this.clickOnOrder} clickOnProfile={this.clickOnProfile} logout={this.props.logout}/>
     <Carousel />
-    <Profile PageToShow={this.state.PageToShow} canteenID={this.state.id}/>
-    <Menu PageToShow={this.state.PageToShow} canteenID={this.state.id}/>
+    <Profile PageToShow={this.state.PageToShow} canteenID={this.props.id}/>
+    <Menu PageToShow={this.state.PageToShow} canteenID={this.props.id}/>
     </div>
   </div>
 </div>
         )
+        else
+        return null
     }
 
 }

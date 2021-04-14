@@ -110,7 +110,7 @@ class Profile_Modify extends React.Component{
           <label htmlFor="exampleInputPassword1">
             Password
           </label>
-          <input name="status" className="form-control" onChange={this.passwordChange} />
+          <input type="password" name="status" className="form-control" onChange={this.passwordChange} />
         </div>
 
         <div className="form-group">

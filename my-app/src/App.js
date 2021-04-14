@@ -11,8 +11,8 @@ constructor(props){
   super(props)
   this.state=({
 
-    id:null,
-    customer_canteen: null,
+    id:1,
+    customer_canteen: 1,
     login_register:0
   })
 }
@@ -62,7 +62,7 @@ render(){
   else
   return (
     <div className="App">
-      <Canteen id={this.state.id} logout={this.logout} logout={this.logout} customer_canteen={this.state.customer_canteen}/>
+      <Canteen id={this.state.id} logout={this.logout} customer_canteen={this.state.customer_canteen}/>
     </div>
   );
 
