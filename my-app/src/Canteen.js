@@ -105,7 +105,8 @@ export default class Canteen extends React.Component{
         console.log(value);
         this.setState({search_content:value})
     }
-    cancel_search=()=>{
+    cancel_search=(e)=>{
+        e.preventDefault();
         this.setState({search_content:null})
     }
 
