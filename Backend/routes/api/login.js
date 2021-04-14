@@ -1,5 +1,7 @@
 const express = require('express')
 const router = express.Router()
+const session = require('express-session')
+const { stringify } = require('uuid')
 const sqlQuery = require('../../db')
 
 // router.get('/',(req,res)=>{
@@ -7,13 +9,14 @@ const sqlQuery = require('../../db')
 // })
 
 //useer login page
-// router.get('/user', (req, res) => {
-//     res.render('userlogin')
-// })
+router.get('/user', (req, res) => {
+    res.render('userlogin')
+})
 
 
 //deal with user login request
 router.post('/user', async (req, res) => {
+    
     console.log(req.body)
     let id = req.body.id
     let password = req.body.password
@@ -25,7 +28,23 @@ router.post('/user', async (req, res) => {
         res.status(200).json('fail')
     }
     else {
-        res.status(200).json('success')
+        
+        let result_new = result.map((items)=>{
+                return items
+            })
+        console.log(JSON.stringify(result_new))
+        console.log(result_new)
+        
+        req.session.isCustomerLogin = 'true'
+        req.session.userid = result_new[0].id
+        req.session.username = result_new[0].username
+        console.log(req.session)
+        //console.log(req.session.id)
+        // req.session.id = result_new[0].id
+        // req.session.username = result_new[0].username
+        //console.log(JSON.stringify(result_new[0].id))
+        res.status(200).json('success,session saved')
+
     }
     //res.send("post method")
 })
@@ -64,4 +83,15 @@ router.put('/canteen',async(req,res)=>{
     res.status(200).send()
 })
 
+
+router.get('/session',(req,res)=>{
+    console.log(req.session)
+    if(req.session.isCustomerLogin){
+        result = {'username':req.session.username,'id':req.session.userid }
+        res.status(200).send(result)
+    }
+    else{
+        res.status(200).send('false')
+    }
+})
 module.exports = router
