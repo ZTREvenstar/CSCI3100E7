@@ -28,7 +28,7 @@ class Profile_Modify extends React.Component{
 
             //alert(this.props.canteenID);
             //console.log(this.state.img)
-            /*
+            
             $.ajax({
         
                 url :URL+'/api/login/canteen?id='+this.props.canteenID,
@@ -46,22 +46,24 @@ class Profile_Modify extends React.Component{
                     console.log("err");
                 }
             })
-            console.log(this.state.img)
-            */
-
-            let file = this.state.img;
-            const formdata = new FormData();
-            formdata.append('img', file);
-    
-        const url = URL+'/api/canteen/img?id='+this.props.canteenID;
-        fetch(url, {
-            method: 'POST',
-            body: formdata,
-            headers: {
-                "Content-Type": false
+            //console.log(this.state.img)
+            
+            if ( this.state.img!=null){
+                let file = this.state.img;
+                const formdata = new FormData();
+                formdata.append('img', file);
+        
+            const url = URL+'/api/canteen/img?id='+this.props.canteenID;
+            fetch(url, {
+                method: 'POST',
+                body: formdata,
+                headers: {
+                    "Content-Type": false
+                }
+            }).then(response => {console.log("success")})
+            .catch(error => console.log(error));
             }
-        }).then(response => {console.log("success")})
-        .catch(error => console.log(error));
+
 
 
 
