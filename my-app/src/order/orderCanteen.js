@@ -85,7 +85,7 @@ class OrderList extends React.Component {
         console.log(orderID);
         $.ajax({
             type: "POST",
-            url: "/api/order/updateorder",
+            url: URL + "/api/order/updateorder",
             // operation = 1 for update, = 2 for delete
             data: {
                 "orderID" : orderID,
