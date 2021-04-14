@@ -61,7 +61,7 @@ router.get('/', (req, res)=> {
 })
 
 router.post('/updateInfo', async function(req,res){
-	console.log(req.body);
+	//console.log(req.body);
 	
 	//console.log(databody);
 	//Object.assign(profileInfo,req.body)
@@ -75,10 +75,32 @@ router.post('/updateInfo', async function(req,res){
 		sqlQuery(strSql, 
 			[req.body['username'],req.body['id']]);
 		console.log("updated");
+		res.send("success");
 	}else{
+		res.send("failure");
 	}
 
-	res.send(req.body);
+	
+})
+
+router.post('/updatePW', async function(req,res){
+	console.log(req.body);
+	
+	var strSql = "SELECT * FROM customer WHERE id=?"
+    let customer = await sqlQuery(strSql, 
+        [req.body['id']]);
+	let empty = customer && Object.keys(customer).length === 0 && customer.constructor === Object
+	if(!empty){
+		console.log("updating");
+		strSql = "UPDATE customer SET password=? WHERE id=?"
+		sqlQuery(strSql, 
+			[req.body['pw'],req.body['id']]);
+		console.log("updated");
+		res.send("success");
+	}else{
+		console.log("user not found");
+		res.send("failure");
+	}
 })
 
 /*router.post('/updateProfilePic', uploadProfilePic.single('chooseProfilePic'), function(req,res){
@@ -100,15 +122,6 @@ router.get('/profilePic',function(req,res){
 	console.log("get profile picture");
 	var strSql = 'SELECT * FROM customer';
 	res.send(profilePic);
-})
-
-router.get('/testProfile',async function(req,res){
-	console.log("show testing data");
-	var strSql = 'SELECT * FROM customer';
-	let customer_list = await sqlQuery(strSql);
-	console.log(customer_list);
-
-    res.json(customer_list);
 })
 
 router.post('/updateProfilePic', uploadProfilePic.single('img'), function(req,res){
