@@ -15,7 +15,7 @@ constructor(props){
   super(props)
   this.state=({
 
-    id:123,
+    id:null,
     customer_canteen: 0,
     login_register:0
   })
