@@ -23,6 +23,7 @@ class Menu extends React.Component{
 
 
     get_Menu(){
+        //console.log("asd");
         $.ajax({
             url: URL+'/api/canteen/dish',
             type:'GET',
@@ -44,10 +45,9 @@ class Menu extends React.Component{
     }
     componentDidMount(){
         //console.log("Menu canteenID is"+this.props.canteenID)
-
         this.intervalId = setInterval(() => {
                 this.get_Menu();
-        }, 3000);
+        }, 2000);
         
     }
     componentWillUnmount(){
@@ -59,7 +59,6 @@ class Menu extends React.Component{
         if (this.props.PageToShow==0){
             return(
                 <div>
-            <button  className="btn btn-primary text-center">transform</button>
             <Nested Menu_data={this.state.Menu_data}/>
             <Table search_content={this.props.search_content} Menu_data={this.state.Menu_data}/>
            

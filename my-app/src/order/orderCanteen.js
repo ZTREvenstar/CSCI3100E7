@@ -33,7 +33,7 @@ class OrderCanteen extends React.Component {
         //console.log("Menu canteenID is"+this.props.canteenID)
         this.intervalId = setInterval(() => {
             this.getData();
-        }, 500);
+        }, 3000);
 
     }
     componentWillUnmount(){
@@ -116,7 +116,7 @@ class OrderList extends React.Component {
                         this.props.orderlist.map((item)=>{
                             return(
                                 <li className=" list-group-item" id = {"order"+ item["orderID"]}>
-                                    <div>OrderID:{item["orderID"]}   Dish Name:{item["dishName"]}</div>
+                                    <div>OrderID:{item["orderID"]} </div><div>  Dish Name:{item["dishName"]}</div>
                                     <button className="btn btn-primary" id= {"btn" + item["orderID"]}
                                             onClick={(e)=>this.handleClickEvent(item["orderID"], this.props.operation)}>{this.props.btn_operation}</button>
                                 </li>
