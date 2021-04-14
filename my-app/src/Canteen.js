@@ -121,7 +121,7 @@ export default class Canteen extends React.Component{
         Welcome Dear Canteen {this.props.id}
       </h3>
     <Navbar start_search={this.start_search}cancel_search={this.cancel_search} name={this.state.name} id={this.props.id} clickOnMenu={this.clickOnMenu} clickOnOrder={this.clickOnOrder} clickOnProfile={this.clickOnProfile} logout={this.props.logout}/>
-    <Carousel />
+    <Carousel canteenID={this.props.id}/>
     <Profile PageToShow={this.state.PageToShow} canteenID={this.props.id}/>
     <Menu search_content={this.state.search_content} PageToShow={this.state.PageToShow} canteenID={this.props.id}/>
     </div>
