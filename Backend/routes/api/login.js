@@ -9,9 +9,9 @@ const sqlQuery = require('../../db')
 // })
 
 //useer login page
-// router.get('/user', (req, res) => {
-//     res.render('userlogin')
-// })
+router.get('/user', (req, res) => {
+    res.render('userlogin')
+})
 
 
 //deal with user login request
