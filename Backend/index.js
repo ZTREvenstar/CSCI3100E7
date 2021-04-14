@@ -8,7 +8,7 @@ const mysql = require('mysql')
 
 const app = express()
 app.use(cors())
-
+app.use('/public', express.static(path.join(__dirname, '..','public')));
 // Body parser middleware
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
@@ -39,6 +39,8 @@ app.use('/api/register', require('./routes/api/register'))
 
 app.use('/api/com', require('./routes/api/comment_back'))
 
+//profile manager router
+app.use('/api/profile', require('./routes/api/profile'))
 
 const PORT = process.env.PORT || 5000
 app.listen(PORT, ()=>console.log(`Serevr started on PORT ${PORT}`))
