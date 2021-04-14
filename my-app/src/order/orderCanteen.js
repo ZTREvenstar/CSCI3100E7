@@ -19,12 +19,12 @@ class OrderCanteen extends React.Component {
             dataType:'json',
             success: (data)=> {
                 console.log("Success!");
-                console.log(data);
+                //console.log(data);
                 this.setState({myData:data});
             },
             error: (err)=>{
                 console.log("error");
-                console.log(err);
+                //console.log(err);
             }
         })
     }
@@ -81,24 +81,41 @@ class OrderCanteen extends React.Component {
 
 class OrderList extends React.Component {
 
+    handleConfirm = (orderID)=>{
+        console.log(orderID);
+        $.ajax({
+            type: "POST",
+            url: "/api/order/updateorder",
+            // operation = 1 for update, = 2 for delete
+            data: {
+                "orderID" : orderID,
+                "operation" : 1
+            },
+            dataType: "json",
+            complete: function(){
+                alert("completed!");
+                window.location.reload(true);
+            }
+        });
+    }
 
 
     render() {
-        let unconfirmed = [
-            {"order": 1, "name": "a"},
-            {"order": 1, "name": "a"},
-            {"order": 1, "name": "a"}];
+        // let unconfirmed = [
+        //     {"order": 1, "name": "a"},
+        //     {"order": 1, "name": "a"},
+        //     {"order": 1, "name": "a"}];
         return (
             <div>
 
                 <ul className = "list-unstyled" >
                     {
-                        unconfirmed.map(function(item) {
+                        this.props.orderlist.map((item)=>{
                             return(
-                                <li className="order" id = {"order"+ item["order"]}>
-                                    {item["order"]}
-                                    <div>Dish Name:{item["name"]}</div>
-                                    <button className="btn" id= {"btn" + item["order"]}>confirm</button>
+                                <li className="order" id = {"order"+ item["orderID"]}>
+                                    <div>OrderID:{item["orderID"]}   Dish Name:{item["dishName"]}</div>
+                                    <button className="btn" id= {"btn" + item["orderID"]}
+                                            onClick={(e)=>this.handleConfirm(item["orderID"])}>confirm</button>
                                 </li>
                             )
                         })
