@@ -18,8 +18,8 @@ class OrderCustomer extends React.Component {
             type:'GET',
             dataType:'json',
             success: (data)=> {
-                console.log("!!!!!Success!");
-                console.log(data);
+               // console.log("!!!!!Success!");
+                //console.log(data);
                 this.setState({myData:data});
             },
             error: (err)=>{

@@ -13,7 +13,6 @@ class Profile extends React.Component{
     };
 
     componentDidMount() {
-        var that = this
         this.serverRequest = $.ajax({
             url: URL + '/api/profile/info',
             type:'POST',
@@ -21,10 +20,10 @@ class Profile extends React.Component{
             contentType: "application/json",
             dataType:'JSON',
             async:true,
-            success: function(data,status){
+            success: (data) => {
                 console.log("succeed");
                 console.log(data);
-                that.setState({
+                this.setState({
                     username: data[0].username,
                     id: data[0].id,
                 })
@@ -37,7 +36,9 @@ class Profile extends React.Component{
     }
      
     componentWillUnmount() {
-        this.serverRequest.abort();
+        if(this.serverRequest!=null){
+            this.serverRequest.abort()
+        }
     }
 
     handleClick=(index)=>{
@@ -140,6 +141,12 @@ class ChangeInfo extends React.Component{
         event.preventDefault();
 
         //alert('trying to submit a form');
+        if(this.state.username==''){
+            window.alert("please enter a valid username")
+        }
+        if(this.serverRequest!=null){
+            this.serverRequest.abort()
+        }
         let newusername = this.state.username
         this.serverRequest = $.ajax({
             url: URL + '/api/profile/updateInfo',
@@ -156,14 +163,21 @@ class ChangeInfo extends React.Component{
                 if(data == 'success'){
                     this.props.handleUsername(newusername)
                 }
-                this.props.handleSuccess(1);
+                this.props.handleSuccess(0);
             },
             error:function(data,status){
                 console.log("error");
                 console.log(data);
+                window.alert("update failed, the username has been used by anthoer customer")
             }
         });
         
+    }
+
+    componentWillUnmount() {
+        if(this.serverRequest!=null){
+            this.serverRequest.abort()
+        }
     }
 
     usernameChange=(event)=>{
@@ -179,7 +193,7 @@ class ChangeInfo extends React.Component{
                 <form id = "changeInfo" method = "post" onSubmit = {this.handleSubmit}>
                     <div className="form-group">
                         <label htmlFor="InputProfileName">Profile Name</label>
-                        <input type="text" className="form-control"  name="username" placeholder="Enter New User Name" onChange = {this.usernameChange}></input>email
+                        <input type="text" className="form-control"  name="username" placeholder="Enter New User Name" onChange = {this.usernameChange}></input>
                     </div>
                     <button type="submit" className="btn btn-primary">Submit</button>
                 </form>
@@ -198,10 +212,17 @@ class ChangePW extends React.Component{
       //  this.handleSubmit = this.handleSubmit.bind(this);
     }
     handleSubmit=(event)=>{
+        
         event.preventDefault();
         if(this.state.pw!=this.state.confirm){
-            window.alert("pleas enter the same password twice")
+            window.alert("please enter the same password twice")
             return;
+        }else if(this.state.pw==''){
+            window.alert("pleas enter password")
+            return;
+        }
+        if(this.serverRequest!=null){
+            this.serverRequest.abort()
         }
         //alert('trying to submit a form');
         this.serverRequest = $.ajax({
@@ -216,14 +237,21 @@ class ChangePW extends React.Component{
             success: (data)=>{
                 console.log("succeed");
                 console.log(data);
-                this.props.handleSuccess(2);
+                this.props.handleSuccess(0);
             },
             error:function(data){
                 console.log("error");
-                this.props.handleSuccess(2);
+                this.props.handleSuccess(0);
+                window.alert("update failed")
             }
         });
         
+    }
+
+    componentWillUnmount() {
+        if(this.serverRequest!=null){
+            this.serverRequest.abort()
+        }
     }
 
     pwChange=(event)=>{
@@ -276,8 +304,16 @@ class UploadPic extends React.Component{
     
     handleSubmit=(event)=>{
         event.preventDefault();
-
         let file = this.state.img;
+
+        
+        if(file==null){
+            window.alert("please select a picture");
+            return;
+        }
+        if(this.serverRequest!=null){
+            this.serverRequest.abort()
+        }
         let formdata = new FormData();
         formdata.append('id',this.props.id);
         formdata.append('img', file);
@@ -291,7 +327,7 @@ class UploadPic extends React.Component{
             success: (data)=>{
                 window.alert("succeeded, now updating parent component");
                 console.log(data);
-                this.props.handleSuccess(3)
+                this.props.handleSuccess(0)
                 this.props.handlePicChange();
             },
             error:function(data){
@@ -301,6 +337,11 @@ class UploadPic extends React.Component{
         });
     }
 
+    componentWillUnmount() {
+        if(this.serverRequest!=null){
+            this.serverRequest.abort()
+        }
+    }
 
     render(){
         return(

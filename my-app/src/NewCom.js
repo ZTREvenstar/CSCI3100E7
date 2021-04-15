@@ -168,14 +168,14 @@ class CForm extends React.Component{
       render() {
         return (
           <form onSubmit={this.handleSubmit}>
-            <div class="form-group">
+            <div className="form-group">
             <label>
               write your comment:
               <ReactStars count={5} size={20} onChange={this.starChange} value={this.state.star}/>
               <input type="text" value={this.state.value} onChange={this.handleChange} />
             </label>
             </div>
-            <button type="submit" class="btn btn-primary"value="submit">Submit</button>
+            <button type="submit" className="btn btn-primary"value="submit">Submit</button>
           </form>
         );
       }
@@ -238,7 +238,7 @@ class Comment extends React.Component{
                             <div className="d-flex flex-wrap justify-content-center">
                             <button type="button" className="btn btn-primary m-1" onClick={this.likeC}>Helpful</button>
                             <button type="button" className="btn btn-primary m-1" onClick={this.DeleteC}>delete</button>
-                            <small class="text-muted"> {this.state.likeNum} people found this review helpful</small>
+                            <small className="text-muted"> {this.state.likeNum} people found this review helpful</small>
                     </div>
                         </div>
                    </div>
@@ -257,7 +257,7 @@ class Comment extends React.Component{
                                 <p className="card-text">{this.props.content}</p>
                                 <div className="d-flex flex-wrap justify-content-center">
                                 <button type="button" className="btn btn-primary m-1" onClick={this.likeC}>Helpful</button>
-                                <small class="text-muted"> {this.state.likeNum} people found this review helpful</small>
+                                <small className="text-muted"> {this.state.likeNum} people found this review helpful</small>
                         </div>
                             </div>
                        </div>
