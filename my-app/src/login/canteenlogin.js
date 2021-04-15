@@ -28,6 +28,9 @@ class login extends React.Component {
                         open_or_not: 0
                     })
                 }
+                else{
+                    alert("worng id or password")
+                }
                 //this.props.customerlogin(this.state.id)
             }
         })
@@ -69,10 +72,10 @@ class login extends React.Component {
                         </div>
                      
 
-                        <div>
+                        {/* <div>
                         <button className="btn btn-warning" type="submit"  οnmοuseοver="this.style.backgroundColor='#FF8D00'"
                                 οnmοuseοut="this.style.backgroundColor='#FC5628'" onClick={this.props.BackToRegister}>Go register</button>
-                                </div>
+                                </div> */}
                         <div>
                             <button className="btn btn-primary" type="submit"  οnmοuseοver="this.style.backgroundColor='#FF8D00'"
                                 οnmοuseοut="this.style.backgroundColor='#FC5628'" onClick={this.login}>Login</button>

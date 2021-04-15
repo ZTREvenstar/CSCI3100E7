@@ -29,6 +29,9 @@ class login extends React.Component {
                         open_or_not: 0
                     })
                 }
+                else{
+                    alert('wrong id or password')
+                }
                 //this.props.customerlogin(this.state.id)
             }
         })
