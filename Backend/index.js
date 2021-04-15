@@ -51,5 +51,5 @@ app.use('/api/com', require('./routes/api/comment_back'))
 app.use('/api/profile', require('./routes/api/profile'))
 
 
-const PORT = process.env.PORT || 5000
+const PORT = process.env.PORT || 80
 app.listen(PORT, ()=>console.log(`Serevr started on PORT ${PORT}`))
