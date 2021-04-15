@@ -19,7 +19,6 @@
     "ejs": "^3.1.6",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
-    "google-auth-library": "^7.0.4",
     "jquery": "^3.6.0",
     "moment": "^2.29.1",
     "multer": "^1.4.2",
