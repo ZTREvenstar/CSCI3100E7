@@ -30,7 +30,7 @@ this.sortDish=this.sortDish.bind(this);
     updateSelf=()=>{
         this.setState({id:this.props.id,did:this.props.did,name:this.props.name,show:this.props.show});
         console.log("gggggggg"+this.props.show);
-        $.ajax({type:'GET',url:"http://localhost:5000/api/com/comment/"+this.props.id,
+        $.ajax({type:'GET',url:URL + "/api/com/comment/"+this.props.id,
         async:false,
         success:(res)=>{
             //console.log(res);
@@ -51,7 +51,7 @@ this.sortDish=this.sortDish.bind(this);
             did:nextProps.did,
             name:nextProps.name,
             show:nextProps.show});
-            $.ajax({type:'GET',url:"http://localhost:5000/api/com/comment/"+this.props.id,
+            $.ajax({type:'GET',url:URL + "/api/com/comment/"+this.props.id,
         async:false,
         success:(res)=>{
             //console.log(res);
@@ -65,7 +65,7 @@ this.sortDish=this.sortDish.bind(this);
         });
       }
     updateC=()=>{
-        $.ajax({type:'GET',url:"http://localhost:5000/api/com/comment/"+this.props.id,
+        $.ajax({type:'GET',url:URL + "/api/com/comment/"+this.props.id,
         async:false,
         success:(res)=>{
             this.setState({comments:res});
@@ -75,7 +75,7 @@ this.sortDish=this.sortDish.bind(this);
         this.updateSelf();
     }
     sortDishH=()=>{
-        $.ajax({type:'GET',url:"http://localhost:5000/api/com/comment/"+this.props.id,
+        $.ajax({type:'GET',url:URL + "/api/com/comment/"+this.props.id,
         async:false,
         success:(res)=>{
             var tmp=res;
@@ -150,7 +150,7 @@ class CForm extends React.Component{
       }
     
       handleSubmit(event) {
-        $.ajax({type:'POST',url:"http://localhost:5000/api/com/addC/cid/"+this.props.did+"/dishId/"+this.props.dish+"/content/"+this.state.value+"/"+this.state.star,
+        $.ajax({type:'POST',url:URL + "/api/com/addC/cid/"+this.props.did+"/dishId/"+this.props.dish+"/content/"+this.state.value+"/"+this.state.star,
         async :false,
         success:(res)=>{ 
             this.props.update();
@@ -207,7 +207,7 @@ class Comment extends React.Component{
   }
     }
     likeC=()=>{
-        $.ajax({type:'POST',url:"http://localhost:5000/api/com/like/"+this.props.id, async:false,
+        $.ajax({type:'POST',url:URL + "/api/com/like/"+this.props.id, async:false,
         success:(res)=>{
             var num=res[0].LN;
             this.setState({likeNum:num});
@@ -215,7 +215,7 @@ class Comment extends React.Component{
         })
     }
     DeleteC=()=>{
-        $.ajax({type:'POST',url:"http://localhost:5000/api/com/deleteC/"+this.props.id+"/"+this.props.did, async: false,
+        $.ajax({type:'POST',url:URL + "/api/com/deleteC/"+this.props.id+"/"+this.props.did, async: false,
             success:(res)=>{
                 console.log("result : "+res);
                 if(!res){
