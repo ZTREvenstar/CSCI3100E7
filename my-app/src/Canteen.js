@@ -7,7 +7,7 @@ import Profile from "./canteen_component/Profile"
 import Table from "./canteen_component/Table"
 import Form from "./canteen_component/Form"
 import OrderCanteen from './order/orderCanteen.js'
-const URL = "http://localhost:5000"
+const URL = "http://54.227.0.209:5000"
 
 
 
