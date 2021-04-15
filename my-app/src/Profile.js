@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import $ from "jquery"
-const URL = "54.227.0.209:5000";
+const URL = "http://54.227.0.209:5000";
 
 class Profile extends React.Component{
     constructor(props){
