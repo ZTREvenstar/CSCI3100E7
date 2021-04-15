@@ -15,7 +15,7 @@ class Profile extends React.Component{
     componentDidMount() {
         var that = this
         this.serverRequest = $.ajax({
-            url: 'http://localhost:5000/api/profile/info',
+            url: URL + '/api/profile/info',
             type:'POST',
             data: JSON.stringify({'id':this.props.id}),
             contentType: "application/json",
@@ -142,7 +142,7 @@ class ChangeInfo extends React.Component{
         //alert('trying to submit a form');
         let newusername = this.state.username
         this.serverRequest = $.ajax({
-            url: 'http://localhost:5000/api/profile/updateInfo',
+            url: URL + '/api/profile/updateInfo',
             type:'POST',
             data: JSON.stringify({
                 'username':this.state.username,
@@ -205,7 +205,7 @@ class ChangePW extends React.Component{
         }
         //alert('trying to submit a form');
         this.serverRequest = $.ajax({
-            url: 'http://localhost:5000/api/profile/updatePW',
+            url: URL + '/api/profile/updatePW',
             type:'POST',
             data: JSON.stringify({
                 'pw':this.state.pw,
