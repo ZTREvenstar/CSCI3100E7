@@ -25,7 +25,7 @@ class Menu extends React.Component{
     get_Menu(){
         //console.log("asd");
         $.ajax({
-            url: URL+'/api/canteen/dish',
+            url: URL+'/api/canteen/dish?id='+this.props.canteenID,
             type:'GET',
             dataType:'json',
             //async:false,
