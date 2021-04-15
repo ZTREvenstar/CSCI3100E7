@@ -17,7 +17,7 @@ class UserInt extends React.Component{
         //get all canteen id
         //setstate
         $.ajax({
-            url:"http://localhost:5000/api/com/canteen",
+            url:URL + "/api/com/canteen",
             async:false,
             success:(res)=>{
             this.setState({all_canteen:res,userID:this.props.uid});
@@ -83,7 +83,7 @@ class UserMenu extends React.Component{
     updateDish=(cid)=>{
         //get canteen dish
         $.ajax({
-            url:"http://localhost:5000/api/com/canteen/"+cid,
+            url:URL + "/api/com/canteen/"+cid,
             async:false,
             success:(res)=>{
             this.setState({dish:res});
@@ -149,7 +149,7 @@ class Dish extends React.Component{
           //console.log("aadadadadada");
           $.ajax({
         
-            url :'http://localhost:5000/api/order/makeorder',
+            url :URL + '/api/order/makeorder',
             type:'GET',
             datatype :'JSON',
             data: {
