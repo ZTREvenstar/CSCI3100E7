@@ -1,6 +1,6 @@
 import React from "react"
 import $ from "jquery"
-const URL = "http://localhost:5000/api"
+const URL = "http://localhost:80/api"
 
 class login extends React.Component {
     constructor(props) {

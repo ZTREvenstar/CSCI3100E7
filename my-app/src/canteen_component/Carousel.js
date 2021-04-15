@@ -1,6 +1,6 @@
 import React from "react"
 import $ from "jquery"
-const URL = "http://localhost:5000"
+const URL = "http://localhost:80"
 
 export default class Carousel extends React.Component{
 

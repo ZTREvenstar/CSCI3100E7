@@ -1,7 +1,7 @@
 import React from "react"
 import $ from "jquery"
 
-const URL = "http://localhost:5000"
+const URL = "http://localhost:80"
 
 
 class OrderCustomer extends React.Component {

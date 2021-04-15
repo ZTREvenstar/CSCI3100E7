@@ -1,7 +1,7 @@
 import React from "react";
 import $ from "jquery";
 import DishDet from "./NewCom.js";
-const URL = "http://localhost:5000";
+const URL = "http://localhost:80";
 
 class UserInt extends React.Component{
     constructor(props){

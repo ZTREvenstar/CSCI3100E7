@@ -1,6 +1,6 @@
 import React from "react"
 import $ from "jquery"
-const URL = "http://localhost:5000"
+const URL = "http://localhost:80"
 
 class Thread_comment extends React.Component{
     render(){
