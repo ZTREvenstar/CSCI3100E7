@@ -88,12 +88,12 @@ class OrderList extends React.Component {
 
         return (
             <div>
-                <ul className = "list-unstyled" >
+                <div className="card-columns">
                     {
                         this.props.orderlist.map((item)=>{
                             return(
-                                <li className="order" id = {"order"+ item["orderID"]}>
-                                    <div key={"order"+ item["orderID"]} id = {"order"+ item["orderID"]} className="card d-inline-block m-2" style={{width: 200}}>
+                                
+                                    <div key={"order"+ item["orderID"]} id = {"order"+ item["orderID"]} className="card d-inline-block m-1">
                                         <h5 className="card-header">OrderID: {item["orderID"]}</h5>
                                         <div className="card-body">
                                             <h5 className="card-title">Dish Name: {item["dishName"]}</h5>
@@ -101,11 +101,10 @@ class OrderList extends React.Component {
                                             <h6 className="card-title">Price: ${item["price"]}</h6>  
                                         </div>
                                     </div>
-                                </li>
                             )
                         })
                     }
-                </ul>
+                </div>
                 <hr/>
             </div>
         );

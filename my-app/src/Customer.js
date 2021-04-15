@@ -81,7 +81,17 @@ export default class Customer extends React.Component{
 
     render(){
 
-        if (this.props.customer_canteen==0)
+        if (this.props.customer_canteen==0){
+
+        let display = null
+
+        if(this.state.PageToShow==0){
+          display = <Profile PageToShow={this.state.PageToShow} id={this.props.id} logout={this.props.logout} customer_canteen={this.props.customer_canteen}/>
+        }else if(this.state.PageToShow==1){
+          display = <OrderCustomer PageToShow={this.state.PageToShow} id={this.props.id} logout={this.props.logout} customer_canteen={this.props.customer_canteen}/>
+        }else{
+          display = <UserInt PageToShow={this.state.PageToShow} uid={this.props.id} logout={this.props.logout} customer_canteen={this.props.customer_canteen}/>
+        }
         return (
             
   <div className="container-fluid  bg-light" >
@@ -91,16 +101,15 @@ export default class Customer extends React.Component{
         Welcome Dear Customer {this.props.id}
       </h3>
     <Navbar name={this.state.name} id={this.props.id} clickOnMenu={this.clickOnMenu} clickOnOrder={this.clickOnOrder} clickOnProfile={this.clickOnProfile} logout={this.props.logout}/>
-    <Profile PageToShow={this.state.PageToShow} id={this.props.id} logout={this.props.logout} customer_canteen={this.props.customer_canteen}/>
-    <OrderCustomer PageToShow={this.state.PageToShow} id={this.props.id} logout={this.props.logout} customer_canteen={this.props.customer_canteen}/>
-    <UserInt PageToShow={this.state.PageToShow} uid={this.props.id} logout={this.props.logout} customer_canteen={this.props.customer_canteen}/>
-  
+    {display}
     </div>
   </div>
 </div>
-        )
-        else
-        return null
+        )}
+        else{
+          return null
+        }
+        
     }
 
 }
