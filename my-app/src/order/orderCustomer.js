@@ -1,7 +1,7 @@
 import React from "react"
 import $ from "jquery"
 
-const URL = "http://localhost:80"
+const URL = "54.227.0.209:5000"
 
 
 class OrderCustomer extends React.Component {
@@ -93,10 +93,14 @@ class OrderList extends React.Component {
                         this.props.orderlist.map((item)=>{
                             return(
                                 <li className="order" id = {"order"+ item["orderID"]}>
-                                    <div>OrderID: {item["orderID"]}</div>
-                                    <div>Dish Name: {item["dishName"]}</div>
-                                    <div>Canteen Name: {item["canteenName"]}</div>
-                                    <div>Price: ${item["price"]}</div>
+                                    <div key={"order"+ item["orderID"]} id = {"order"+ item["orderID"]} className="card d-inline-block m-2" style={{width: 200}}>
+                                        <h5 className="card-header">OrderID: {item["orderID"]}</h5>
+                                        <div className="card-body">
+                                            <h5 className="card-title">Dish Name: {item["dishName"]}</h5>
+                                            <h6 className="card-title">Canteen: {item["canteenName"]}</h6>
+                                            <h6 className="card-title">Price: ${item["price"]}</h6>  
+                                        </div>
+                                    </div>
                                 </li>
                             )
                         })

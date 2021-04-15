@@ -1,6 +1,6 @@
 import React from "react"
 import $ from "jquery"
-const URL = "http://localhost:80"
+const URL = "54.227.0.209:5000"
 class TableRow extends React.Component{
     
     delete_menu=()=>{

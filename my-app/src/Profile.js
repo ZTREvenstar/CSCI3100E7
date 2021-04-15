@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import $ from "jquery"
-const URL = "http://localhost:80";
+const URL = "54.227.0.209:5000";
 
 class Profile extends React.Component{
     constructor(props){
@@ -319,7 +319,7 @@ class UploadPic extends React.Component{
         formdata.append('img', file);
         console.log(formdata);
         this.serverRequest = $.ajax({
-            url: 'http://localhost:5000/api/profile/updateProfilePic',
+            url: URL+'/api/profile/updateProfilePic',
             type:'POST',
             data: formdata,
             contentType: false, processData: false,
@@ -357,45 +357,4 @@ class UploadPic extends React.Component{
     }
 }
 
-/*
-<div className="row my-2" id = "Profile">
-
-                <div>
-                    <form id = "changeProfileInfo">
-                        <div className="form-group">
-                            <label htmlFor="InputProfileName">Profile Name</label>
-                            <input type="text" className="form-control" id = "profileName" name="profileName" placeholder="Enter New Profile Name"></input>
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="InputEmailAddress">Email address</label>
-                            <input type="email" className="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="Enter email"></input>
-                            <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
-                        </div>
-                        <button type="submit" className="btn btn-primary">Submit</button>
-                    </form>
-                </div>  
-                <div>
-                    <form id = "changePassword">
-                        <div className="form-group">
-                            <label htmlFor="InputPassword">Password</label>
-                            <input type="password" className="form-control" id="InputPassword" placeholder="Enter New Password"></input>
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="ConfirmPassword">Password</label>
-                            <input type="password" className="form-control" id="ConfirmPassword" placeholder="Repeat New Password"></input>
-                        </div>
-                        <button type="submit" className="btn btn-primary">Submit</button>
-                    </form>
-                </div> 
-                <div>
-                    <form id ="changeProfilePic" action="http://localhost:3000/updateProfilePic" method="post" enctype="multipart/form-data">
-                        <div className="form-group">
-                            <label htmlFor ="chooseProfilePic">Choose Profile Pic</label>
-                            <input id="chooseProfilePic" name="chooseProfilePic" type="file" className="form-control-file">   </input> 
-                        </div>
-                        <button type="submit" className="btn btn-primary">Submit</button>
-                    </form>
-                </div> 
-
- */
 export default Profile;
