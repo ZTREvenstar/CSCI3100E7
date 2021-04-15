@@ -1,6 +1,6 @@
 import React from "react"
 import $ from "jquery"
-const URL = "http://54.227.0.209:5000"
+const URL = "http://localhost:5000"
 
 class Profile_Modify extends React.Component{
 

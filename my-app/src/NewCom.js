@@ -3,7 +3,7 @@ import $ from "jquery";
 import propic from './pic/green.png';
 import equal from 'fast-deep-equal';
 import ReactStars from "react-rating-stars-component";
-const URL = "http://54.227.0.209:5000";
+const URL = "http://localhost:5000";
 
 const sortChoice=[
     {uuid:'1',name:'Choose filter'},
