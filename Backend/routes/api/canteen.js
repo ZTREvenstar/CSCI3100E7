@@ -85,9 +85,9 @@ router.get('/React.js', (req, res)=> {
 
 //Two way -----either "then()" or "async and await" takes effects
 router.get('/dish', async (req, res)=> {
-
+	let canteenID = req.query.id
 	//console.log("get dish");
-    var strSql = 'SELECT * FROM dish';
+    var strSql = 'SELECT * FROM dish WHERE canteenID='+canteenID;
     //strSql = "desc dish;";
     let dish_list = await sqlQuery(strSql);
 	//console.log(dish_list);
