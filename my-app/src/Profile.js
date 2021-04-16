@@ -160,13 +160,11 @@ class ChangeInfo extends React.Component{
             success: (data)=>{
                 console.log("succeed");
                 console.log(data);
-                if(data == 'success'){
+               
                     window.alert("update succeeded")
                     this.props.handleUsername(newusername)
                     this.props.handleSuccess(0);
-                }else{
-                    window.alert("update failed, the username has been used by another customer")
-                }
+   
                 
             },
             error:function(data,status){
