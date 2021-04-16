@@ -41,8 +41,8 @@ class UserInt extends React.Component{
                 {   
                 this.state.all_canteen.map(c => 
                     { if(this.state.show_cur_canteen == 0 || (this.state.show_cur_canteen==1 && this.state.cur_canteen==c.id)) {return (
-                   <div key={c.id} id={c.id} className="card d-inline-block m-2 " onClick = {()=>this.changeCan(c.id)} style = {{maxWidth: 260}}>
-                        <img src={URL + "/public/canteen/"+c.id+".png"} alt="{file.remarks}" className="w-100"></img>
+                   <div key={c.id} id={c.id} className="card d-inline-block m-2 " onClick = {()=>this.changeCan(c.id)} >
+                        <img src={URL + "/public/canteen/"+c.id+".png"} alt="{file.remarks}" className="img-fluid" style = {{ height: 140}}></img>
                         <div className="card-body">
                             <h3 className="card-title">{c.name}</h3>
                             
@@ -173,7 +173,7 @@ class Dish extends React.Component{
         }) 
       }
     render(){
-        return(<li className="list-group-item" key = {this.state.id} id={this.state.id}>
+        return(<li className="list-group-item" key={this.state.id} id={this.state.id}>
             <a>{this.state.name}</a>
             <button type="button" className="btn btn-primary m-2" onClick={this.order}>order</button>
             <button type="button" className="btn btn-primary m-2" onClick={this.showD}>show detail</button>
