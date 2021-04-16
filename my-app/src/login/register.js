@@ -9,22 +9,29 @@ class login extends React.Component {
 
             id: null,
             password: null,
-            username:null,
+            username: null,
             open_or_not: 1
         })
     }
-    
+
     register = (e) => {
         e.preventDefault();
         $.ajax({
             type: 'POST',
             url: URL + "/register",
-            data:JSON.stringify({"id":this.state.id,"username":this.state.username, "password":this.state.password}),
-            contentType:"application/json",
+            data: JSON.stringify({ "id": this.state.id, "username": this.state.username, "password": this.state.password }),
+            contentType: "application/json",
             success: (res) => {
                 console.log("result: " + res)
+                if (res == 'register success') {
+                    alert('success! Please go back to login page to login')
                 }
-                //this.props.customerlogin(this.state.id)
+                else {
+                    alert('register fail, please use unique id')
+                }
+            }
+
+            //this.props.customerlogin(this.state.id)
         })
     }
 
@@ -49,37 +56,37 @@ class login extends React.Component {
         })
     }
     render() {
-        if (this.props.login_register==1)
+        if (this.props.login_register == 1)
             return (
 
                 <div className="container ">
                     <div className="row justify-content-center ">
-                    <form className="col-md-4 col-xm-4 bg-dark text-light rounded"noValidate method="POST">
-                        <div id="form_widget">
-                            <div className="form-group ">
-                            Your Id:<input type="text" className="form-control"placeholder="id" id="box_name" name="id" 
-                                    οnfοcus="this.value=''" onChange={(e) => this.id_change(e)} οnblur="if(this.value=='')this.value='id'" />
+                        <form className="col-md-4 col-xm-4 bg-dark text-light rounded" noValidate method="POST">
+                            <div id="form_widget">
+                                <div className="form-group ">
+                                    Your Id:<input type="text" className="form-control" placeholder="id" id="box_name" name="id"
+                                        οnfοcus="this.value=''" onChange={(e) => this.id_change(e)} οnblur="if(this.value=='')this.value='id'" />
 
-                            Username:<input type="text" className="form-control"placeholder="id" id="box_name" name="id" 
-                                    οnfοcus="this.value=''" onChange={(e) => this.username_change(e)} οnblur="if(this.value=='')this.value='username'" />
+                            Username:<input type="text" className="form-control" placeholder="username" id="box_name" name="username"
+                                        οnfοcus="this.value=''" onChange={(e) => this.username_change(e)} οnblur="if(this.value=='')this.value='username'" />
 
-                            Password:<input type="password" className="form-control"placeholder="password" id="box_pass" name="password" 
-                                    οnfοcus="this.value=''" onChange={(e) => this.password_change(e)} οnblur="if(this.value=='')this.value='password'" />
+                            Password:<input type="password" className="form-control" placeholder="password" id="box_pass" name="password"
+                                        οnfοcus="this.value=''" onChange={(e) => this.password_change(e)} οnblur="if(this.value=='')this.value='password'" />
+                                </div>
                             </div>
-                        </div>
 
-                        <div>
-                            <button className="btn btn-warning"type="submit"  οnmοuseοver="this.style.backgroundColor='#FF8D00'"
-                                οnmοuseοut="this.style.backgroundColor='#FC5628'" onClick={this.props.BackToLogin}>Back to login</button>
-                        </div>
-                        <div>
-                            <button className="btn btn-primary"type="submit"  οnmοuseοver="this.style.backgroundColor='#FF8D00'"
-                                οnmοuseοut="this.style.backgroundColor='#FC5628'" onClick={this.register}>Register</button>
-                        </div>
+                            <div>
+                                <button className="btn btn-warning" type="submit" οnmοuseοver="this.style.backgroundColor='#FF8D00'"
+                                    οnmοuseοut="this.style.backgroundColor='#FC5628'" onClick={this.props.BackToLogin}>Back to login</button>
+                            </div>
+                            <div>
+                                <button className="btn btn-primary" type="submit" οnmοuseοver="this.style.backgroundColor='#FF8D00'"
+                                    οnmοuseοut="this.style.backgroundColor='#FC5628'" onClick={this.register}>Register</button>
+                            </div>
 
-                    </form>
+                        </form>
+                    </div>
                 </div>
-</div>
 
             )
         else
