@@ -68,8 +68,7 @@ router.post('/updateInfo', async function(req,res){
 	var strSql = "SELECT * FROM customer WHERE id!=? AND username=?"
     let customer = await sqlQuery(strSql, 
         [req.body['id'],req.body['username']]);
-	let found = customer && Object.keys(customer).length === 0 && customer.constructor === Object
-	if(!found){
+	if(customer != null){
 		console.log("updating");
 		strSql = "UPDATE customer SET username=? WHERE id=?"
 		sqlQuery(strSql, 

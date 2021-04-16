@@ -114,6 +114,10 @@ router.get('/order',async (req, res)=> {
 })
 
 
+
+
+
+/*
 router.post('/dish',upload.array(),(req, res)=>{
 
 
@@ -122,6 +126,21 @@ router.post('/dish',upload.array(),(req, res)=>{
 
     sqlQuery(strSql, 
         [data['id'],data['name'],data['status'],data['price'],data['canteenID'],data['img']]);
+
+    res.status(200).send();
+
+})*/
+router.post('/dish',upload.array(),async (req, res)=>{
+
+    let sql = 'SELECT MAX(id) AS oldID FROM dish';
+    let result = await sqlQuery(sql);
+    let new_dishID = result[0]['oldID'] + 1;
+
+    let data = req.body;
+    let strSql = "insert into dish (id,name,status,price, canteenID, img) values(?,?,?,?,?,?);"
+
+    sqlQuery(strSql,
+        [new_dishID,data['name'],data['status'],data['price'],data['canteenID'],data['img']]);
 
     res.status(200).send();
 

@@ -21,10 +21,7 @@ export default class Form extends React.Component{
             }
          post_menu=(e)=>{
             e.preventDefault();
-            if (this.state.id==null){
-                alert("dish id should not be empty")
-                return;
-            }
+            
             if (this.state.name==null){
                 alert("dish name should not be empty")
                 return;
@@ -42,11 +39,10 @@ export default class Form extends React.Component{
                 type:'POST',
                 datatype :'JSON',
                 data: {
-                    'id':this.state.id, 
                     'name':this.state.name, 
                     'status':this.state.status, 
                     'price':this.state.price, 
-                    'img':this.state.img, 
+                    'img':null, 
                     'canteenID':this.props.canteenID, 
     
                 
@@ -54,6 +50,8 @@ export default class Form extends React.Component{
                 success: (data)=>{
                     alert("add successfully");
                     document.getElementById("create-course-form").reset();
+                    this.props.handleSubmit();
+                    this.set_Start_add();
                     //this.Reset();
                 },
                 error: (err)=>{
@@ -65,9 +63,9 @@ export default class Form extends React.Component{
          nameChange=(event)=>{
             this.setState({name: event.target.value});
          }
-         idChange=(event)=>{
-            this.setState({id: event.target.value});
-         }
+//          idChange=(event)=>{
+//             this.setState({id: event.target.value});
+//          }
     
          statusChange=(event)=>{
             if (event.target.value)
@@ -90,18 +88,12 @@ export default class Form extends React.Component{
         render(){
     
             if (this.state.Start_add==0)
-            return <button  className="btn btn-primary text-center" onClick={this.set_Start_add}>Add a new menu</button>
+            return <button  className="btn btn-primary text-center mb-3" onClick={this.set_Start_add}>Add a new dish</button>
             else
             return(<div className="container ">
                 <div className="row justify-content-center ">
                 <form className="col-md-4 col-xm-4 " role="form" id="create-course-form" onSubmit={this.post_menu}>
-            <div className="form-group ">
-               
-               <label htmlFor="exampleInputEmail1">
-                 id
-               </label>
-               <input name="id" className="form-control "placeholder="0" onChange={this.idChange}/>
-             </div>
+            
             <div className="form-group">
                
               <label htmlFor="exampleInputEmail1">
@@ -119,14 +111,6 @@ export default class Form extends React.Component{
                <input name="price" className="form-control"  placeholder="10"onChange={this.priceChange} />
              </div>
     
-            <div className="form-group">
-               
-              <label htmlFor="exampleInputFile">
-                Image
-              </label>
-              <input type="file" className="form-control-file" onChange={this.imgChange}/>
-            </div>
-    
             <div className="checkbox">
                
               <label>
@@ -138,7 +122,7 @@ export default class Form extends React.Component{
             <button type="submit" className="btn btn-primary" >
               Add 
             </button>
-            <button  className="btn btn-warning text-center" onClick={this.set_Start_add}>Cancel</button>
+            <button  className="btn btn-warning text-center m-2" onClick={this.set_Start_add}>Cancel</button>
           </form>
           </div>
           </div>

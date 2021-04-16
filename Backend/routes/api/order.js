@@ -14,10 +14,10 @@ router.get('/canteen',async (req,res)=>{
 
     let dataSend = [];
 
-    // unconfirmed
+    // unconfirmed, fixed
     let sql = 'SELECT O.orderID AS orderID, O.status AS status, D.name AS dishName ' +
               'FROM orderinfo O, dish D ' +
-              'WHERE O.status = 0 AND D.id = O.dishID AND D.id = ?';
+              'WHERE O.status = 0 AND D.id = O.dishID AND D.canteenID = ?';
     let addSqlParams = [cid];
     let result = await sqlQuery(sql, addSqlParams);
     dataSend.push(result);
@@ -25,7 +25,7 @@ router.get('/canteen',async (req,res)=>{
     // unfinished
     sql = 'SELECT O.orderID AS orderID, O.status AS status, D.name AS dishName ' +
         'FROM orderinfo O, dish D ' +
-        'WHERE O.status = 1 AND D.id = O.dishID AND D.id = ?';
+        'WHERE O.status = 1 AND D.id = O.dishID AND D.canteenID = ?';
     addSqlParams = [cid];
     result = await sqlQuery(sql, addSqlParams);
     dataSend.push(result);
@@ -33,7 +33,7 @@ router.get('/canteen',async (req,res)=>{
     // finished
     sql = 'SELECT O.orderID AS orderID, O.status AS status, D.name AS dishName ' +
           'FROM orderinfo O, dish D ' +
-          'WHERE O.status = 2 AND D.id = O.dishID AND D.id = ?';
+          'WHERE O.status = 2 AND D.id = O.dishID AND D.canteenID = ?';
     addSqlParams = [cid];
     result = await sqlQuery(sql, addSqlParams);
     dataSend.push(result);
