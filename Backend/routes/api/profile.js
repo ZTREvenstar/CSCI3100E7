@@ -68,13 +68,12 @@ router.post('/updateInfo', async function(req,res){
 	var strSql = "SELECT * FROM customer WHERE id!=? AND username=?"
     let customer = await sqlQuery(strSql, 
         [req.body['id'],req.body['username']]);
-	if(customer != null){
+	if(customer == []){
 		console.log("updating");
 		strSql = "UPDATE customer SET username=? WHERE id=?"
 		sqlQuery(strSql, 
 			[req.body['username'],req.body['id']]);
 		console.log("updated");
-		res.send("success");
 	}else{
 		res.send("failure");
 	}
