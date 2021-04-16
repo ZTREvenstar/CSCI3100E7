@@ -13,12 +13,16 @@ class OrderCustomer extends React.Component {
     }
 
     getData(){
-        $.ajax({
+        if(this.serverRequest!=null && this.serverRequest.readyState!=4){
+            console.log("last update not finished");
+            return;
+        }
+        this.serverRequest = $.ajax({
             url: URL + '/api/order/customer?customerID=' + this.props.id,
             type:'GET',
             dataType:'json',
             success: (data)=> {
-               // console.log("!!!!!Success!");
+                console.log("!!!!!Success!");
                 //console.log(data);
                 this.setState({myData:data});
             },
@@ -33,11 +37,14 @@ class OrderCustomer extends React.Component {
         //console.log("Menu canteenID is"+this.props.canteenID)
         this.intervalId = setInterval(() => {
             this.getData();
-        }, 500);
+        }, 3000);
 
     }
     componentWillUnmount(){
         clearInterval(this.intervalId);
+        if(this.serverRequest!=null){
+            this.serverRequest.abort();
+        }
     }
 
 
@@ -73,9 +80,9 @@ class OrderCustomer extends React.Component {
                 <h3>Preparing:</h3>
                 {display2}
 
-                <h3>Finished Orders. Please take the meal:</h3>
+                <h3>Finished Orders.</h3> 
+                <h4>Please take the meal:</h4>
                 {display3}
-
                 <h3>HAVE A NICE MEAL!</h3>
             </div>
         );
@@ -88,7 +95,7 @@ class OrderList extends React.Component {
 
         return (
             <div>
-                <div className="card-columns">
+                <div className="d-flex flex-wrap justify-content-center">
                     {
                         this.props.orderlist.map((item)=>{
                             return(

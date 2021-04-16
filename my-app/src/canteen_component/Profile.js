@@ -21,14 +21,12 @@ class Profile_Modify extends React.Component{
 
         put_canteen=(e)=>{
             e.preventDefault();
-            if (this.props.canteenID==null||this.state.name==null||this.state.password==null){
-                alert("please enter valid information")
-                return null;
+            if (this.props.canteenID==null|| ((this.state.name==null||this.state.password==null) && this.state.img==null)){
+                alert("please enter valid information");
             }
-
             //alert(this.props.canteenID);
             //console.log(this.state.img)
-            else{
+            else if(this.state.img==null){
             $.ajax({
         
                 url :URL+'/api/login/canteen?id='+this.props.canteenID,
@@ -41,15 +39,13 @@ class Profile_Modify extends React.Component{
             },
                 success: function(data){
                     console.log("update canteen");
+                    this.change_form_trigger();
                 },
                 error: function(err){
                     console.log("err");
                 }
             })
-        }
-            //console.log(this.state.img)
-            
-            if ( this.state.img!=null){
+        }else   if ( this.state.img!=null){
                 let file = this.state.img;
                 console.log(file);
                 var formdata = new FormData();
@@ -67,9 +63,10 @@ class Profile_Modify extends React.Component{
                 contentType: false, processData: false,
                 async:true,
                 success: (data)=>{
-                    window.alert("succeeded, now updating parent component");
-                    console.log(data);
+                    //window.alert("succeeded, now updating parent component");
+                    //console.log(data);
                     this.props.set_random();
+                    this.change_form_trigger();
                 },
                 error:function(data){
                     console.log("error");
@@ -107,12 +104,12 @@ class Profile_Modify extends React.Component{
      }
     render(){
         if (this.state.form_trigger==0)
-        return <button className="btn btn-primary"onClick={this.change_form_trigger}>modify</button>
+        return <button className="btn btn-primary my-2"onClick={this.change_form_trigger}>modify</button>
         else
         return(
             <div className="container ">
             <div className="row justify-content-center ">
-            <form role="form col-md-4 col-sm-4" id="uploadForm" enctype="multipart/form-data" onSubmit={this.put_canteen}>
+            <form role="form col-md-4 col-sm-4" id="uploadForm" encType="multipart/form-data" onSubmit={this.put_canteen}>
         <div className="form-group">
 
            
@@ -128,17 +125,20 @@ class Profile_Modify extends React.Component{
           </label>
           <input type="password" name="status" className="form-control" onChange={this.passwordChange} />
         </div>
-
+        <button type="submit" className="btn btn-primary m-2" >
+          Modify Password
+        </button>
         <div className="form-group">
            <label htmlFor="exampleInputFile">
              Image
            </label>
            <input type="file" name="img"className="form-control-file" onChange={this.imgChange}/>
          </div>
-        <button type="submit" className="btn btn-primary" >
-          Modify
+        <button type="submit" className="btn btn-primary m-2" >
+          Modify Canteen Picture
         </button>
-        <button className="btn btn-warning"onClick={this.change_form_trigger}>Cancel</button>
+        <br />
+        <button className="btn btn-warning m-2"onClick={this.change_form_trigger}>Cancel</button>
       </form>
       </div>
       </div>
@@ -151,7 +151,7 @@ export default class Profile extends React.Component{
     render(){
         if (this.props.PageToShow==2)
         return(<div>
-            <p>id: {this.props.canteenID}</p>
+            <h4 className = "my-2">Canteen ID: {this.props.canteenID}</h4>
             <Profile_Modify set_random={this.props.set_random}canteenID={this.props.canteenID}/>
             </div>)
         else

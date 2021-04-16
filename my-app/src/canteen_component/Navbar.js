@@ -37,10 +37,10 @@ get_search_content=(event)=>{
            </ul>
            <form className="form-inline">
              <input name="content" className="form-control mr-sm-2"  onChange={this.get_search_content} /> 
-             <button className="btn btn-primary my-2 my-sm-0"  onClick={(e)=>this.props.start_search(e,this.state.search_content)}>
+             <button className="btn btn-primary mx-2 my-2 my-sm-0"  onClick={(e)=>this.props.start_search(e,this.state.search_content)}>
                Search
              </button>
-             <button className="btn btn-primary my-2 my-sm-0"  onClick={(e)=>this.props.cancel_search(e)}>
+             <button className="btn btn-primary mx-2 my-2 my-sm-0"  onClick={(e)=>this.props.cancel_search(e)}>
                Cancel
              </button>
            </form>

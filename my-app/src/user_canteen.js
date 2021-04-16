@@ -1,7 +1,7 @@
 import React from "react";
 import $ from "jquery";
 import DishDet from "./NewCom.js";
-const URL = "http://54.227.0.209:5000";
+const URL = "http://54.227.0.209:5000"
 
 class UserInt extends React.Component{
     constructor(props){
@@ -29,30 +29,34 @@ class UserInt extends React.Component{
     changeCan=(tmpid)=>{
         //console.log(eve.target.parentNode.id);
         console.log(tmpid);
-        this.setState({cur_canteen:tmpid,show_cur_canteen:1});
+        this.setState({cur_canteen:tmpid,show_cur_canteen:(this.state.show_cur_canteen+1)%2});
     }
     render(){
         if(this.props.PageToShow!=2){
             return(<></>)
         }
         console.log("rendering menu");
-        return(
-            <div>
+        
+            return(<div><div >
                 {   
                 this.state.all_canteen.map(c => 
-                   <div key={c.id} id={c.id} className="card d-inline-block m-2" style={{width: 200}} onClick = {()=>this.changeCan(c.id)}>
+                    { if(this.state.show_cur_canteen == 0 || (this.state.show_cur_canteen==1 && this.state.cur_canteen==c.id)) {return (
+                   <div key={c.id} id={c.id} className="card d-inline-block m-2 " onClick = {()=>this.changeCan(c.id)} style = {{maxWidth: 260}}>
                         <img src={URL + "/public/canteen/"+c.id+".png"} alt="{file.remarks}" className="w-100"></img>
                         <div className="card-body">
                             <h3 className="card-title">{c.name}</h3>
+                            
                         </div>
-                   </div>
+                   </div>)}
+                   }
                  )
                 }
-                <div>
-                    <UserMenu show={this.state.show_cur_canteen} cid={this.state.cur_canteen} uid={this.state.userID}/>
                 </div>
-            </div>
-        );
+                <div>
+                <UserMenu show={this.state.show_cur_canteen} cid={this.state.cur_canteen} uid={this.state.userID} BackToCanteen = {this.changeCan}/>
+                </div>
+                </div>
+                )
     }
 
 }
@@ -107,8 +111,12 @@ class UserMenu extends React.Component{
         }
         else{
             return(
-                
-                <div className = "d-flex flex-wrap justify-content-center"><ul className = "list-group w-75 ">{this.state.dish.map(d=><Dish did={d.id} name={d.name} uid={this.props.uid}/>)}</ul></div>);
+                <>
+                <button type="button" className="btn btn-primary m-2" onClick={(e)=>this.props.BackToCanteen(this.state.canteenID)}>Back To Canteen List</button>
+                <div className = "d-flex flex-wrap justify-content-center">       
+                    <ul className = "list-group w-75 ">{this.state.dish.map(d=><Dish did={d.id} name={d.name} uid={this.props.uid}/>)}</ul>
+                </div>
+                </>);
         }
         
     }
@@ -169,7 +177,10 @@ class Dish extends React.Component{
             <a>{this.state.name}</a>
             <button type="button" className="btn btn-primary m-2" onClick={this.order}>order</button>
             <button type="button" className="btn btn-primary m-2" onClick={this.showD}>show detail</button>
-            <DishDet id={this.state.id}  did={this.state.uid} name={this.state.name} show={this.state.show}/>
+            {
+                (this.state.show == 1) && <DishDet id={this.state.id}  did={this.state.uid} name={this.state.name} show={this.state.show}/>
+                
+            }
         </li>);
     }
 }

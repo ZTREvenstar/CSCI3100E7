@@ -46,7 +46,7 @@ export default class Form extends React.Component{
                     'name':this.state.name, 
                     'status':this.state.status, 
                     'price':this.state.price, 
-                    'img':this.state.img, 
+                    'img':null, 
                     'canteenID':this.props.canteenID, 
     
                 
@@ -54,6 +54,8 @@ export default class Form extends React.Component{
                 success: (data)=>{
                     alert("add successfully");
                     document.getElementById("create-course-form").reset();
+                    this.props.handleSubmit();
+                    this.set_Start_add();
                     //this.Reset();
                 },
                 error: (err)=>{
@@ -90,7 +92,7 @@ export default class Form extends React.Component{
         render(){
     
             if (this.state.Start_add==0)
-            return <button  className="btn btn-primary text-center" onClick={this.set_Start_add}>Add a new menu</button>
+            return <button  className="btn btn-primary text-center mb-3" onClick={this.set_Start_add}>Add a new dish</button>
             else
             return(<div className="container ">
                 <div className="row justify-content-center ">
@@ -119,14 +121,6 @@ export default class Form extends React.Component{
                <input name="price" className="form-control"  placeholder="10"onChange={this.priceChange} />
              </div>
     
-            <div className="form-group">
-               
-              <label htmlFor="exampleInputFile">
-                Image
-              </label>
-              <input type="file" className="form-control-file" onChange={this.imgChange}/>
-            </div>
-    
             <div className="checkbox">
                
               <label>
@@ -138,7 +132,7 @@ export default class Form extends React.Component{
             <button type="submit" className="btn btn-primary" >
               Add 
             </button>
-            <button  className="btn btn-warning text-center" onClick={this.set_Start_add}>Cancel</button>
+            <button  className="btn btn-warning text-center m-2" onClick={this.set_Start_add}>Cancel</button>
           </form>
           </div>
           </div>

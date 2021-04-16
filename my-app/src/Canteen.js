@@ -7,6 +7,7 @@ import Profile from "./canteen_component/Profile"
 import Table from "./canteen_component/Table"
 import Form from "./canteen_component/Form"
 import OrderCanteen from './order/orderCanteen.js'
+
 const URL = "http://54.227.0.209:5000"
 
 
@@ -24,7 +25,7 @@ class Menu extends React.Component{
 
     get_Menu(){
         //console.log("asd");
-        $.ajax({
+        this.serverRequest = $.ajax({
             url: URL+'/api/canteen/dish?id='+this.props.canteenID,
             type:'GET',
             dataType:'json',
@@ -45,13 +46,12 @@ class Menu extends React.Component{
     }
     componentDidMount(){
         //console.log("Menu canteenID is"+this.props.canteenID)
-        this.intervalId = setInterval(() => {
                 this.get_Menu();
-        }, 2000);
+
         
     }
     componentWillUnmount(){
-        clearInterval(this.intervalId);
+        this.serverRequest.abort();
     }
 
     render(){
@@ -62,7 +62,7 @@ class Menu extends React.Component{
             <Nested Menu_data={this.state.Menu_data}/>
             <Table search_content={this.props.search_content} Menu_data={this.state.Menu_data}/>
            
-            <Form canteenID={this.props.canteenID} Menu_data={this.state.Menu_data}/>
+            <Form canteenID={this.props.canteenID} Menu_data={this.state.Menu_data} handleSubmit = {()=>this.get_Menu()} />
                 </div>
         )
         }
@@ -115,26 +115,30 @@ export default class Canteen extends React.Component{
     }
 
     render(){
-        if (this.props.customer_canteen==1)
-        return (
-            
-  <div className="container-fluid  bg-light" >
-  <div className="row">
-    <div className="col-md-12">
-      <h3 className="text-info text-center" >
-        Welcome Dear Canteen {this.props.id}
-      </h3>
-    <Navbar start_search={this.start_search}cancel_search={this.cancel_search} name={this.state.name} id={this.props.id} clickOnMenu={this.clickOnMenu} clickOnOrder={this.clickOnOrder} clickOnProfile={this.clickOnProfile} logout={this.props.logout}/>
-    <Carousel Random={this.state.Random} canteenID={this.props.id}/>
-    <Profile set_random={this.set_random} PageToShow={this.state.PageToShow} canteenID={this.props.id}/>
-    <Menu search_content={this.state.search_content} PageToShow={this.state.PageToShow} canteenID={this.props.id}/>
-    <OrderCanteen id={this.props.id} PageToShow={this.state.PageToShow} logout={this.props.logout} customer_canteen={this.props.customer_canteen}/>
+        if (this.props.customer_canteen==1){
+            let display = null
+            if(this.state.PageToShow == 2){
+                display = <Profile set_random={this.set_random} PageToShow={this.state.PageToShow} canteenID={this.props.id}/>
+            }else if(this.state.PageToShow == 1){
+                display = <OrderCanteen id={this.props.id} PageToShow={this.state.PageToShow} logout={this.props.logout} customer_canteen={this.props.customer_canteen}/>
+            }else{
+                display = <Menu search_content={this.state.search_content} PageToShow={this.state.PageToShow} canteenID={this.props.id}/>
+            }
+            return (
+    <div className="container-fluid  bg-light" >
+    <div className="row">
+        <div className="col-md-12">
+        <h3 className="text-info text-center" >
+            Welcome Dear Canteen {this.props.id}
+        </h3>
+        <Navbar start_search={this.start_search}cancel_search={this.cancel_search} name={this.state.name} id={this.props.id} clickOnMenu={this.clickOnMenu} clickOnOrder={this.clickOnOrder} clickOnProfile={this.clickOnProfile} logout={this.props.logout}/>
+        <Carousel Random={this.state.Random} canteenID={this.props.id}/>
+        {display}
+        </div>
     </div>
-  </div>
-</div>
-        )
-        else
-        return null
+    </div>
+        )}
+        else{return null}
     }
 
 }

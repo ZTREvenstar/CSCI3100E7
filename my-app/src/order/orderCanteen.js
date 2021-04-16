@@ -13,13 +13,17 @@ class OrderCanteen extends React.Component {
     }
 
     getData(){
-        $.ajax({
+        if(this.serverRequest!=null && this.serverRequest.readyState!=4){
+            console.log("last update not finished");
+            return;
+        }
+        this.serverRequest = $.ajax({
             url: URL + '/api/order/canteen?canteenID='+ this.props.id,
             type:'GET',
             dataType:'json',
             success: (data)=> {
-                console.log("Success!");
-                //console.log(data);
+               // console.log("Success!");
+                console.log(data);
                 this.setState({myData:data});
             },
             error: (err)=>{
@@ -38,6 +42,9 @@ class OrderCanteen extends React.Component {
     }
     componentWillUnmount(){
         clearInterval(this.intervalId);
+        if(this.serverRequest!=null){
+            this.serverRequest.abort();
+        }
     }
 
 
@@ -66,7 +73,7 @@ class OrderCanteen extends React.Component {
             <ul  className=" list-group">
                 <li className=" list-group-item">
                 <h1>Order Canteen Interface</h1>
-                <h3>Newly Come Orders:</h3>
+                <h3>Incoming Orders:</h3>
                 <div>choose an order to confirm</div>
                 {display1}
                 </li>
@@ -110,20 +117,23 @@ class OrderList extends React.Component {
 
         return (
             <div>
-
-                <ul className = " list-group" >
+                <div className="d-flex flex-wrap justify-content-center">
                     {
                         this.props.orderlist.map((item)=>{
                             return(
-                                <li className=" list-group-item" id = {"order"+ item["orderID"]}>
-                                    <div>OrderID:{item["orderID"]} </div><div>  Dish Name:{item["dishName"]}</div>
-                                    <button className="btn btn-primary" id= {"btn" + item["orderID"]}
+                                
+                                    <div key={"order"+ item["orderID"]} id = {"order"+ item["orderID"]} className="card m-1 d-inline-block">
+                                        <h5 className="card-header">OrderID: {item["orderID"]}</h5>
+                                        <div className="card-body">
+                                            <h5 className="card-title">Dish Name: {item["dishName"]}</h5>
+                                            <button className="btn btn-primary" id= {"btn" + item["orderID"]}
                                             onClick={(e)=>this.handleClickEvent(item["orderID"], this.props.operation)}>{this.props.btn_operation}</button>
-                                </li>
+                                        </div>
+                                    </div>
                             )
                         })
                     }
-                </ul>
+                </div>
                 <hr/>
             </div>
         );

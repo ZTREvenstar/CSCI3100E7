@@ -1,6 +1,7 @@
 import React from "react"
 import $ from "jquery"
 const URL = "http://54.227.0.209:5000"
+
 class TableRow extends React.Component{
     
     delete_menu=()=>{
@@ -22,7 +23,7 @@ class TableRow extends React.Component{
     render(){
 
         return (
-            <tr>   
+            <tr key = {this.props.data.id}>   
             <td scope="row"> <a className="btn btn-warning" onClick={this.delete_menu}>delete</a></td>
             <td>{this.props.data.id}</td>
             <td>{this.props.data.name}</td>

@@ -3,7 +3,7 @@ import $ from "jquery";
 import propic from './pic/green.png';
 import equal from 'fast-deep-equal';
 import ReactStars from "react-rating-stars-component";
-const URL = "http://54.227.0.209:5000";
+const URL = "http://54.227.0.209:5000"
 
 const sortChoice=[
     {uuid:'1',name:'Choose filter'},
@@ -18,7 +18,7 @@ class DishDet extends React.Component{
         id:"",
         did:"",
         comments:[],
-        rating:0.0 ,      //overall rating
+        rating:"Not Available" ,      //overall rating
         show:0
 };
 this.updateSelf=this.updateSelf.bind(this);
@@ -29,7 +29,7 @@ this.sortDish=this.sortDish.bind(this);
 }
     updateSelf=()=>{
         this.setState({id:this.props.id,did:this.props.did,name:this.props.name,show:this.props.show});
-        console.log("gggggggg"+this.props.show);
+       // console.log("Updating Self"+this.props.show);
         $.ajax({type:'GET',url:URL + "/api/com/comment/"+this.props.id,
         async:false,
         success:(res)=>{
@@ -44,6 +44,7 @@ this.sortDish=this.sortDish.bind(this);
         });
     }
     componentDidMount(){
+        //console.log("component did mount")
         this.updateSelf();
     }
     componentWillReceiveProps(nextProps) {
@@ -65,6 +66,7 @@ this.sortDish=this.sortDish.bind(this);
         });
       }
     updateC=()=>{
+        console.log("update c")
         $.ajax({type:'GET',url:URL + "/api/com/comment/"+this.props.id,
         async:false,
         success:(res)=>{
@@ -96,6 +98,7 @@ this.sortDish=this.sortDish.bind(this);
         },0);
     }
     sortDish=(e)=>{
+        console.log("sortDish")
         if(e.target.value==2){
             this.sortDishH();
         }
