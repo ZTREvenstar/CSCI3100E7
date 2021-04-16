@@ -67,8 +67,22 @@ router.post('/updateInfo', async function(req,res){
 	//Object.assign(profileInfo,req.body)
 	var strSql = "SELECT * FROM customer WHERE id!=? AND username=?"
     let customer = await sqlQuery(strSql, 
-        [req.body['id'],req.body['username']]);
-	if(customer == []){
+        [req.body['id'],req.body['username']], function(error, result, field) {
+			if(error) {
+				res.send("failure");
+			} else if(result && result.isArray() && result.length > 0) {
+				res.send("failure");
+				
+			} else if(result){
+				console.log("updating");
+				strSql = "UPDATE customer SET username=? WHERE id=?"
+				sqlQuery(strSql, 
+					[req.body['username'],req.body['id']]);
+				console.log("updated");
+			}
+		});
+
+	if(customer.length>0){
 		console.log("updating");
 		strSql = "UPDATE customer SET username=? WHERE id=?"
 		sqlQuery(strSql, 
