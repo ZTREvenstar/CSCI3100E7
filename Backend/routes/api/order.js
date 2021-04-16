@@ -14,7 +14,7 @@ router.get('/canteen',async (req,res)=>{
 
     let dataSend = [];
 
-    // unconfirmed
+    // unconfirmed, fixed
     let sql = 'SELECT O.orderID AS orderID, O.status AS status, D.name AS dishName ' +
               'FROM orderinfo O, dish D ' +
               'WHERE O.status = 0 AND D.id = O.dishID AND D.canteenID = ?';
