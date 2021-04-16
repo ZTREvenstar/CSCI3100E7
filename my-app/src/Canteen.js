@@ -60,7 +60,7 @@ class Menu extends React.Component{
             return(
                 <div>
             <Nested Menu_data={this.state.Menu_data}/>
-            <Table search_content={this.props.search_content} Menu_data={this.state.Menu_data}/>
+            <Table search_content={this.props.search_content} Menu_data={this.state.Menu_data} handleDelete = {()=>this.get_Menu()}/>
            
             <Form canteenID={this.props.canteenID} Menu_data={this.state.Menu_data} handleSubmit = {()=>this.get_Menu()} />
                 </div>
