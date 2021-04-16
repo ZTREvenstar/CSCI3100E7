@@ -79,6 +79,7 @@ router.post('/updateInfo', async function(req,res){
 				sqlQuery(strSql, 
 					[req.body['username'],req.body['id']]);
 				console.log("updated");
+				res.send("success")
 			}
 		});
 
