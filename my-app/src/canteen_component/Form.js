@@ -21,10 +21,7 @@ export default class Form extends React.Component{
             }
          post_menu=(e)=>{
             e.preventDefault();
-            if (this.state.id==null){
-                alert("dish id should not be empty")
-                return;
-            }
+            
             if (this.state.name==null){
                 alert("dish name should not be empty")
                 return;
@@ -42,7 +39,6 @@ export default class Form extends React.Component{
                 type:'POST',
                 datatype :'JSON',
                 data: {
-                    'id':this.state.id, 
                     'name':this.state.name, 
                     'status':this.state.status, 
                     'price':this.state.price, 
@@ -67,9 +63,9 @@ export default class Form extends React.Component{
          nameChange=(event)=>{
             this.setState({name: event.target.value});
          }
-         idChange=(event)=>{
-            this.setState({id: event.target.value});
-         }
+//          idChange=(event)=>{
+//             this.setState({id: event.target.value});
+//          }
     
          statusChange=(event)=>{
             if (event.target.value)
@@ -97,13 +93,7 @@ export default class Form extends React.Component{
             return(<div className="container ">
                 <div className="row justify-content-center ">
                 <form className="col-md-4 col-xm-4 " role="form" id="create-course-form" onSubmit={this.post_menu}>
-            <div className="form-group ">
-               
-               <label htmlFor="exampleInputEmail1">
-                 id
-               </label>
-               <input name="id" className="form-control "placeholder="0" onChange={this.idChange}/>
-             </div>
+            
             <div className="form-group">
                
               <label htmlFor="exampleInputEmail1">
