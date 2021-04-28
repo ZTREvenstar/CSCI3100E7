@@ -143,6 +143,20 @@ router.post('/dish',upload.array(),async (req, res)=>{
     let new_dishID = result[0]['oldID'] + 1;
 
     let data = req.body;
+	/*
+	if (data==null||data==undefined){
+		res.send("Please fill the form")
+	}
+	if (data['name']==null||data['name']==undefined||data['name']==""){
+		res.send("Menu's name should not be empty")
+	}
+	if (data['price']==null||data['price']==undefined||data['price']==""){
+		res.send("Menu's price is required")
+	}
+	if(isNaN(data['price'])){
+		res.send("Menu's price should bea numebr")
+	}
+	*/
     let strSql = "insert into dish (id,name,status,price, canteenID) values(?,?,?,?,?);"
 
     sqlQuery(strSql,
