@@ -25,6 +25,9 @@ router.all('/*', (req, res,next) => {
 	next();
 });
 router.post('/addC/cid/:cid/dishId/:dishId/content/:content/:rate', async (req, res) => {
+	if(req.params.rate>5){
+	res.send("invalid rating");
+	}
         var sql='SELECT MAX(id) AS MI FROM comment';
         let id=await sqlQuery(sql);
         console.log(id[0].MI);
