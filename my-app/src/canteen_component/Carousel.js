@@ -1,3 +1,4 @@
+// This component will retrieve image from remote server and display it on the main page 
 import React from "react"
 import $ from "jquery"
 const URL = "http://54.227.0.209:5000"
