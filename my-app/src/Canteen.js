@@ -1,3 +1,4 @@
+// This component will import all canteen components from "./canteen_component/"
 import React from "react"
 import $ from "jquery"
 import Navbar from "./canteen_component/Navbar"
@@ -12,7 +13,7 @@ const URL = "http://54.227.0.209:5000"
 
 
 
-
+// It is the initial page that will display menu information 
 class Menu extends React.Component{
     constructor(props) {
         super(props);
@@ -86,7 +87,7 @@ export default class Canteen extends React.Component{
             name:null,
             id:0,
             password:null,
-            search_content:null,
+            search_content:null, // to use search function 
             PageToShow:0 ,// 0 means show Menu, 1 means show Order, 2 means show profile
             Random: 0
         }
