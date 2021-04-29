@@ -73,6 +73,8 @@ class Menu extends React.Component{
 }
 
 
+
+// This is the main component which contains all subcomponents 
 export default class Canteen extends React.Component{
 
     constructor(props){
