@@ -47,6 +47,9 @@ router.get('/comment/:dishId',async (req,res)=>{
     res.json(d);
 });
 router.post('/like/:cid',async (req,res)=>{
+	if(isNaN(req.params.cid)){
+	res.send("comment id should be a number");	
+	}
     var cid=req.params.cid;
     var sql='UPDATE comment SET likeNum=likeNum+1 WHERE id='+cid;
     //console.log("like it");
@@ -68,6 +71,9 @@ router.get('/dish/:canID',async (req,res)=>{
 });
 router.post('/deleteC/:cid/:cID',async (req,res)=>{
     console.log("delete it");
+	if(isNaN(req.params.cid)){
+		res.send("invalid input type");
+	}
     var sql="SELECT customerID AS CID FROM comment WHERE id="+req.params.cid;
     var re=await sqlQuery(sql);
     console.log(re[0].CID,req.params.cID);
