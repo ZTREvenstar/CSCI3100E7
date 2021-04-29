@@ -7,7 +7,7 @@ const router = express.Router()
 router.use(express.json())
 
 
-
+//Create folder to store image files 
 var createFolder = function(folder){
     try{
         fs.accessSync(folder); 
@@ -15,11 +15,10 @@ var createFolder = function(folder){
         fs.mkdirSync(folder);
     }  
 };
-
 var profilePicFolder = path.join(__dirname, '..', '..', '..','public','canteen');
-
 createFolder(profilePicFolder);
 
+//Set multer middleware to handle image file 
 var profilePicStorage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, profilePicFolder);   
@@ -53,12 +52,8 @@ router.all('/*', (req, res, next) => {
 
 
 
-
-
-
-
-
 //Two way -----either "then()" or "async and await" takes effects
+//this router is set to receive get menu request and send back menu data
 router.get('/dish', async (req, res)=> {
 	let canteenID = req.query.id
 //	console.log("type is"+typeof(canteenID));
@@ -69,9 +64,8 @@ router.get('/dish', async (req, res)=> {
 	res.send("canteen id should be a number")
 	}
     var strSql = 'SELECT * FROM dish WHERE canteenID='+canteenID;
-  //  strSql = "desc dish;";
     let dish_list = await sqlQuery(strSql);
-	//console.log(dish_list);
+//	console.log(dish_list);
 
     res.json(dish_list);
 
@@ -98,6 +92,7 @@ router.post('/dish',upload.array(),(req, res)=>{
     res.status(200).send();
 
 })*/
+// This router is set to receive post menu request and create corresponding dish in database
 router.post('/dish',upload.array(),async (req, res)=>{
 
     let sql = 'SELECT MAX(id) AS oldID FROM dish';
@@ -143,7 +138,7 @@ router.put('/dish',upload.array(), (req, res)=> {
 })
 
 
-
+//This router is set to receive delete menu request and remove corresponding dish in database
 router.delete('/dish',  (req, res)=> {
 
 	console.log(req.query.id);
@@ -161,7 +156,7 @@ router.delete('/dish',  (req, res)=> {
 
 })
 
-
+//This router is set to receive image from the front end, then multer will automatically save image file in remote server 
 router.post('/img', upload.single('img'), function(req,res){
 	var file = req.file;
 	console.log(file)
