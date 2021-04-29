@@ -34,6 +34,9 @@ router.post('/addC/cid/:cid/dishId/:dishId/content/:content/:rate', async (req, 
         res.json(id);	
 });
 router.get('/comment/:dishId',async (req,res)=>{
+	if(isNaN(req.params.dishId)){
+	res.send("dish id should be a number");
+	}
     var dish=req.params.dishId;
     var sql='SELECT * FROM comment WHERE dishID='+dish;
     let d=await sqlQuery(sql);
@@ -80,6 +83,9 @@ router.get('/canteen',async (req,res)=>{
 });
 
 router.get('/canteen/:cid',async (req,res)=>{
+	if(isNaN(req.params.cid)){
+	res.send("canteen id should be a number");
+	}
     var tmp=req.params.cid;
     var sql='SELECT * FROM dish WHERE canteenID='+tmp;
     let d=await sqlQuery(sql);
