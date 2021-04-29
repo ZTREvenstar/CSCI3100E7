@@ -94,7 +94,7 @@ class Profile_Modify extends React.Component{
      }
 
      imgChange=(event)=>{
-        if (event.files[0].size/1024 > 2000){
+        if (event.target.files[0].size/1024 > 2000){
         alert("the image size should be less than 2MB!")
         }  
         else{
