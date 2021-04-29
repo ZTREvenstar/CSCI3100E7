@@ -14,6 +14,7 @@ class TableRow extends React.Component{
             data: {},
             success: (data)=>{
                 alert("delete successfully");
+                this.props.handleDelete();
             },
             error: (err)=>{
                 console.log("err");
@@ -76,7 +77,7 @@ export default class Table extends React.Component{
             </thead>
             <tbody>
         { this.filter_data().map(data => 
-            <TableRow data={data}/> )}
+            <TableRow data={data} handleDelete = {(e)=>this.props.handleDelete()}/> )}
             </tbody>
           </table>
         )
