@@ -1,3 +1,4 @@
+// This is the profile subpage which shows the profile information and provide modification function
 import React from "react"
 import $ from "jquery"
 const URL = "http://54.227.0.209:5000"
