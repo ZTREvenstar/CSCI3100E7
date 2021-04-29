@@ -203,6 +203,12 @@ router.put('/order',upload.array(), (req, res)=> {
 router.delete('/dish',  (req, res)=> {
 
 	console.log(req.query.id);
+	if (req.query.id==null||req.query.id==undefined||req.query.id==""){
+	res.send("dish id required")
+	}
+	if(isNaN(req.query.id)){
+	res.send("dish id should be a number")
+	}
     var strSql = "delete from dish WHERE id=?;"
     sqlQuery(strSql, 
         [req.query.id]);
