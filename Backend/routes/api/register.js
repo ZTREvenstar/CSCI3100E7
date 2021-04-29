@@ -2,10 +2,11 @@ const express = require('express')
 const router = express.Router()
 const sqlQuery = require('../../db')
 
-router.get('/', (req, res) => {
-    res.render('register')
-})
+// router.get('/', (req, res) => {
+//     res.render('register')
+// })
 
+//register
 router.post('/', async (req, res) => {
     console.log(req.body)
     let sqlStr = "select * from customer where id = '" + req.body.id + "';"

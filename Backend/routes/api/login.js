@@ -63,15 +63,17 @@ router.post('/canteen', async (req, res) => {
     //let strSql = "show tables;"
     console.log(strSql)
     let result = await sqlQuery(strSql)
+    console.log(result)
     if (result.length == 0) {
         res.status(200).send('fail')
     }
     else {
-        res.status(200).send('success')
+        res.status(200).send(result.name)
     }
     //res.send("post method")
 })
 
+//canteen update ame and password
 router.put('/canteen',async(req,res)=>{
     console.log(req.body)
     let id = req.query.id
@@ -83,7 +85,7 @@ router.put('/canteen',async(req,res)=>{
     res.status(200).send()
 })
 
-
+//provide port for front end to check session infromation
 router.get('/session',(req,res)=>{
     console.log(req.session)
     if(req.session.isCustomerLogin){

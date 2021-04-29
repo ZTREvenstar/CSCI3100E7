@@ -44,8 +44,9 @@ function handleDisconnect() {
         
     });
 }
-handleDisconnect();
+handleDisconnect();//keep database connected once the connection is closed becasue of time out
 
+//sqlQuery function which can be used in other routers
 function sqlQuery(strSql, arr) {
     return new Promise(function (resolve, reject) {
         db.query(strSql, arr, (err, results) => {

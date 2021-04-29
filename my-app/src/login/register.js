@@ -3,6 +3,7 @@ import $ from "jquery"
 const URL = "http://54.227.0.209:5000/api"
 
 class login extends React.Component {
+    //props cookies state
     constructor(props) {
         super(props)
         this.state = ({
@@ -13,7 +14,7 @@ class login extends React.Component {
             open_or_not: 1
         })
     }
-
+    //register function including ajax to exchange information with backend
     register = (e) => {
         e.preventDefault();
         $.ajax({
@@ -25,6 +26,7 @@ class login extends React.Component {
                 console.log("result: " + res)
                 if (res == 'register success') {
                     alert('success! Please go back to login page to login')
+
                 }
                 else {
                     alert('register fail, please use unique id')
@@ -35,6 +37,7 @@ class login extends React.Component {
         })
     }
 
+    //functions to get changes session information
     id_change = (e) => {
 
         this.setState({
@@ -55,6 +58,7 @@ class login extends React.Component {
             password: e.target.value
         })
     }
+    //html
     render() {
         if (this.props.login_register == 1)
             return (
