@@ -76,7 +76,7 @@ this.sortDish=this.sortDish.bind(this);
         });
         this.updateSelf();
     }
-    //likenum
+    //likenum sorting
     sortDishH=()=>{
         $.ajax({type:'GET',url:URL + "/api/com/comment/"+this.props.id,
         async:false,
