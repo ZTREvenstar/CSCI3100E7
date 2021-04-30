@@ -76,6 +76,7 @@ this.sortDish=this.sortDish.bind(this);
         });
         this.updateSelf();
     }
+    //likenum
     sortDishH=()=>{
         $.ajax({type:'GET',url:URL + "/api/com/comment/"+this.props.id,
         async:false,
@@ -90,6 +91,7 @@ this.sortDish=this.sortDish.bind(this);
         
         
     }
+    //bad comments
     filterDish=()=>{
         var tmp=this.state.comments;
         tmp=tmp.filter(c=>c['rating']<2);
@@ -209,6 +211,7 @@ class Comment extends React.Component{
     this.setState({likeNum:this.props.ln,id:this.props.id,did:this.props.did,cid:this.props.cid,content:this.props.content,rating:this.props.rating});
   }
     }
+    //like comment
     likeC=()=>{
         $.ajax({type:'POST',url:URL + "/api/com/like/"+this.props.id, async:false,
         success:(res)=>{
@@ -217,6 +220,7 @@ class Comment extends React.Component{
         }
         })
     }
+    //delete comment
     DeleteC=()=>{
         $.ajax({type:'POST',url:URL + "/api/com/deleteC/"+this.props.id+"/"+this.props.did, async: false,
             success:(res)=>{
