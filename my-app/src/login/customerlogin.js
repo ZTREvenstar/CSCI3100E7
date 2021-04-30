@@ -15,6 +15,9 @@ class login extends React.Component {
     }
     //login function including ajax to exchange information with backend
     login = (e) => {
+        if (this.state.id == null || this.state.password == null) {
+            alert("id, password cannot be empty")
+        }
         e.preventDefault();
         $.ajax({
             type: 'POST',

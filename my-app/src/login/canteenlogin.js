@@ -16,6 +16,13 @@ class login extends React.Component {
     }
     //login function including ajax to exchange information with backend
     login = (e) => {
+        console.log("here")
+        console.log("id: " + this.state.id)
+        console.log("password: " + this.state.password)
+
+        if (this.state.id == null || this.state.password == null) {
+            alert("id and password cannot be empty")
+        }
         e.preventDefault();
         $.ajax({
             type: 'POST',
@@ -30,27 +37,21 @@ class login extends React.Component {
                         open_or_not: 0
                     })
                 }
-                else 
-                // if(res == "empty"){
-                //     alert("")
-                // }
-                // else
-                {
+                else {
                     alert("worng id or password")
                 }
                 //this.props.customerlogin(this.state.id)
             }
         })
+
     }
     //functions to get changes session information
     id_change = (e) => {
-
         this.setState({
             id: e.target.value
         })
     }
     password_change = (e) => {
-
         this.setState({
             password: e.target.value
         })

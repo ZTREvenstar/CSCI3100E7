@@ -75,12 +75,12 @@ router.post('/canteen', async (req, res) => {
         res.status(200).send('fail')
     }
     else {
-        res.status(200).send(result.name)
+        res.status(200).send('success')
     }
     //res.send("post method")
 })
 
-//canteen update ame and password
+//canteen update name and password
 router.put('/canteen',async(req,res)=>{
     console.log(req.body)
     let id = req.query.id
@@ -97,7 +97,7 @@ router.get('/session',(req,res)=>{
     console.log(req.session)
     if(req.session.isCustomerLogin){
         result = {'username':req.session.username,'id':req.session.userid }
-        res.status(200).send(result)
+        res.status(200).send('success')
     }
     else{
         res.status(200).send('false')
