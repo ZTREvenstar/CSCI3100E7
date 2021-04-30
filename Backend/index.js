@@ -27,11 +27,6 @@ app.set('view engine', 'ejs');
 
 
 
-// app.use('/api/backend_functions', require('./routes/api/backend_functions'))
-
-// app.use('/api/comment_back', require('./routes/api/comment_back'))
-
-// app.use('/api/order_back', require('./routes/api/order_back'))
 
 // orderCanteenUI router, for testing
 app.use('/api/order', require('./routes/api/order'))
@@ -39,11 +34,12 @@ app.use('/api/order', require('./routes/api/order'))
 
 app.use('/api/canteen', require('./routes/api/canteen'))
 
-//login router
+//login and profile change router
 app.use('/api/login', require('./routes/api/login'))
 
 //register router
 app.use('/api/register', require('./routes/api/register'))
+
 
 app.use('/api/com', require('./routes/api/comment_back'))
 

@@ -1,3 +1,4 @@
+// This table component display the information of all dishes that belong to this canteen and provides deleting dish function.
 import React from "react"
 import $ from "jquery"
 const URL = "http://54.227.0.209:5000"

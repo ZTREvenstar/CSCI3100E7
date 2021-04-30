@@ -1,3 +1,4 @@
+// This is the profile subpage which shows the profile information and provide modification function
 import React from "react"
 import $ from "jquery"
 const URL = "http://54.227.0.209:5000"
@@ -94,7 +95,13 @@ class Profile_Modify extends React.Component{
      }
 
      imgChange=(event)=>{
+        if (event.target.files[0].size/1024 > 2000){
+        alert("the image size should be less than 2MB!")
+        }  
+        else{
         this.setState({img: event.target.files[0]});
+        }
+        
      }
      change_form_trigger=()=>{
         if (this.state.form_trigger==0)

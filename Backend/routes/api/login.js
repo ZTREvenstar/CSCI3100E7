@@ -9,9 +9,9 @@ const sqlQuery = require('../../db')
 // })
 
 //useer login page
-router.get('/user', (req, res) => {
-    res.render('userlogin')
-})
+// router.get('/user', (req, res) => {
+//     res.render('userlogin')
+// })
 
 
 //deal with user login request
@@ -20,6 +20,10 @@ router.post('/user', async (req, res) => {
     console.log(req.body)
     let id = req.body.id
     let password = req.body.password
+    if(id == undefined||password == undefined){
+        res.status(200),send('empty')
+    }
+
     let strSql = "select * from customer where id = '" + id + "'and password = '" + password + "';"
     //let strSql = "show tables;"
     console.log(strSql)
@@ -59,19 +63,24 @@ router.post('/canteen', async (req, res) => {
     console.log(req.body)
     let id = req.body.id
     let password = req.body.password
+    if(id == undefined||password == undefined){
+        res.status(200),send('empty')
+    }
     let strSql = "select * from canteen where id = '" + id + "'and password = '" + password + "';"
     //let strSql = "show tables;"
     console.log(strSql)
     let result = await sqlQuery(strSql)
+    console.log(result)
     if (result.length == 0) {
         res.status(200).send('fail')
     }
     else {
-        res.status(200).send('success')
+        res.status(200).send(result.name)
     }
     //res.send("post method")
 })
 
+//canteen update ame and password
 router.put('/canteen',async(req,res)=>{
     console.log(req.body)
     let id = req.query.id
@@ -83,7 +92,7 @@ router.put('/canteen',async(req,res)=>{
     res.status(200).send()
 })
 
-
+//provide port for front end to check session infromation
 router.get('/session',(req,res)=>{
     console.log(req.session)
     if(req.session.isCustomerLogin){
