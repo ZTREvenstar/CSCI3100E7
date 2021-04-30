@@ -38,7 +38,30 @@ var profilePicStorage = multer.diskStorage({
     }
 });
 
-var uploadProfilePic = multer({storage: profilePicStorage });
+var uploadProfilePic = multer({
+	storage: profilePicStorage, 
+	limits: {
+        fileSize: 1024*1024
+    },
+    fileFilter: function(_req, file, cb){
+        checkFileType(file, cb);
+    }
+});
+
+function checkFileType(file, cb){
+	// Allowed ext
+	const filetypes = /jpeg|jpg|png|gif/;
+	// Check ext
+	const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+	// Check mime
+	const mimetype = filetypes.test(file.mimetype);
+  
+	if(mimetype && extname){
+	  return cb(null,true);
+	} else {
+		return cb(null,false);
+	}
+  }
 //router.use('/',express.static('../../../client/Canteen Interface'))
 
 
@@ -65,37 +88,47 @@ router.post('/updateInfo', async function(req,res){
 	
 	//console.log(databody);
 	//Object.assign(profileInfo,req.body)
-	var strSql = "SELECT * FROM customer WHERE id!=? AND username=?"
-    let customer = await sqlQuery(strSql, 
-        [req.body['id'],req.body['username']]);
+	if(req.body.id==null || req.body.id == ""){
+		res.send("error, invalid id");
+	}else if(req.body.username==null || req.body.username == ""){
+		res.send("error, invalid new username");
+	}else{
+		var strSql = "SELECT * FROM customer WHERE id!=? AND username=?"
+		let customer = await sqlQuery(strSql, 
+			[req.body['id'],req.body['username']]);
 
-		console.log("updating");
-		strSql = "UPDATE customer SET username=? WHERE id=?"
-		sqlQuery(strSql, 
-			[req.body['username'],req.body['id']]);
-		console.log("updated");
-		res.send("success");
-
-	
+		if(customer.length>0){
+			res.send("error, username already exist")
+		}else{
+			console.log("updating");
+			strSql = "UPDATE customer SET username=? WHERE id=?"
+			let result = await sqlQuery(strSql, 
+				[req.body['username'],req.body['id']]);
+			if(result.affectedRows==0){
+				res.send("error, id does not exist")
+			}else{
+				res.send("success");
+			}
+		}	
+	}
 })
 
 router.post('/updatePW', async function(req,res){
-	console.log(req.body);
-	
-	var strSql = "SELECT * FROM customer WHERE id=?"
-    let customer = await sqlQuery(strSql, 
-        [req.body['id']]);
-	let empty = customer && Object.keys(customer).length === 0 && customer.constructor === Object
-	if(!empty){
-		console.log("updating");
-		strSql = "UPDATE customer SET password=? WHERE id=?"
-		sqlQuery(strSql, 
-			[req.body['pw'],req.body['id']]);
-		console.log("updated");
-		res.send("success");
+	if(req.body.id==null || req.body.id == ""){
+		res.send("error, invalid id");
+	}else if(req.body.pw==null || req.body.pw == ""){
+		res.send("error, invalid new password");
 	}else{
-		console.log("user not found");
-		res.send("failure");
+		//	console.log("updating");
+			strSql = "UPDATE customer SET password=? WHERE id=?"
+			let result = await sqlQuery(strSql, 
+				[req.body['pw'],req.body['id']]);
+			if(result.affectedRows==0){
+				res.send("error, id does not exist")
+			}else{
+				console.log("updated");
+				res.send("success");
+			}
 	}
 })
 
@@ -103,28 +136,32 @@ router.post('/updatePW', async function(req,res){
 	var file = req.file;
 })*/
 
-router.post('/info',async function(req,res){
+router.get('/info',async function(req,res){
 	//res.send(req.body);
-	var strSql = 'SELECT * FROM customer WHERE id=' + req.body.id;
-	//var strSql_2 = 'SELECT * FROM customer WHERE id!=' + req.body.id + ' AND username=' + req.body.username;
-	let customer = await sqlQuery(strSql);
-
-	console.log(customer);
-
-    res.json(customer);
-})
-
-router.get('/profilePic',function(req,res){
-	console.log("get profile picture");
-	var strSql = 'SELECT * FROM customer';
-	res.send(profilePic);
+	if(req.body.id==null || req.body.id == ""){
+		res.send("error, invalid id");
+	}else{
+		var strSql = 'SELECT * FROM customer WHERE id=' + req.body.id;
+		//var strSql_2 = 'SELECT * FROM customer WHERE id!=' + req.body.id + ' AND username=' + req.body.username;
+		let result = await sqlQuery(strSql);
+		if(result==null||result.length == 0||result=={}){
+			res.send("error, id does not exist")
+		}else{
+			res.send(result)
+			//console.log(result)
+		}
+	}
 })
 
 router.post('/updateProfilePic', uploadProfilePic.single('img'), function(req,res){
 	var file = req.file;
 	console.log(file)
-	console.log(req.body.id);
-	res.send('success');
+	if(file!=null && file!={}){
+		res.send("success");
+	}else{
+		res.send("error, your file may be over 1MB in size, or has an incompatible extension name");
+	}
+	
 })
 
 module.exports = router;
