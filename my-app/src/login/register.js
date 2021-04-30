@@ -28,6 +28,15 @@ class login extends React.Component {
                     alert('success! Please go back to login page to login')
 
                 }
+                else if(res == "empty"){
+                    alert('username,id, password cannnot be empty')
+                }
+                else if(res == 'id must be integers, please check again'){
+                    alert('id must be integers, please check again')
+                }
+                else if(res == "password’s length should be less than 40, please check  again"){
+                    alert("password’s length should be less than 40, please check  again")
+                }
                 else {
                     alert('register fail, please use unique id')
                 }

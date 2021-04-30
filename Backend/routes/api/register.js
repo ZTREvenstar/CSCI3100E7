@@ -9,6 +9,18 @@ const sqlQuery = require('../../db')
 //register
 router.post('/', async (req, res) => {
     console.log(req.body)
+    if(req.body.id == undefined||req.body.username == undefined||req.body.password == undefined){
+        res.status(200),send('empty')
+    }
+    if(isNaN(req.body.id)){
+        res.status(200),send('id must be integers, please check again')
+    }
+    if(req.body.username.length > 10){
+        res.status(200),send('username’s length should be less than 10, please check  again')
+    }
+    if(req.body.password.length > 40){
+        res.status(200),send("password’s length should be less than 40, please check  again")
+    }
     let sqlStr = "select * from customer where id = '" + req.body.id + "';"
     console.log(sqlStr)
     let search_result = await sqlQuery(sqlStr)
