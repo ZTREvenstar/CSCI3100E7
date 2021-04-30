@@ -17,29 +17,35 @@ class login extends React.Component {
     //login function including ajax to exchange information with backend
     login = (e) => {
         console.log("here")
-        console.log("id: "+this.state.id)
-        console.log("password: "+this.state.password)
-        e.preventDefault();
-        $.ajax({
-            type: 'POST',
-            url: URL + "/login/canteen",
-            data: JSON.stringify({ "id": this.state.id, "password": this.state.password }),
-            contentType: "application/json",
-            success: (res) => {
-                console.log("result: " + res)
-                if (res == "success") {
-                    this.props.canteenlogin(this.state.id)
-                    this.setState({
-                        open_or_not: 0
-                    })
+        console.log("id: " + this.state.id)
+        console.log("password: " + this.state.password)
+
+        if (this.state.id == null || this.state.password == null) {
+            alert("worng id or password")
+        }
+        else {
+            e.preventDefault();
+            $.ajax({
+                type: 'POST',
+                url: URL + "/login/canteen",
+                data: JSON.stringify({ "id": this.state.id, "password": this.state.password }),
+                contentType: "application/json",
+                success: (res) => {
+                    console.log("result: " + res)
+                    if (res == "success") {
+                        this.props.canteenlogin(this.state.id)
+                        this.setState({
+                            open_or_not: 0
+                        })
+                    }
+                    else {
+                        alert("worng id or password")
+                    }
+                    //this.props.customerlogin(this.state.id)
                 }
-                else 
-                {
-                    alert("worng id or password")
-                }
-                //this.props.customerlogin(this.state.id)
             }
-        })
+            )
+        }
     }
     //functions to get changes session information
     id_change = (e) => {
