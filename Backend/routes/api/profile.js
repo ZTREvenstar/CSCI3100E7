@@ -27,12 +27,7 @@ var profilePicStorage = multer.diskStorage({
 		console.log("namingfiles");
 		let id = req.body.id;
 		console.log(id);
-		fs.unlink(profilePicFolder+"/"+id +".png", (err) => {
-			if (err) {
-			  console.error(err)
-			  return
-			}
-		})
+
 		var profilePicName = id +".png";
         cb(null, profilePicName);  
     }
@@ -40,13 +35,10 @@ var profilePicStorage = multer.diskStorage({
 
 var uploadProfilePic = multer({
 	storage: profilePicStorage, 
-	limits: {
-        fileSize: 1024*1024
-    },
     fileFilter: function(_req, file, cb){
         checkFileType(file, cb);
     }
-});
+}).single('img');
 
 function checkFileType(file, cb){
 	// Allowed ext
@@ -136,7 +128,7 @@ router.post('/updatePW', async function(req,res){
 	var file = req.file;
 })*/
 
-router.get('/info',async function(req,res){
+router.post('/info',async function(req,res){
 	//res.send(req.body);
 	if(req.body.id==null || req.body.id == ""){
 		res.send("error, invalid id");
@@ -153,13 +145,14 @@ router.get('/info',async function(req,res){
 	}
 })
 
-router.post('/updateProfilePic', uploadProfilePic.single('img'), function(req,res){
+router.post('/updateProfilePic', uploadProfilePic, function(req,res){
+		
 	var file = req.file;
 	console.log(file)
 	if(file!=null && file!={}){
 		res.send("success");
 	}else{
-		res.send("error, your file may be over 1MB in size, or has an incompatible extension name");
+		res.send("error, your file has an incompatible file extension");
 	}
 	
 })

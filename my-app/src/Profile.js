@@ -18,15 +18,18 @@ class Profile extends React.Component{
             type:'POST',
             data: JSON.stringify({'id':this.props.id}),
             contentType: "application/json",
-            dataType:'JSON',
             async:true,
             success: (data) => {
-                console.log("succeed");
-                console.log(data);
-                this.setState({
-                    username: data[0].username,
-                    id: data[0].id,
-                })
+                if(data=="error, invalid id" || data=="error, id does not exist"){
+                    window.alert(data)
+                }else{
+                    console.log("succeed");
+                    console.log(data);
+                    this.setState({
+                        username: data[0].username,
+                        id: data[0].id,
+                    })
+                }
             },
             error:function(data,status){
                 console.log("error");
@@ -143,37 +146,36 @@ class ChangeInfo extends React.Component{
         //alert('trying to submit a form');
         if(this.state.username==''){
             window.alert("please enter a valid username")
-        }
-        if(this.serverRequest!=null){
-            this.serverRequest.abort()
-        }
-        let newusername = this.state.username
-        this.serverRequest = $.ajax({
-            url: URL + '/api/profile/updateInfo',
-            type:'POST',
-            data: JSON.stringify({
-                'username':this.state.username,
-                'id':this.props.id,
-            }),
-            contentType: "application/json",
-            async:true,
-            success: (data)=>{
-                console.log("succeed");
-                console.log(data);
-               
-                    window.alert("update succeeded")
-                    this.props.handleUsername(newusername)
-                    this.props.handleSuccess(0);
-   
-                
-            },
-            error:function(data,status){
-                console.log("error");
-                console.log(data);
-                window.alert("update failed, the username has been used by anthoer customer")
+        }else{
+            if(this.serverRequest!=null){
+                this.serverRequest.abort()
             }
-        });
-        
+            let newusername = this.state.username
+            this.serverRequest = $.ajax({
+                url: URL + '/api/profile/updateInfo',
+                type:'POST',
+                data: JSON.stringify({
+                    'username':this.state.username,
+                    'id':this.props.id,
+                }),
+                contentType: "application/json",
+                async:true,
+                success: (data)=>{
+                    if(data!="success"){
+                        window.alert(data)
+                    }else{
+                        window.alert("update succeeded")
+                        this.props.handleUsername(newusername)
+                        this.props.handleSuccess(0);
+                    }       
+                },
+                error:function(data,status){
+                    console.log("error");
+                    console.log(data);
+                    window.alert("update failed, the username has been used by anthoer customer")
+                }
+            });
+        }
     }
 
     componentWillUnmount() {
@@ -237,9 +239,13 @@ class ChangePW extends React.Component{
             contentType: "application/json",
             async:true,
             success: (data)=>{
-                console.log("succeed");
-                console.log(data);
-                this.props.handleSuccess(0);
+                if(data!="success"){
+                    window.alert(data)
+                }else{
+                    console.log("succeed");
+                    console.log(data);
+                    this.props.handleSuccess(0);
+                }
             },
             error:function(data){
                 console.log("error");
@@ -327,10 +333,14 @@ class UploadPic extends React.Component{
             contentType: false, processData: false,
             async:true,
             success: (data)=>{
-                window.alert("succeeded, now updating parent component");
-                console.log(data);
-                this.props.handleSuccess(0)
-                this.props.handlePicChange();
+                if(data!="success"){
+                    window.alert(data);
+                }else{
+                    window.alert("succeeded, now updating parent component");
+                    console.log(data);
+                    this.props.handleSuccess(0)
+                    this.props.handlePicChange();
+                }
             },
             error:function(data){
                 console.log("error");
