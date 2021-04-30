@@ -31,10 +31,6 @@ class login extends React.Component {
                     })
                 }
                 else 
-                // if(res == "empty"){
-                //     alert("")
-                // }
-                // else
                 {
                     alert("worng id or password")
                 }

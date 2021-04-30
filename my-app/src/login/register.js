@@ -26,7 +26,6 @@ class login extends React.Component {
                 console.log("result: " + res)
                 if (res == 'register success') {
                     alert('success! Please go back to login page to login')
-
                 }
                 else if(res == "empty"){
                     alert('username,id, password cannnot be empty')
