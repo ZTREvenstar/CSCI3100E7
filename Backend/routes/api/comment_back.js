@@ -25,6 +25,9 @@ router.all('/*', (req, res,next) => {
 	next();
 });
 router.post('/addC/cid/:cid/dishId/:dishId/content/:content/:rate', async (req, res) => {
+	if(req.params.rate>5){
+	res.send("invalid rating");
+	}
         var sql='SELECT MAX(id) AS MI FROM comment';
         let id=await sqlQuery(sql);
         console.log(id[0].MI);
@@ -34,6 +37,9 @@ router.post('/addC/cid/:cid/dishId/:dishId/content/:content/:rate', async (req, 
         res.json(id);	
 });
 router.get('/comment/:dishId',async (req,res)=>{
+	if(isNaN(req.params.dishId)){
+	res.send("dish id should be a number");
+	}
     var dish=req.params.dishId;
     var sql='SELECT * FROM comment WHERE dishID='+dish;
     let d=await sqlQuery(sql);
@@ -41,6 +47,9 @@ router.get('/comment/:dishId',async (req,res)=>{
     res.json(d);
 });
 router.post('/like/:cid',async (req,res)=>{
+	if(isNaN(req.params.cid)){
+	res.send("comment id should be a number");	
+	}
     var cid=req.params.cid;
     var sql='UPDATE comment SET likeNum=likeNum+1 WHERE id='+cid;
     //console.log("like it");
@@ -62,6 +71,9 @@ router.get('/dish/:canID',async (req,res)=>{
 });
 router.post('/deleteC/:cid/:cID',async (req,res)=>{
     console.log("delete it");
+	if(isNaN(req.params.cid)){
+		res.send("invalid input type");
+	}
     var sql="SELECT customerID AS CID FROM comment WHERE id="+req.params.cid;
     var re=await sqlQuery(sql);
     console.log(re[0].CID,req.params.cID);
@@ -80,6 +92,9 @@ router.get('/canteen',async (req,res)=>{
 });
 
 router.get('/canteen/:cid',async (req,res)=>{
+	if(isNaN(req.params.cid)){
+	res.send("canteen id should be a number");
+	}
     var tmp=req.params.cid;
     var sql='SELECT * FROM dish WHERE canteenID='+tmp;
     let d=await sqlQuery(sql);
