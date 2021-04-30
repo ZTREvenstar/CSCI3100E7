@@ -24,6 +24,7 @@ router.all('/*', (req, res,next) => {
 	res.setHeader('Content-Type', 'application/json');
 	next();
 });
+//add comments
 router.post('/addC/cid/:cid/dishId/:dishId/content/:content/:rate', async (req, res) => {
 	if(req.params.rate>5){
 	res.send("invalid rating");
@@ -36,6 +37,7 @@ router.post('/addC/cid/:cid/dishId/:dishId/content/:content/:rate', async (req, 
         sqlQuery(sql,addSqlParams);
         res.json(id);	
 });
+//get comment of a dish
 router.get('/comment/:dishId',async (req,res)=>{
 	if(isNaN(req.params.dishId)){
 	res.send("dish id should be a number");
@@ -46,6 +48,7 @@ router.get('/comment/:dishId',async (req,res)=>{
     d.sort(function(a,b){return b['likeNum']-a['likeNum'];});
     res.json(d);
 });
+//like a comment
 router.post('/like/:cid',async (req,res)=>{
 	if(isNaN(req.params.cid)){
 	res.send("comment id should be a number");	
@@ -59,16 +62,19 @@ router.post('/like/:cid',async (req,res)=>{
     res.json(ln);
 
 });
+//for test
 router.get('/dish',async (req,res)=>{
     var dish_list = [{ "name": '猪骨拉面', "status": 'open', "price": 31,"id":1 }, { "name": '汉堡', "status": 'close', "price": 23, "id":2 }];
     res.json(dish_list);
 });
+//get dishes from a canteen
 router.get('/dish/:canID',async (req,res)=>{
     var sql="SELECT * FROM dish WHERE canteenID="+req.params.canID;
     let dish=await sqlQuery(sql);
     dish.sort(function(a,b){return b['rating']-a['rating'];});
     res.json(dish);
 });
+//delete a comment
 router.post('/deleteC/:cid/:cID',async (req,res)=>{
     console.log("delete it");
 	if(isNaN(req.params.cid)){
