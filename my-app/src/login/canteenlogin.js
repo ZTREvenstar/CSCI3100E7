@@ -21,7 +21,7 @@ class login extends React.Component {
         console.log("password: " + this.state.password)
 
         if (this.state.id == null || this.state.password == null) {
-            alert("worng id or password")
+            alert("id and password cannot be empty")
         }
         e.preventDefault();
         $.ajax({

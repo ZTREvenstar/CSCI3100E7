@@ -16,6 +16,9 @@ class login extends React.Component {
     }
     //register function including ajax to exchange information with backend
     register = (e) => {
+        if (this.state.id == null || this.state.password == null || this.state.username == null) {
+            alert("username, id, password cannot be empty")
+        }
         e.preventDefault();
         $.ajax({
             type: 'POST',
@@ -27,13 +30,13 @@ class login extends React.Component {
                 if (res == 'register success') {
                     alert('success! Please go back to login page to login')
                 }
-                else if(res == "empty"){
+                else if (res == "empty") {
                     alert('username,id, password cannnot be empty')
                 }
-                else if(res == 'id must be integers, please check again'){
+                else if (res == 'id must be integers, please check again') {
                     alert('id must be integers, please check again')
                 }
-                else if(res == "password’s length should be less than 40, please check  again"){
+                else if (res == "password’s length should be less than 40, please check  again") {
                     alert("password’s length should be less than 40, please check  again")
                 }
                 else {
